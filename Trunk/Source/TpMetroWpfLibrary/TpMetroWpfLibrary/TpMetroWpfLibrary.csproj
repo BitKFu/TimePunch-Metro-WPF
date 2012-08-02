@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{18C832BB-9C4B-401B-96AB-7BC4FC4472DC}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TimePunch.Metro.Wpf</RootNamespace>
+    <AssemblyName>TpMetroWpfLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Output\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Output\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\Output\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\..\..\Output\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TpMetroWpfLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugX86|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugX86\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugX86|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DebugX86\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseX86|AnyCPU'">
+    <OutputPath>bin\ReleaseX86\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseX86|x86'">
+    <OutputPath>bin\x86\ReleaseX86\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\ApplicationCommands.cs" />
+    <Compile Include="Commands\DynamicCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\Kernel.cs" />
+    <Compile Include="Controls\AppBar\ApplicationBar.xaml.cs">
+      <DependentUpon>ApplicationBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AppBar\ApplicationBarIcon.cs" />
+    <Compile Include="Controls\AppBar\ApplicationBarMenuItem.cs" />
+    <Compile Include="Controls\Buttons\DataBoundRadioButton.cs" />
+    <Compile Include="Controls\CheckedList\CheckableList.cs" />
+    <Compile Include="Controls\CheckedList\CheckableListChangeEvent.cs" />
+    <Compile Include="Controls\CheckedList\CheckableListItem.cs" />
+    <Compile Include="Controls\CheckedList\ICheckableList.cs" />
+    <Compile Include="Controls\ErrorBar\DisplayErrorBar.xaml.cs">
+      <DependentUpon>DisplayErrorBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Panels\TouchableScrollViewer.cs" />
+    <Compile Include="Controls\Picker\DatePicker.xaml.cs">
+      <DependentUpon>DatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\DatePickerFullMode.xaml.cs">
+      <DependentUpon>DatePickerFullMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\DatePickerFullModeRequest.cs" />
+    <Compile Include="Controls\Picker\DatePickerFullModeViewModel.cs" />
+    <Compile Include="Controls\Picker\DatePickerSelectDateRequest.cs" />
+    <Compile Include="Controls\Picker\DayInfo.cs" />
+    <Compile Include="Controls\Picker\DesignatorInfo.cs" />
+    <Compile Include="Controls\Picker\HourInfo.cs" />
+    <Compile Include="Controls\Picker\ListPicker.xaml.cs">
+      <DependentUpon>ListPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\ListPickerFullMode.xaml.cs">
+      <DependentUpon>ListPickerFullMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\ListPickerFullModeRequest.cs" />
+    <Compile Include="Controls\Picker\ListPickerFullModeViewModel.cs" />
+    <Compile Include="Controls\Picker\ListPickerSelectItemRequest.cs" />
+    <Compile Include="Controls\Picker\MinuteInfo.cs" />
+    <Compile Include="Controls\Picker\MonthInfo.cs" />
+    <Compile Include="Controls\Picker\TimePicker.xaml.cs">
+      <DependentUpon>TimePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\TimePickerFullMode.xaml.cs">
+      <DependentUpon>TimePickerFullMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\TimePickerFullModeRequest.cs" />
+    <Compile Include="Controls\Picker\TimePickerFullModeViewModel.cs" />
+    <Compile Include="Controls\Picker\TimePickerSelectRequest.cs" />
+    <Compile Include="Controls\Picker\TimeSpanPicker.xaml.cs">
+      <DependentUpon>TimeSpanPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\TimeSpanPickerFullMode.xaml.cs">
+      <DependentUpon>TimeSpanPickerFullMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Picker\TimeSpanPickerFullModeRequest.cs" />
+    <Compile Include="Controls\Picker\TimeSpanPickerFullModeViewModel.cs" />
+    <Compile Include="Controls\Picker\TimeSpanPickerSelectRequest.cs" />
+    <Compile Include="Controls\Picker\YearInfo.cs" />
+    <Compile Include="Controls\ProgressBar\RelativeAnimatingContentControl.cs" />
+    <Compile Include="Controls\TextBox\ExtendedTextBox.cs" />
+    <Compile Include="Controls\WindowedControl\WindowedItemsControl.cs" />
+    <Compile Include="Controls\WindowedControl\WindowedItemsControl.Manipulation.cs" />
+    <Compile Include="Controls\WindowedControl\WindowedItemsControl.Mouse.cs" />
+    <Compile Include="Controls\WindowedControl\WindowedItemsControl.Overrides.cs" />
+    <Compile Include="Controls\WindowedControl\WrappableStackPanel.cs" />
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converter\EqualsToVisibilityMultiConverter.cs" />
+    <Compile Include="Converter\NumberToFixedStringConverter.cs" />
+    <Compile Include="Converter\ObjectToVisibilityConverter.cs" />
+    <Compile Include="Converter\ShortDateConverter.cs" />
+    <Compile Include="Converter\ShortTimeConverter.cs" />
+    <Compile Include="Converter\ShortTimeSpanConverter.cs" />
+    <Compile Include="Docking\OnTaskBarMovedEventHandler.cs" />
+    <Compile Include="Docking\OnTaskBarMovedEventHandlerArgs.cs" />
+    <Compile Include="Docking\TaskBar.cs" />
+    <Compile Include="Docking\TaskBarDocker.cs" />
+    <Compile Include="Docking\TaskBarDocker.Dpi.cs" />
+    <Compile Include="EventAggregation\EventAggregator.cs" />
+    <Compile Include="EventAggregation\IEventAggregator.cs" />
+    <Compile Include="EventAggregation\IHandleMessage.cs" />
+    <Compile Include="Events\ApplicationClosedEvent.cs" />
+    <Compile Include="Events\ApplicationIsClosingEvent.cs" />
+    <Compile Include="Events\CloseApplicationCommand.cs" />
+    <Compile Include="Events\ForceBindingUpdateEvent.cs" />
+    <Compile Include="Events\GoBackNavigationRequest.cs" />
+    <Compile Include="Events\HideMenuItemsRequest.cs" />
+    <Compile Include="Events\NavigatedEvent.cs" />
+    <Compile Include="Events\NavigationCompletedEvent.cs" />
+    <Compile Include="Events\NavigationEvent.cs" />
+    <Compile Include="Events\WindowStateApplicationCommand.cs" />
+    <Compile Include="Frames\AnimationFrame.cs" />
+    <Compile Include="Frames\AnimationMode.cs" />
+    <Compile Include="Frames\FaderFrame.cs" />
+    <Compile Include="Frames\SliderFrame.cs" />
+    <Compile Include="Helper\PasswordBoxAssistent.cs" />
+    <Compile Include="Hooks\GlobalEventProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Hooks\HookManager.Callbacks.cs" />
+    <Compile Include="Hooks\HookManager.cs" />
+    <Compile Include="Hooks\HookManager.Structures.cs" />
+    <Compile Include="Hooks\HookManager.Windows.cs" />
+    <Compile Include="Hooks\MouseEventExtArgs.cs" />
+    <Compile Include="Metro\ResizeDirectionFlags.cs" />
+    <Compile Include="Metro\SnappedTransparentWindow.cs" />
+    <Compile Include="Metro\TransparentWindow.cs" />
+    <Compile Include="Metro\TransparentWindow.Windows.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CommonResources.Designer.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CommonResources.de.resx" />
+    <EmbeddedResource Include="Resources\CommonResources.resx" />
+    <None Include="Images\appbar.icons.pdn" />
+    <AppDesigner Include="Properties\" />
+    <None Include="TpMetroWpfLibrary.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\AppBar\ApplicationBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ErrorBar\DisplayErrorBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\DatePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\DatePickerFullMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\ListPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\ListPickerFullMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\TimePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\TimePickerFullMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\TimeSpanPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Picker\TimeSpanPickerFullMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\MetroStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\appbar.cancel.png" />
+    <Resource Include="Images\appbar.check.png" />
+    <Resource Include="Images\appbar.delete.png" />
+    <Resource Include="Images\appbar.feature.settings.png" />
+    <Resource Include="Images\appbar.ff.png" />
+    <Resource Include="Images\appbar.new.png" />
+    <Resource Include="Images\appbar.next.png" />
+    <Resource Include="Images\appbar.overflowdots.png" />
+    <Resource Include="Images\appbar.pause.png" />
+    <Resource Include="Images\appbar.play.png" />
+    <Resource Include="Images\appbar.prev.png" />
+    <Resource Include="Images\appbar.refresh.png" />
+    <Resource Include="Images\appbar.save.png" />
+    <Resource Include="Images\appbar.stop.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
