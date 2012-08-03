@@ -37,7 +37,8 @@
                         Click="SwitchMenuItemVisibility">
 
                 <Button.Content>
-                    <Image Source="/TpMetroWpfLibrary;component/Images/appbar.overflowdots.png" Stretch="None" />
+                    <Image Source="/TpMetroWpfLibrary;component/Images/appbar.overflowdots.png" Stretch="None" 
+                           Width="{StaticResource ApplicationBarIconSize}" Height="{StaticResource ApplicationBarIconSize}" />
                 </Button.Content>
             </Button>
 

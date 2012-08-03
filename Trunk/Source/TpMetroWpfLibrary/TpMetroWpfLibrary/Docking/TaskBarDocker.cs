@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Linq;
+using TimePunch.Metro.Wpf.Helper;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
@@ -34,6 +35,11 @@ namespace TimePunch.Metro.Wpf.Docking
 
         public event Action<TaskBar.TaskBarEdge> OnDockingChanged = null;
 
+        /// <summary>
+        /// Used to get the DPI of the screen
+        /// </summary>
+        private readonly ScreenResolution screenResolution = new ScreenResolution();
+        
         #endregion
 
         #region Private Constants
@@ -53,13 +59,6 @@ namespace TimePunch.Metro.Wpf.Docking
                 throw new ArgumentNullException("form");
 
             this.form = form;
-
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
-            IntPtr desktop = g.GetHdc();
-
-            Xdpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSX);
-            Ydpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSY);     
-            
             AttachedToTaskBarEvent = attachToTaskBarEvent;
 
             if (attachToTaskBarEvent)
@@ -141,27 +140,27 @@ namespace TimePunch.Metro.Wpf.Docking
             switch (TaskBar.GetTaskBarEdge())
             {
                 case TaskBar.TaskBarEdge.Left:
-                    form.Left = ConvertXDpi(left + taskbarWidth);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height);
+                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height);
                     break;
 
                 case TaskBar.TaskBarEdge.Top:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top + taskbarHeight);
-                    form.Height = ConvertYDpi(height - taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
+                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
                     break;
 
                 case TaskBar.TaskBarEdge.Right:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height);
                     break;
 
                 case TaskBar.TaskBarEdge.Bottom:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height - taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
                     break;
 
                 default:
@@ -202,27 +201,27 @@ namespace TimePunch.Metro.Wpf.Docking
             switch (TaskBar.GetTaskBarEdge())
             {
                 case TaskBar.TaskBarEdge.Left:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left + taskbarWidth);
-                    form.Width = ConvertYDpi(width - taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
+                    form.Width = screenResolution.ConvertYDpi(width - taskbarWidth);
                     break;
 
                 case TaskBar.TaskBarEdge.Top:
-                    form.Top = ConvertYDpi(top + taskbarHeight);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(width);
+                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(width);
                     break;
 
                 case TaskBar.TaskBarEdge.Right:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(width - taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
                     break;
 
                 case TaskBar.TaskBarEdge.Bottom:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(width);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(width);
                     break;
 
                 default:
@@ -236,7 +235,7 @@ namespace TimePunch.Metro.Wpf.Docking
             Screen taskBarScreen = Screen.FromHandle(TaskBar.GetHandle()); ;
             Size taskBarSize = TaskBar.GetTaskBarSize();
 
-            var left = activeScreen.Bounds.Left + activeScreen.Bounds.Width - ConvertXToScreen(form.Width);
+            var left = activeScreen.Bounds.Left + activeScreen.Bounds.Width - screenResolution.ConvertXToScreen(form.Width);
             var top = activeScreen.Bounds.Top;
             var height = activeScreen.Bounds.Height;
 
@@ -246,27 +245,27 @@ namespace TimePunch.Metro.Wpf.Docking
             switch (TaskBar.GetTaskBarEdge())
             {
                 case TaskBar.TaskBarEdge.Left:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height);
                     break;
 
                 case TaskBar.TaskBarEdge.Top:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top + taskbarHeight);
-                    form.Height = ConvertYDpi(height - taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
+                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
                     break;
 
                 case TaskBar.TaskBarEdge.Right:
-                    form.Left = ConvertXDpi(left - taskbarWidth);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height);
+                    form.Left = screenResolution.ConvertXDpi(left - taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height);
                     break;
 
                 case TaskBar.TaskBarEdge.Bottom:
-                    form.Left = ConvertXDpi(left);
-                    form.Top = ConvertYDpi(top);
-                    form.Height = ConvertYDpi(height - taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
                     break;
 
                 default:
@@ -282,7 +281,7 @@ namespace TimePunch.Metro.Wpf.Docking
             Size taskBarSize = TaskBar.GetTaskBarSize();
 
             var left = activeScreen.Bounds.Left;
-            var top = activeScreen.Bounds.Top + activeScreen.Bounds.Height - ConvertYToScreen(form.Height);
+            var top = activeScreen.Bounds.Top + activeScreen.Bounds.Height - screenResolution.ConvertYToScreen(form.Height);
             var width = activeScreen.Bounds.Width;
 
             var taskbarHeight = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Height : 0);
@@ -291,27 +290,27 @@ namespace TimePunch.Metro.Wpf.Docking
             switch (TaskBar.GetTaskBarEdge())
             {
                 case TaskBar.TaskBarEdge.Left:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left + taskbarWidth);
-                    form.Width = ConvertXDpi(width - taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
+                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
                     break;
 
                 case TaskBar.TaskBarEdge.Top:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(taskbarWidth);
                     break;
 
                 case TaskBar.TaskBarEdge.Right:
-                    form.Top = ConvertYDpi(top);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(width - taskbarWidth);
+                    form.Top = screenResolution.ConvertYDpi(top);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
                     break;
 
                 case TaskBar.TaskBarEdge.Bottom:
-                    form.Top = ConvertYDpi(top - taskbarHeight);
-                    form.Left = ConvertXDpi(left);
-                    form.Width = ConvertXDpi(width);
+                    form.Top = screenResolution.ConvertYDpi(top - taskbarHeight);
+                    form.Left = screenResolution.ConvertXDpi(left);
+                    form.Width = screenResolution.ConvertXDpi(width);
                     break;
 
                 default:

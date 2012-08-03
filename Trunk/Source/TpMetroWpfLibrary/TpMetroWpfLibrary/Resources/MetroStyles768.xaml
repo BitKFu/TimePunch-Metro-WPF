@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:System="clr-namespace:System;assembly=mscorlib"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
   xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" 
     xmlns:unsupported="clr-namespace:TimePunch.Metro.Wpf.Controls.ProgressBar" 
     xmlns:Metro="clr-namespace:TimePunch.Metro.Wpf.Metro" 
-    x:Class="TimePunch.Metro.Wpf.Resources.e__work_timepunch_metro_wpf_library_source_tpmetrowpflibrary_tpmetrowpflibrary_resources_metrostyles_xaml">
+    x:Class="TimePunch.Metro.Wpf.Resources.e__work_timepunch_metro_wpf_library_source_tpmetrowpflibrary_tpmetrowpflibrary_resources_metrostyles8_xaml">
 
     <!-- Common colors -->
 
@@ -177,18 +177,18 @@
 
 
     <!-- Touch Target area -->
-    <Thickness x:Key="WinTouchTargetOverhang">12</Thickness>
+    <Thickness x:Key="WinTouchTargetOverhang">10</Thickness>
 
     <!-- Touch Target area for CheckBox / RadioButton -->
-    <Thickness x:Key="WinTouchTargetLargeOverhang">12,20</Thickness>
+    <Thickness x:Key="WinTouchTargetLargeOverhang">10,17</Thickness>
 
     <!-- Default margins for non-touch items -->
-    <Thickness x:Key="WinHorizontalMargin">12,0</Thickness>
-    <Thickness x:Key="WinVerticalMargin">0,12</Thickness>
-    <Thickness x:Key="WinMargin">12</Thickness>
-    <Thickness x:Key="WinDescMargin">12,12,12,0</Thickness>
+    <Thickness x:Key="WinHorizontalMargin">10,0</Thickness>
+    <Thickness x:Key="WinVerticalMargin">0,10</Thickness>
+    <Thickness x:Key="WinMargin">10</Thickness>
+    <Thickness x:Key="WinDescMargin">10,10,10,0</Thickness>
 
-    <Thickness x:Key="WinVerticalLargeOverhang">12,24,12,12</Thickness>
+    <Thickness x:Key="WinVerticalLargeOverhang">10,20,10,10</Thickness>
 
     <!-- Inner margins for text controls -->
     <Thickness x:Key="WinTextBoxInnerMargin">1,2</Thickness>
@@ -209,21 +209,21 @@
     <!-- Font sizes -->
 
     <!--14pt-->
-    <System:Double x:Key="WinFontSizeSmall">14</System:Double>
+    <System:Double x:Key="WinFontSizeSmall">12</System:Double>
     <!--15pt-->
-    <System:Double x:Key="WinFontSizeNormal">15</System:Double>
+    <System:Double x:Key="WinFontSizeNormal">13</System:Double>
     <!--17pt-->
-    <System:Double x:Key="WinFontSizeMedium">17</System:Double>
+    <System:Double x:Key="WinFontSizeMedium">14</System:Double>
     <!--19pt-->
-    <System:Double x:Key="WinFontSizeMediumLarge">19</System:Double>
+    <System:Double x:Key="WinFontSizeMediumLarge">16</System:Double>
     <!--24pt-->
-    <System:Double x:Key="WinFontSizeLarge">24</System:Double>
+    <System:Double x:Key="WinFontSizeLarge">20</System:Double>
     <!--32pt-->
-    <System:Double x:Key="WinFontSizeExtraLarge">32</System:Double>
+    <System:Double x:Key="WinFontSizeExtraLarge">26</System:Double>
     <!--54pt-->
-    <System:Double x:Key="WinFontSizeExtraExtraLarge">54</System:Double>
+    <System:Double x:Key="WinFontSizeExtraExtraLarge">45</System:Double>
     <!--140pt-->
-    <System:Double x:Key="WinFontSizeHuge">140</System:Double>
+    <System:Double x:Key="WinFontSizeHuge">116</System:Double>
 
     <!-- TextBox styles -->
 
@@ -323,7 +323,7 @@
     <FontFamily
 		x:Key="HeaderFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <System:Double
-		x:Key="HeaderFontSize">21.333</System:Double>
+		x:Key="HeaderFontSize">18</System:Double>
         <System:Double
 		x:Key="HyperlinkFontSize">11</System:Double>
 
@@ -350,10 +350,10 @@
         Color="Red" />
 
     <!-- Global Styles -->
-    <System:Double x:Key="PickerBox">96</System:Double>
-    
-    <System:Double x:Key="ApplicationBarIconSize">48</System:Double>
-    
+    <System:Double x:Key="PickerBox">80</System:Double>
+
+    <System:Double x:Key="ApplicationBarIconSize">40</System:Double>
+
     <ControlTemplate
 		x:Key="ChromeButtonControlTemplate"
 		TargetType="{x:Type ButtonBase}">
@@ -957,7 +957,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <Grid>
-                        <Border BorderBrush="{StaticResource WinChromeBrush}" BorderThickness="0 1 0 0" Margin="12 -4 0 12"/>
+                        <Border BorderBrush="{StaticResource WinChromeBrush}" BorderThickness="0 1 0 0" Margin="10 -4 0 10"/>
                         <ContentPresenter Content="{Binding}"/>
                     </Grid>
                 </DataTemplate>

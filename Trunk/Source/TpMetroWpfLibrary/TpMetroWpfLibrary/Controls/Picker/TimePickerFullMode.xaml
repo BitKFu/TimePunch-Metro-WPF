@@ -42,7 +42,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:HourInfo">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=hourControl,
                                                   Path=Foreground}"
@@ -97,7 +97,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:MinuteInfo">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=minuteControl,
                                                   Path=Foreground}"
@@ -154,7 +154,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:DesignatorInfo">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=designatorControl,
                                                   Path=Foreground}"

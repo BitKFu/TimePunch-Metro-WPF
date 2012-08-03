@@ -40,7 +40,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:MonthInfo">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=monthControl,
                                                   Path=Foreground}"
@@ -100,7 +100,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:MonthInfo">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=dayControl,
                                                   Path=Foreground}"
@@ -161,7 +161,7 @@
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="system:Int32">
-                        <Border Width="96" Height="96"
+                        <Border Width="{StaticResource PickerBox}" Height="{StaticResource PickerBox}"
                             BorderThickness="1"
                             BorderBrush="{Binding ElementName=yearControl,
                                                   Path=Foreground}"

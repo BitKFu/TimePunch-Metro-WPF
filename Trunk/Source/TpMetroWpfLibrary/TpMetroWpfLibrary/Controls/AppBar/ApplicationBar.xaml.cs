@@ -195,7 +195,12 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
                 var stack = new StackPanel() {Orientation = Orientation.Vertical, Tag = newItem};
 
                 // Button 
-                var content = new Image() { Stretch = Stretch.None };
+                var content = new Image()
+                                  {
+                                      Stretch = Stretch.UniformToFill,
+                                      Width = (Double)TryFindResource("ApplicationBarIconSize"),
+                                      Height= (Double)TryFindResource("ApplicationBarIconSize")
+                                  };
 
                 var button = new Button()
                                   {

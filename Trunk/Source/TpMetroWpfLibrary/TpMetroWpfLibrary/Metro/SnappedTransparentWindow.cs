@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using TimePunch.Metro.Wpf.Docking;
+using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.Hooks;
 using Binding = System.Windows.Data.Binding;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
@@ -84,6 +85,11 @@ namespace TimePunch.Metro.Wpf.Metro
         /// Flag indicating whether the window shall slide in on activation or not
         /// </summary>
         private bool showOnActivate = true;
+
+        /// <summary>
+        /// Used to get the DPI of the screen
+        /// </summary>
+        private readonly ScreenResolution screenResolution = new ScreenResolution();
 
         #endregion
 
@@ -771,7 +777,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <param name="e">Event arguments</param>
         private void OnMouseClickOnScreen(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            var formLocation = new System.Drawing.Point((int) docker.ConvertXDpi(e.Location.X), (int) docker.ConvertYDpi(e.Location.Y));
+            var formLocation = new System.Drawing.Point((int)screenResolution.ConvertXDpi(e.Location.X), (int)screenResolution.ConvertYDpi(e.Location.Y));
 
             // Only interessting for Touch Friendly)
             if (PinStyle != PinStyle.TouchFriendly && PinStyle != PinStyle.AlwaysOff)
