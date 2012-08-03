@@ -199,7 +199,6 @@
     <Compile Include="Docking\OnTaskBarMovedEventHandlerArgs.cs" />
     <Compile Include="Docking\TaskBar.cs" />
     <Compile Include="Docking\TaskBarDocker.cs" />
-    <Compile Include="Docking\TaskBarDocker.Dpi.cs" />
     <Compile Include="EventAggregation\EventAggregator.cs" />
     <Compile Include="EventAggregation\IEventAggregator.cs" />
     <Compile Include="EventAggregation\IHandleMessage.cs" />
@@ -213,11 +212,14 @@
     <Compile Include="Events\NavigationCompletedEvent.cs" />
     <Compile Include="Events\NavigationEvent.cs" />
     <Compile Include="Events\WindowStateApplicationCommand.cs" />
+    <Compile Include="Extensions\StylesAccordingToCurrentResolution.cs" />
+    <Compile Include="Extensions\MetroStylesAccordingToCurrentResolution.cs" />
     <Compile Include="Frames\AnimationFrame.cs" />
     <Compile Include="Frames\AnimationMode.cs" />
     <Compile Include="Frames\FaderFrame.cs" />
     <Compile Include="Frames\SliderFrame.cs" />
     <Compile Include="Helper\PasswordBoxAssistent.cs" />
+    <Compile Include="Helper\ScreenResolution.cs" />
     <Compile Include="Hooks\GlobalEventProvider.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -288,6 +290,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Picker\TimeSpanPickerFullMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\MetroStyles768.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
