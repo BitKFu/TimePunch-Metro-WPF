@@ -25,7 +25,7 @@ namespace TimePunch.Metro.Wpf.Extensions
             try
             {
                 if (ViewModelBase.IsDesignMode)
-                    return new Uri("/TpMetroWpfLibrary;component/Resources/MetroStyles.xaml", UriKind.RelativeOrAbsolute);
+                    return new Uri("/TpMetroWpfLibrary;component/Styles/MetroStyles.xaml", UriKind.RelativeOrAbsolute);
 
                 var activeScreen = Screen.PrimaryScreen;
                 var dpi = screenResolution.Xdpi;
@@ -36,9 +36,9 @@ namespace TimePunch.Metro.Wpf.Extensions
 
                 // Use the smaller sizes, if the screen resolution is higher than 96 dpi (which is standard) or the height is smaller or equal to 768
                 if (height <= 768 || dpi > 96)
-                    resourceName = "/TpMetroWpfLibrary;component/Resources/MetroStyles768.xaml";
+                    resourceName = "/TpMetroWpfLibrary;component/Styles/MetroStyles768.xaml";
                 else
-                    resourceName = "/TpMetroWpfLibrary;component/Resources/MetroStyles.xaml";
+                    resourceName = "/TpMetroWpfLibrary;component/Styles/MetroStyles.xaml";
 
                 // Add the resource to the app. 
                 return new Uri(resourceName, UriKind.RelativeOrAbsolute);
@@ -47,7 +47,7 @@ namespace TimePunch.Metro.Wpf.Extensions
             {
                 // Don't throw an exception at this place.
                 // Use the default
-                return new Uri("/TpMetroWpfLibrary;component/Resources/MetroStyles.xaml", UriKind.RelativeOrAbsolute);
+                return new Uri("/TpMetroWpfLibrary;component/Styles/MetroStyles.xaml", UriKind.RelativeOrAbsolute);
             }
         }
 

@@ -240,13 +240,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CommonResources.Designer.cs" />
+    <Compile Include="Resources\CommonResources.Designer.cs">
+      <DependentUpon>CommonResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CommonResources.de.resx" />
+    <EmbeddedResource Include="Resources\CommonResources.de.resx">
+      <DependentUpon>CommonResources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CommonResources.resx" />
     <None Include="Images\appbar.icons.pdn" />
     <AppDesigner Include="Properties\" />
@@ -293,11 +297,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\MetroStyles768.xaml">
+    <Page Include="Styles\MetroStyles768.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\MetroStyles.xaml">
+    <Page Include="Styles\MetroStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
