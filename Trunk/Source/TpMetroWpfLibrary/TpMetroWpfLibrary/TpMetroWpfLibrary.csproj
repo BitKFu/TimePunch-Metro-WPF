@@ -243,6 +243,7 @@
     <Compile Include="Resources\CommonResources.Designer.cs">
       <DependentUpon>CommonResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MainWindowViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
