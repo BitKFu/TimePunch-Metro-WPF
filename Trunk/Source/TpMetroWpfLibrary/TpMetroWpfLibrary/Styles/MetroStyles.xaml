@@ -1032,20 +1032,37 @@
 
                                     <Rectangle Name="PART_HEADER" Height="28" VerticalAlignment="Top" Fill="Transparent" />
 
-                                    <StackPanel Margin="12" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                        <Button x:Name="CloseButton" 
-                                                Style="{StaticResource ChromeButtonStyle}" 
-                                                Margin="4"
-                                                Command="ApplicationCommands.Close" 
-                                                x:Uid="CloseButton">
-                                            <TextBlock TextWrapping="Wrap" Text="r" FontFamily="Webdings" Foreground="#FF919191" FontSize="11" x:Uid="r_TextBlock" />
-                                        </Button>
+                                    <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                         <Button x:Name="MinimizeButton" 
                                                 Style="{StaticResource ChromeButtonStyleHidden}" 
-                                                Margin="4"
+                                                Padding="4"
                                                 Command="Metro:TransparentWindow.MinimizeCommand" 
                                                 x:Uid="MinimizeButton">
                                             <TextBlock TextWrapping="Wrap" Text="0" FontFamily="Webdings" Foreground="#FF919191" FontSize="11" x:Uid="r_TextBlock" />
+                                        </Button>
+
+                                        <Button x:Name="MaximizeButton" 
+                                                Style="{StaticResource ChromeButtonStyleHidden}" 
+                                                Padding="4"
+                                                Command="Metro:TransparentWindow.MaximizeCommand" 
+                                                x:Uid="MaximizeButton">
+                                            <TextBlock TextWrapping="Wrap" Text="1" FontFamily="Webdings" Foreground="#FF919191" FontSize="11" x:Uid="r_TextBlock" />
+                                        </Button>
+                                        
+                                        <Button x:Name="NormalizeButton" 
+                                                Style="{StaticResource ChromeButtonStyleHidden}" 
+                                                Padding="4"
+                                                Command="Metro:TransparentWindow.NormalizeCommand" 
+                                                x:Uid="NormalizeButton">
+                                            <TextBlock TextWrapping="Wrap" Text="2" FontFamily="Webdings" Foreground="#FF919191" FontSize="11" x:Uid="r_TextBlock" />
+                                        </Button>
+
+                                        <Button x:Name="CloseButton" 
+                                                Style="{StaticResource ChromeButtonStyle}" 
+                                                Padding="4"
+                                                Command="ApplicationCommands.Close" 
+                                                x:Uid="CloseButton">
+                                            <TextBlock TextWrapping="Wrap" Text="r" FontFamily="Webdings" Foreground="#FF919191" FontSize="11" x:Uid="r_TextBlock" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>

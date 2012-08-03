@@ -38,6 +38,8 @@ namespace TimePunch.Metro.Wpf.Metro
             DependencyProperty.Register("IsMainWindow", typeof(bool), typeof(TransparentWindow), new PropertyMetadata(false));
 
         public static RoutedUICommand MinimizeCommand = new RoutedUICommand();
+        public static RoutedUICommand MaximizeCommand = new RoutedUICommand();
+        public static RoutedUICommand NormalizeCommand = new RoutedUICommand();
 
         /// <summary>
         /// Initializes the <see cref="TransparentWindow"/> class.
