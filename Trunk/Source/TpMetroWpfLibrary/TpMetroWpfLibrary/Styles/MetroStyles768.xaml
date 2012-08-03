@@ -1089,6 +1089,10 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid>
+                <Grid.Resources>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                </Grid.Resources>
+
                 <TextBlock Text="{Binding EmptyText, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource WinTextSmallStyle}" 
                            Visibility="{Binding IsEmpty, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
