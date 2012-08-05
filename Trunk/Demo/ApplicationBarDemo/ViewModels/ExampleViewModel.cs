@@ -16,7 +16,7 @@ namespace ApplicationBarDemo.ViewModels
 
         private string[] months = {
                                       "January", "Febuary", "March", "April", "May", "June", "July", "August", "September",
-                                      "Octobre", "November", "December"
+                                      "October", "November", "December"
                                   };
 
         #endregion

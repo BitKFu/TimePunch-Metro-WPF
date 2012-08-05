@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationBarDemo", "Appli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyMetroDemo", "EmptyMetroDemo\EmptyMetroDemo.csproj", "{BB074728-A71B-435E-8B42-1453635E7866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickerControlDemo", "PickerControlDemo\PickerControlDemo.csproj", "{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -23,6 +25,10 @@ Global
 		{BB074728-A71B-435E-8B42-1453635E7866}.Debug|x86.Build.0 = Debug|x86
 		{BB074728-A71B-435E-8B42-1453635E7866}.Release|x86.ActiveCfg = Release|x86
 		{BB074728-A71B-435E-8B42-1453635E7866}.Release|x86.Build.0 = Release|x86
+		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Debug|x86.ActiveCfg = Debug|x86
+		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Debug|x86.Build.0 = Debug|x86
+		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.ActiveCfg = Release|x86
+		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
