@@ -2,13 +2,39 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:AppBar="clr-namespace:TimePunch.Metro.Wpf.Controls.AppBar;assembly=TpMetroWpfLibrary" xmlns:Resources="clr-namespace:TimePunch.Metro.Wpf.Resources;assembly=TpMetroWpfLibrary" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="ExampleView">
 
     <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"    />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="{Binding SelectedText}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource WinTextExtraLargeStyle}"/>
+        
+        <AppBar:ApplicationBar Grid.Row="1">
+            <AppBar:ApplicationBar.Icons>
+                <AppBar:ApplicationBarIcon ImageSource="/TpMetroWpfLibrary;component/Images/appbar.prev.png"
+                                           Description="previous"
+                                           Command="{Binding PrevCommand}"/>
+                <AppBar:ApplicationBarIcon ImageSource="/TpMetroWpfLibrary;component/Images/appbar.next.png"
+                                           Description="next"
+                                           Command="{Binding NextCommand}"/>
+            </AppBar:ApplicationBar.Icons>
+            
+            <AppBar:ApplicationBar.MenuItems>
+                <AppBar:ApplicationBarMenuItem Description="Next Month" Command="{Binding NextCommand}"/>
+                <AppBar:ApplicationBarMenuItem Description="Previous Month" Command="{Binding PrevCommand}"/>
+            </AppBar:ApplicationBar.MenuItems>
+            
+        </AppBar:ApplicationBar>
         
     </Grid>
 </Page>
