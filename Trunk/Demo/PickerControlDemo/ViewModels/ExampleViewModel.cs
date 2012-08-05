@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TimePunch.Metro.Wpf.ViewModel;
 
 namespace PickerControlDemo.ViewModels
@@ -35,6 +36,7 @@ namespace PickerControlDemo.ViewModels
                          };
 
             SelectedMonth = Months[0];
+            SelectedDate = DateTime.Today;
         }
 
         /// <summary>
@@ -74,6 +76,19 @@ namespace PickerControlDemo.ViewModels
         {
             get { return GetPropertyValue(() => SelectedMonth); }
             set { SetPropertyValue(() => SelectedMonth, value); }
+        }
+
+        #endregion
+
+        #region Property SelectedDate
+
+        /// <summary>
+        /// Gets or sets the SelectedDate
+        /// </summary>
+        public DateTime SelectedDate
+        {
+            get { return GetPropertyValue(() => SelectedDate); }
+            set { SetPropertyValue(() => SelectedDate, value); }
         }
 
         #endregion

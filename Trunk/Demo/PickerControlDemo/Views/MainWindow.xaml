@@ -13,7 +13,9 @@
         <Frames:AnimationFrame x:Name="ContentFrame"
                                Source="ExampleView.xaml" 
                                AnimationMode="Fade"
-                               FadeDuration="300"/>
+                               NavigationUIVisibility="Hidden"
+                               FadeDuration="0:0:0.050"
+                               FadeOffset="0:0:0.150"/>
         
     </Grid>
 </Metro:TransparentWindow>
