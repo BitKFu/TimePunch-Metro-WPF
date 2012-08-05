@@ -4,22 +4,35 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Picker="clr-namespace:TimePunch.Metro.Wpf.Controls.Picker;assembly=TpMetroWpfLibrary" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="300"
 	Title="ExampleView">
 
-    <Grid Margin="12">
+    <Grid Margin="{StaticResource WinVerticalMargin}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <!-- List Picker -->
+
+        <TextBlock Grid.Row="0" Text="ListPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
+        <Picker:ListPicker Grid.Row="1"  ItemsSource="{Binding Months}" 
+                           Margin="{StaticResource WinMargin}"
+                           DisplayMemberPath="Text"
+                           FullModeHeader="Month selection"
+                           SelectedItem="{Binding SelectedMonth, Mode=TwoWay}">
+            <Picker:ListPicker.FullModeItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Text}" Style="{StaticResource WinTextNormalStyle}" Margin="{StaticResource WinMargin}"/>
+                </DataTemplate>
+            </Picker:ListPicker.FullModeItemTemplate>
+        </Picker:ListPicker>
         
-            <TextBlock Grid.Row="0" Text="ListPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
-        
-            <Picker:ListPicker Grid.Row="1"  ItemsSource="{Binding Months}" 
-                               Margin="{StaticResource WinMargin}"
-                               DisplayMemberPath="Text"
-                               SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"/>
-        
+        <!-- Date Picker -->
+        <TextBlock Grid.Row="2" Text="DatePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
+        <Picker:DatePicker Margin="{StaticResource WinMargin}" Grid.Row="3" Value="{Binding SelectedDate, Mode=TwoWay}"/>
     </Grid>
 </Page>
