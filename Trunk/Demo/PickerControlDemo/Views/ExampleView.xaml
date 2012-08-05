@@ -16,7 +16,8 @@
         
             <TextBlock Grid.Row="0" Text="ListPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
         
-            <Picker:ListPicker Grid.Row="1"  ItemsSource="{Binding Months}"
+            <Picker:ListPicker Grid.Row="1"  ItemsSource="{Binding Months}" 
+                               Margin="{StaticResource WinMargin}"
                                DisplayMemberPath="Text"
                                SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"/>
         
