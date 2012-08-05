@@ -1,4 +1,6 @@
-﻿namespace EmptyMetroDemo.Views
+﻿using TimePunch.Metro.Wpf.Controller;
+
+namespace EmptyMetroDemo.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -8,6 +10,7 @@
         public MainWindow()
         {
             InitializeComponent();
+            Kernel.Instance.Controller.SetRootFrame(ContentFrame);
         }
     }
 }

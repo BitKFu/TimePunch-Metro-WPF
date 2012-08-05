@@ -1,6 +1,6 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
 
-namespace ApplicationBarDemo.Views
+namespace PickerControlDemo.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,4 +1,4 @@
-﻿<Metro:TransparentWindow x:Class="ApplicationBarDemo.Views.MainWindow"
+﻿<Metro:TransparentWindow x:Class="PickerControlDemo.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:Metro="clr-namespace:TimePunch.Metro.Wpf.Metro;assembly=TpMetroWpfLibrary" 

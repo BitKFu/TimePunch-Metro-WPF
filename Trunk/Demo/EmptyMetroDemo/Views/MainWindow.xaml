@@ -10,7 +10,8 @@
     <Grid>
 
         <!-- The animation frame is used to have page transitions on page navigation -->
-        <Frames:AnimationFrame Source="ExampleView.xaml" 
+        <Frames:AnimationFrame x:Name="ContentFrame"
+                               Source="ExampleView.xaml" 
                                AnimationMode="Fade"
                                FadeDuration="300"/>
         

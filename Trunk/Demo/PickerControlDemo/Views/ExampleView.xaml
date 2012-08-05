@@ -1,0 +1,24 @@
+﻿<Page x:Class="PickerControlDemo.Views.ExampleView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Picker="clr-namespace:TimePunch.Metro.Wpf.Controls.Picker;assembly=TpMetroWpfLibrary" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="ExampleView">
+
+    <Grid Margin="12">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+            <TextBlock Grid.Row="0" Text="ListPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
+        
+            <Picker:ListPicker Grid.Row="1"  ItemsSource="{Binding Months}"
+                               DisplayMemberPath="Text"
+                               SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"/>
+        
+    </Grid>
+</Page>
