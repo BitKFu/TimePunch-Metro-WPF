@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypographicDemo", "Typograp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordCheckDemo", "PasswordCheckDemo\PasswordCheckDemo.csproj", "{4EEE8E97-8B61-4BE2-857F-02BF6E73577B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabControlDemo", "TabControlDemo\TabControlDemo.csproj", "{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
@@ -23,19 +25,22 @@ Global
 		SccLocalPath4 = PasswordCheckDemo
 		SccLocalPath5 = ProgressBarDemo
 		SccLocalPath6 = TypographicDemo
-		SccNumberOfProjects = 7
+		SccLocalPath7 = TabControlDemo
+		SccNumberOfProjects = 8
 		SccProjectName1 = ApplicationBarDemo
 		SccProjectName2 = EmptyMetroDemo
 		SccProjectName3 = PickerControlDemo
 		SccProjectName4 = PasswordCheckDemo
 		SccProjectName5 = ProgressBarDemo
 		SccProjectName6 = TypographicDemo
+		SccProjectName7 = TabControlDemo
 		SccProjectUniqueName1 = ApplicationBarDemo\\ApplicationBarDemo.csproj
 		SccProjectUniqueName2 = EmptyMetroDemo\\EmptyMetroDemo.csproj
 		SccProjectUniqueName3 = PickerControlDemo\\PickerControlDemo.csproj
 		SccProjectUniqueName4 = PasswordCheckDemo\\PasswordCheckDemo.csproj
 		SccProjectUniqueName5 = ProgressBarDemo\\ProgressBarDemo.csproj
 		SccProjectUniqueName6 = TypographicDemo\\TypographicDemo.csproj
+		SccProjectUniqueName7 = TabControlDemo\\TabControlDemo.csproj
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs34
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +82,16 @@ Global
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.ActiveCfg = Release|x86
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.Build.0 = Release|x86
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{4EEE8E97-8B61-4BE2-857F-02BF6E73577B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4EEE8E97-8B61-4BE2-857F-02BF6E73577B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EEE8E97-8B61-4BE2-857F-02BF6E73577B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
