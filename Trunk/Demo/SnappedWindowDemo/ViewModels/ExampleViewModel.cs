@@ -26,6 +26,8 @@ namespace SnappedWindowDemo.ViewModels
             DockToLeftCommand = RegisterCommand(ExecuteDockToLeftCommand, CanExecuteDockToLeftCommand, true);
 
             PinStyle = PinStyle.TouchFriendly;
+
+            AddPropertyChangedNotification(() => PinStyle, () => PinStyleAlwaysOn);
         }
 
         /// <summary>
@@ -213,6 +215,18 @@ namespace SnappedWindowDemo.ViewModels
             }
         }
         
+        #endregion
+
+        #region Property PinStyleAlwaysOn
+
+        /// <summary>
+        /// Gets a value indicating whether the PinStyle is set to always on
+        /// </summary>
+        public bool PinStyleAlwaysOn
+        {
+            get { return PinStyle == PinStyle.AlwaysOn; }
+        }
+
         #endregion
     }
 }

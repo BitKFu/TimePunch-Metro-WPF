@@ -15,6 +15,7 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -74,5 +75,9 @@
                          Style="{StaticResource WinRadioButtonStyle}"
                          IsChecked="{Binding PinStyle, Mode=TwoWay, Converter={StaticResource EnumToRadioButtonConverter}, ConverterParameter=Fixed}"/>
         </StackPanel>        
+        
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="STRG can be used as the magic key for mode AlwaysOn"
+                   Visibility="{Binding PinStyleAlwaysOn, Converter={StaticResource BooleanToVisibilityConverter}}"
+                   Style="{StaticResource WinTextAccentStyle}"/>
     </Grid>
 </Page>

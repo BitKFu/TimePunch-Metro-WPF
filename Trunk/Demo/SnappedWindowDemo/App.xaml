@@ -17,6 +17,7 @@
             <Core:DemoViewModelLocator x:Key="ViewModelLocator"/>
                 
             <Core:EnumToRadioButtonConverter x:Key="EnumToRadioButtonConverter"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         </ResourceDictionary>
         
