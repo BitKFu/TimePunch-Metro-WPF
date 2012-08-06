@@ -36,7 +36,7 @@ namespace PickerControlDemo.ViewModels
                          };
 
             SelectedMonth = Months[0];
-            SelectedDate = DateTime.Today;
+            SelectedDate = DateTime.Now;
         }
 
         /// <summary>
@@ -89,6 +89,19 @@ namespace PickerControlDemo.ViewModels
         {
             get { return GetPropertyValue(() => SelectedDate); }
             set { SetPropertyValue(() => SelectedDate, value); }
+        }
+
+        #endregion
+
+        #region Property SelectedTimeSpan
+
+        /// <summary>
+        /// Gets or sets the SelectedTimeSpan
+        /// </summary>
+        public TimeSpan SelectedTimeSpan
+        {
+            get { return GetPropertyValue(() => SelectedTimeSpan); }
+            set { SetPropertyValue(() => SelectedTimeSpan, value); }
         }
 
         #endregion

@@ -6,7 +6,7 @@
         xmlns:Frames="clr-namespace:TimePunch.Metro.Wpf.Frames;assembly=TpMetroWpfLibrary" 
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainWindowViewModel}"
         Commands:ApplicationCommands.RegisterCommandBindings="{Binding RegisteredCommands}"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="550" Width="525">
     <Grid>
 
         <!-- The animation frame is used to have page transitions on page navigation -->
