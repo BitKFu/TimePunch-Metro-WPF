@@ -1,0 +1,21 @@
+﻿<Metro:TransparentWindow x:Class="ProgressBarDemo.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:Metro="clr-namespace:TimePunch.Metro.Wpf.Metro;assembly=TpMetroWpfLibrary" 
+        xmlns:Commands="clr-namespace:TimePunch.Metro.Wpf.Commands;assembly=TpMetroWpfLibrary" 
+        xmlns:Frames="clr-namespace:TimePunch.Metro.Wpf.Frames;assembly=TpMetroWpfLibrary" 
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainWindowViewModel}"
+        Commands:ApplicationCommands.RegisterCommandBindings="{Binding RegisteredCommands}"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+
+        <!-- The animation frame is used to have page transitions on page navigation -->
+        <Frames:AnimationFrame x:Name="ContentFrame"
+                               Source="ExampleView.xaml" 
+                               AnimationMode="Fade"
+                               FadeDuration="0:0:0.050"
+                               FadeOffset="0:0:0.150"/>
+
+            
+    </Grid>
+</Metro:TransparentWindow>
