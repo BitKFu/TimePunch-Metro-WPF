@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordCheckDemo", "Passwo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabControlDemo", "TabControlDemo\TabControlDemo.csproj", "{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnappedWindowDemo", "SnappedWindowDemo\SnappedWindowDemo.csproj", "{C6924CF5-2DD3-42D4-AD07-C117342A70B2}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
@@ -26,7 +28,8 @@ Global
 		SccLocalPath5 = ProgressBarDemo
 		SccLocalPath6 = TypographicDemo
 		SccLocalPath7 = TabControlDemo
-		SccNumberOfProjects = 8
+		SccLocalPath8 = SnappedWindowDemo
+		SccNumberOfProjects = 9
 		SccProjectName1 = ApplicationBarDemo
 		SccProjectName2 = EmptyMetroDemo
 		SccProjectName3 = PickerControlDemo
@@ -34,6 +37,7 @@ Global
 		SccProjectName5 = ProgressBarDemo
 		SccProjectName6 = TypographicDemo
 		SccProjectName7 = TabControlDemo
+		SccProjectName8 = SnappedWindowDemo
 		SccProjectUniqueName1 = ApplicationBarDemo\\ApplicationBarDemo.csproj
 		SccProjectUniqueName2 = EmptyMetroDemo\\EmptyMetroDemo.csproj
 		SccProjectUniqueName3 = PickerControlDemo\\PickerControlDemo.csproj
@@ -41,6 +45,7 @@ Global
 		SccProjectUniqueName5 = ProgressBarDemo\\ProgressBarDemo.csproj
 		SccProjectUniqueName6 = TypographicDemo\\TypographicDemo.csproj
 		SccProjectUniqueName7 = TabControlDemo\\TabControlDemo.csproj
+		SccProjectUniqueName8 = SnappedWindowDemo\\SnappedWindowDemo.csproj
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs34
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,6 +127,16 @@ Global
 		{BB074728-A71B-435E-8B42-1453635E7866}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BB074728-A71B-435E-8B42-1453635E7866}.Release|x86.ActiveCfg = Release|x86
 		{BB074728-A71B-435E-8B42-1453635E7866}.Release|x86.Build.0 = Release|x86
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C6924CF5-2DD3-42D4-AD07-C117342A70B2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
