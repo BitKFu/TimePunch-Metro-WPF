@@ -1,0 +1,50 @@
+﻿<Page x:Class="PasswordCheckDemo.Views.ExampleView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
+      xmlns:Helper="clr-namespace:TimePunch.Metro.Wpf.Helper;assembly=TpMetroWpfLibrary" 
+      xmlns:Error="clr-namespace:TimePunch.Metro.Wpf.Controls.ErrorBar;assembly=TpMetroWpfLibrary" 
+      KeepAlive="True"   
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="ExampleView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="72"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Reset your password"
+                       Margin="{StaticResource WinTouchTargetLargeOverhang}"
+                       Style="{StaticResource WinTextGroupHeaderStyle}"/>
+
+            <TextBlock Text="Password" Style="{StaticResource WinTextNormalStyle}"/>
+            <PasswordBox Helper:PasswordBoxAssistant.BindPassword="True"
+                         Helper:PasswordBoxAssistant.BoundPassword="{Binding Password1, Mode=TwoWay}"
+                         Margin="{StaticResource WinMargin}"
+                         Style="{StaticResource WinPasswordBoxNormalStyle}"/>
+
+            <TextBlock Text="Retype it" Style="{StaticResource WinTextNormalStyle}"/>
+            <PasswordBox Helper:PasswordBoxAssistant.BindPassword="True"
+                         Helper:PasswordBoxAssistant.BoundPassword="{Binding Password2, Mode=TwoWay}"
+                         Margin="{StaticResource WinMargin}"
+                         Style="{StaticResource WinPasswordBoxNormalStyle}"/>
+            
+            <Button Content="Validation" 
+                    Command="{Binding ValidateCommand}"
+                    Style="{StaticResource WinButtonStyle}"/>
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <TextBlock Text="Validation Completed" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Style="{StaticResource WinTextAccentStyle}"
+                       Visibility="{Binding Validated, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Error:DisplayErrorBar Command="{Binding FaultedCommand}" Text="{Binding Error}" />
+        </Grid>
+    </Grid>
+</Page>

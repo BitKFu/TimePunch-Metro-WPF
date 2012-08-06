@@ -993,6 +993,10 @@
 
     </Style>
 
+    <!-- Renamings, because the prior naming was not really intuitiv -->
+    <Style x:Key="WinButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ChromeButtonStyle}"/>
+    <Style x:Key="WinButtonStyleHidden" TargetType="{x:Type Button}" BasedOn="{StaticResource ChromeButtonStyleHidden}"/>
+
     <!-- Special Metro styles -->
     <Style x:Key="TransparentWindowResizeThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="Transparent" />
