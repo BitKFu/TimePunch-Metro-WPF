@@ -2,16 +2,28 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Picker="clr-namespace:TimePunch.Metro.Wpf.Controls.Picker;assembly=TpMetroWpfLibrary" DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Picker="clr-namespace:TimePunch.Metro.Wpf.Controls.Picker;assembly=TpMetroWpfLibrary" 
+      DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ExampleViewModel}"
+      KeepAlive="True"   
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="300"
 	Title="ExampleView">
 
+    <!-- Page.KeepAlive is really important for the Picker Controls, because otherwise they lost their identity and won't function correct -->
+    
     <Grid Margin="{StaticResource WinVerticalMargin}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -34,5 +46,14 @@
         <!-- Date Picker -->
         <TextBlock Grid.Row="2" Text="DatePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
         <Picker:DatePicker Margin="{StaticResource WinMargin}" Grid.Row="3" Value="{Binding SelectedDate, Mode=TwoWay}"/>
+        
+        <!-- Time Picker -->
+        <TextBlock Grid.Row="4" Text="TimePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
+        <Picker:TimePicker Margin="{StaticResource WinMargin}" Grid.Row="5" Value="{Binding SelectedDate, Mode=TwoWay}"/>
+
+        <!-- TimeSpan Picker -->
+        <TextBlock Grid.Row="6" Text="TimeSpanPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
+        <Picker:TimeSpanPicker Margin="{StaticResource WinMargin}" Grid.Row="7" Value="{Binding SelectedTimeSpan, Mode=TwoWay}"/>
+
     </Grid>
 </Page>
