@@ -24,6 +24,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Unique Identifier used to identify the message from ListPickerFullModeViewModel
         /// </summary>
         private readonly Guid datePickerId = Guid.NewGuid();
+        private ChangeAnimationModeRequest oldAnimationMode;
         
         #region Constructor
 
@@ -118,6 +119,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
             Kernel.Instance.EventAggregator.PublishMessage(
                 new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
         }
@@ -130,6 +133,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
             Kernel.Instance.EventAggregator.PublishMessage(
                 new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
         }
@@ -148,6 +153,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // Set the selected Item
             Value = message.Value;
             Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+
+            // switch the animation mode
+            if (oldAnimationMode != null)
+                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
         }
 
         /// <summary>

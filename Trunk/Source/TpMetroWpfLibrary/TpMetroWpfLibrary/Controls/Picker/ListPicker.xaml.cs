@@ -221,6 +221,9 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         private void OnEnterFullModeViaClick(object sender, MouseButtonEventArgs e)
         {
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+
             Kernel.Instance.EventAggregator.PublishMessage(
                 new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId));
         }
@@ -230,6 +233,9 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         private void OnEnterFullModeViaTouch(object sender, TouchEventArgs e)
         {
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+
             Kernel.Instance.EventAggregator.PublishMessage(
                 new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId));
         }
@@ -248,6 +254,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // Set the selected Item
             SelectedItem = message.SelectedItem;
             Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+
+            // switch the animation mode
+            if (oldAnimationMode != null)
+                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
         }
 
 
@@ -277,6 +287,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         #region Implementation of INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private ChangeAnimationModeRequest oldAnimationMode;
 
         #endregion
     }

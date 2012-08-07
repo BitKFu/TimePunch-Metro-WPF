@@ -208,6 +208,7 @@
     <Compile Include="EventAggregation\IHandleMessage.cs" />
     <Compile Include="Events\ApplicationClosedEvent.cs" />
     <Compile Include="Events\ApplicationIsClosingEvent.cs" />
+    <Compile Include="Events\ChangeAnimationModeRequest.cs" />
     <Compile Include="Events\CloseApplicationCommand.cs" />
     <Compile Include="Events\ForceBindingUpdateEvent.cs" />
     <Compile Include="Events\GoBackNavigationRequest.cs" />

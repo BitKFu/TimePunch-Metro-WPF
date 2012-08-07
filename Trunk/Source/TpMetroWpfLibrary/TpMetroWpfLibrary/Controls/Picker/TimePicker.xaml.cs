@@ -130,6 +130,9 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly) 
                 return;
 
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+
             Kernel.Instance.EventAggregator.PublishMessage(
                 new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
         }
@@ -141,6 +144,9 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             if (IsReadonly) 
                 return;
+
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
             Kernel.Instance.EventAggregator.PublishMessage(
                 new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
@@ -160,6 +166,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // Set the selected Item
             Value = message.Value;
             Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+
+            // switch the animation mode
+            if (oldAnimationMode != null)
+                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
         }
 
         /// <summary>
@@ -173,6 +183,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         #region Implementation of INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private object oldAnimationMode;
 
         #endregion
 

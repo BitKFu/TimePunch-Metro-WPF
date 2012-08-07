@@ -13,6 +13,7 @@
         <Frames:AnimationFrame x:Name="ContentFrame"
                                Source="ExampleView.xaml" 
                                AnimationMode="Fade"
+                               NavigationUIVisibility="Hidden"
                                FadeDuration="0:0:0.050"
                                FadeOffset="0:0:0.150"/>
 
