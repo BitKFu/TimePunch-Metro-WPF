@@ -11,6 +11,7 @@
 
         <!-- The animation frame is used to have page transitions on page navigation -->
         <Frames:AnimationFrame x:Name="ContentFrame"
+                               NavigationUIVisibility="Hidden"
                                Source="ExampleView.xaml" 
                                AnimationMode="Fade"
                                FadeDuration="0:0:0.050"

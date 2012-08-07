@@ -414,6 +414,9 @@
                 </DoubleAnimationUsingKeyFrames>
             </Storyboard>
         </Style.Resources>
+        <Setter Property="FontFamily" Value="{StaticResource WinFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource WinFontSizeNormal}"/>
+        <Setter Property="Foreground" Value="{StaticResource WinForegroundBrush}"/>
         <Setter
 			Property="Background"
 			Value="#00000000" />

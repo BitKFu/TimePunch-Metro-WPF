@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using TimePunch.Metro.Wpf.Controls.Picker;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.Metro.Wpf.Frames;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.ViewModel;
 
@@ -28,7 +29,8 @@ namespace TimePunch.Metro.Wpf.Controller
         IHandleMessage<TimePickerFullModeRequest>,
         IHandleMessage<TimeSpanPickerFullModeRequest>,
         IHandleMessage<WindowStateApplicationCommand>,
-        IHandleMessage<ForceBindingUpdateEvent>
+        IHandleMessage<ForceBindingUpdateEvent>,
+        IHandleMessage<ChangeAnimationModeRequest>
     {
         private NavigationMode navigationMode;
 
@@ -342,6 +344,22 @@ namespace TimePunch.Metro.Wpf.Controller
         public bool CanGoBack
         {
             get { return CurrentPage != null && CurrentPage.NavigationService != null ? CurrentPage.NavigationService.CanGoBack : false; } 
+        }
+
+        /// <summary>
+        /// This method will change the animation mode
+        /// </summary>
+        /// <param name="message"></param>
+        public void Handle(ChangeAnimationModeRequest message)
+        {
+            var animationFrame = ContentFrame as AnimationFrame;
+            if (animationFrame == null)
+                return;
+
+            // Switch the Animation Mode
+            AnimationMode oldMode = animationFrame.AnimationMode;
+            animationFrame.AnimationMode = message.AnimationMode;
+            message.AnimationMode = oldMode;
         }
     }
 }
