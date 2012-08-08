@@ -35,7 +35,7 @@ namespace TimePunch.Metro.Wpf.Metro
             DependencyProperty.Register("Resizeable", typeof (bool), typeof (TransparentWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty IsMainWindowProperty =
-            DependencyProperty.Register("IsMainWindow", typeof(bool), typeof(TransparentWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("IsMainWindow", typeof(bool), typeof(TransparentWindow), new PropertyMetadata(true));
 
         public static RoutedUICommand MinimizeCommand = new RoutedUICommand();
         public static RoutedUICommand MaximizeCommand = new RoutedUICommand();

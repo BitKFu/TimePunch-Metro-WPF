@@ -91,6 +91,21 @@ namespace TimePunch.Metro.Wpf.ViewModel
         }
 
         /// <summary>
+        /// Initializes the static members of the ViewModel Base
+        /// </summary>
+        static ViewModelBase()
+        {
+            try
+            {
+                isDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+            }
+            catch (Exception)
+            {
+                isDesignMode = true;
+            }
+        }
+
+        /// <summary>
         /// Initializes this instance.
         /// </summary>
         public abstract void Initialize();
@@ -184,6 +199,11 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Raised when a property on this object gets a new value.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+        
+        /// <summary>
+        /// This field is used to identify if the code is called in DesignMode or in real life ;)
+        /// </summary>
+        private static bool isDesignMode;
 
         /// <summary>
         /// Gets the Property Changed Handler.
@@ -310,14 +330,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         {
             get
             {
-                try
-                {
-                    return DesignerProperties.GetIsInDesignMode(new DependencyObject());
-                }
-                catch (Exception)
-                {
-                    return true;
-                }
+                return isDesignMode;
             }
         }
 
