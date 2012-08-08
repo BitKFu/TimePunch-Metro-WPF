@@ -274,6 +274,7 @@ namespace TimePunch.Metro.Wpf.Metro
         {
             Dragable = false;
             PinStyle = PinStyle.TouchFriendly;
+            Topmost = true;
             Dock(TaskBar.TaskBarEdge.Right, docker.ActiveScreenIndex);
         }
 
