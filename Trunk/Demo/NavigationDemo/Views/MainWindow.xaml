@@ -14,6 +14,7 @@
                                NavigationUIVisibility="Hidden"
                                Source="ExampleView.xaml" 
                                AnimationMode="Fade"
+                               SlideDuration="0:0:0.300"
                                FadeDuration="0:0:0.050"
                                FadeOffset="0:0:0.150"/>
 
