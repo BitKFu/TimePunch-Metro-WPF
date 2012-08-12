@@ -45,15 +45,27 @@
         
         <!-- Date Picker -->
         <TextBlock Grid.Row="2" Text="DatePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
-        <Picker:DatePicker Margin="{StaticResource WinMargin}" Grid.Row="3" Value="{Binding SelectedDate, Mode=TwoWay}"/>
+        <Picker:DatePicker 
+            FullModeHeader="Selected the date"
+            Margin="{StaticResource WinMargin}" 
+            Grid.Row="3" 
+            Value="{Binding SelectedDate, Mode=TwoWay}"/>
         
         <!-- Time Picker -->
         <TextBlock Grid.Row="4" Text="TimePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
-        <Picker:TimePicker Margin="{StaticResource WinMargin}" Grid.Row="5" Value="{Binding SelectedDate, Mode=TwoWay}"/>
+        <Picker:TimePicker 
+            FullModeHeader="Selected the time"
+            Margin="{StaticResource WinMargin}" 
+            Grid.Row="5" 
+            Value="{Binding SelectedDate, Mode=TwoWay}"/>
 
         <!-- TimeSpan Picker -->
         <TextBlock Grid.Row="6" Text="TimeSpanPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
-        <Picker:TimeSpanPicker Margin="{StaticResource WinMargin}" Grid.Row="7" Value="{Binding SelectedTimeSpan, Mode=TwoWay}"/>
+        <Picker:TimeSpanPicker 
+            FullModeHeader="Selected the timespan"
+            Margin="{StaticResource WinMargin}" 
+            Grid.Row="7" 
+            Value="{Binding SelectedTimeSpan, Mode=TwoWay}"/>
 
     </Grid>
 </Page>
