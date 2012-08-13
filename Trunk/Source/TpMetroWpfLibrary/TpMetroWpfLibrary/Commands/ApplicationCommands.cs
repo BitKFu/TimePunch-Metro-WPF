@@ -7,6 +7,11 @@ using System.Windows.Input;
 
 namespace TimePunch.Metro.Wpf.Commands
 {
+    /// <summary>
+    /// The ApplicationCommands Helper enables the binding of ApplicationCommands to the ViewModel.
+    /// Inventor of this class was Micah Martin. Kudos to him.
+    /// If you want to know more. Visit his webpage: http://codingcontext.wordpress.com/2008/12/10/commandbindings-in-mvvm/
+    /// </summary>
     public class ApplicationCommands
     {
         public static DependencyProperty RegisterCommandBindingsProperty = DependencyProperty.RegisterAttached("RegisterCommandBindings", typeof(CommandBindingCollection), typeof(ApplicationCommands), new PropertyMetadata(null, OnRegisterCommandBindingChanged));

@@ -54,7 +54,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// 	<c>true</c> if this instance can execute Close command; otherwise, <c>false</c>.
         /// </returns>
         /// <param name="sender">The sender.</param>
-        public void CanExecuteCloseCommand(object sender, CanExecuteRoutedEventArgs e)
+        public virtual void CanExecuteCloseCommand(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
@@ -80,7 +80,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </returns>
         /// <param name="sender">The sender.</param>
         /// <param name="eventArgs">Event arguments</param>
-        public void CanExecuteMinimizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
+        public virtual void CanExecuteMinimizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
             eventArgs.CanExecute = true;
         }
@@ -107,7 +107,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </returns>
         /// <param name="sender">The sender.</param>
         /// <param name="eventArgs">Event arguments</param>
-        public void CanExecuteMaximizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
+        public virtual void CanExecuteMaximizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
             eventArgs.CanExecute = WindowState != WindowState.Maximized;
         }
@@ -134,7 +134,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </returns>
         /// <param name="sender">The sender.</param>
         /// <param name="eventArgs">Event arguments</param>
-        public void CanExecuteNormalizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
+        public virtual void CanExecuteNormalizeCommand(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
             eventArgs.CanExecute = WindowState == WindowState.Maximized;
         }
@@ -170,7 +170,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Store the current Window State
         /// </summary>
         /// <param name="message">Window State Message</param>
-        public void Handle(WindowStateApplicationCommand message)
+        public virtual void Handle(WindowStateApplicationCommand message)
         {
             WindowState = message.WindowState;
         }
