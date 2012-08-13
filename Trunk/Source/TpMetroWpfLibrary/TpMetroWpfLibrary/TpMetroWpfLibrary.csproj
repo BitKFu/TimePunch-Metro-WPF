@@ -135,10 +135,6 @@
     <Compile Include="Controls\AppBar\ApplicationBarIcon.cs" />
     <Compile Include="Controls\AppBar\ApplicationBarMenuItem.cs" />
     <Compile Include="Controls\Buttons\DataBoundRadioButton.cs" />
-    <Compile Include="Controls\CheckedList\CheckableList.cs" />
-    <Compile Include="Controls\CheckedList\CheckableListChangeEvent.cs" />
-    <Compile Include="Controls\CheckedList\CheckableListItem.cs" />
-    <Compile Include="Controls\CheckedList\ICheckableList.cs" />
     <Compile Include="Controls\ErrorBar\DisplayErrorBar.xaml.cs">
       <DependentUpon>DisplayErrorBar.xaml</DependentUpon>
     </Compile>
