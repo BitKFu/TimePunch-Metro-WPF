@@ -19,11 +19,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnappedWindowDemo", "Snappe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavigationDemo", "NavigationDemo\NavigationDemo.csproj", "{DF5755AD-19EA-4C23-8FEA-D4BD4C2E34A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckBoxDemo", "CheckBoxDemo\CheckBoxDemo.csproj", "{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccLocalPath0 = .
 		SccLocalPath1 = ApplicationBarDemo
+		SccLocalPath10 = CheckBoxDemo
 		SccLocalPath2 = EmptyMetroDemo
 		SccLocalPath3 = PickerControlDemo
 		SccLocalPath4 = PasswordCheckDemo
@@ -32,8 +35,9 @@ Global
 		SccLocalPath7 = TabControlDemo
 		SccLocalPath8 = SnappedWindowDemo
 		SccLocalPath9 = NavigationDemo
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 11
 		SccProjectName1 = ApplicationBarDemo
+		SccProjectName10 = CheckBoxDemo
 		SccProjectName2 = EmptyMetroDemo
 		SccProjectName3 = PickerControlDemo
 		SccProjectName4 = PasswordCheckDemo
@@ -43,6 +47,7 @@ Global
 		SccProjectName8 = SnappedWindowDemo
 		SccProjectName9 = NavigationDemo
 		SccProjectUniqueName1 = ApplicationBarDemo\\ApplicationBarDemo.csproj
+		SccProjectUniqueName10 = CheckBoxDemo\\CheckBoxDemo.csproj
 		SccProjectUniqueName2 = EmptyMetroDemo\\EmptyMetroDemo.csproj
 		SccProjectUniqueName3 = PickerControlDemo\\PickerControlDemo.csproj
 		SccProjectUniqueName4 = PasswordCheckDemo\\PasswordCheckDemo.csproj
@@ -92,6 +97,16 @@ Global
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.ActiveCfg = Release|x86
 		{1F3CAE5E-573C-43F5-9B28-5A144FCF6F6B}.Release|x86.Build.0 = Release|x86
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{30EFD64B-BCED-4DCC-B025-5EFB8FB861FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A2D1CAB-36B4-42F3-9CE8-25B5CA8F64E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
