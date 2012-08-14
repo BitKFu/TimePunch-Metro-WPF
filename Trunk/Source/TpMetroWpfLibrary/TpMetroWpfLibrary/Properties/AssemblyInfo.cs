@@ -7,11 +7,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitleAttribute("TpMetroWpfLibrary")]
-[assembly: AssemblyDescriptionAttribute("The TpMetroWpfLibrary executable is part of the product TimePunch.")]
+[assembly: AssemblyDescriptionAttribute("The TimePunch Metro WPF Library is licensed under the MS-Public License")]
 [assembly: AssemblyCompanyAttribute("TimePunch KG")]
-[assembly: AssemblyProductAttribute("TimePunch PRO")]
+[assembly: AssemblyProductAttribute("TimePunch Metro WPF Library")]
 [assembly: AssemblyCopyrightAttribute("(c) by TimePunch KG")]
-[assembly: AssemblyVersionAttribute("1.0.0.0")]
+[assembly: AssemblyVersionAttribute("1.0.0.1")]
 [assembly: AssemblyDelaySignAttribute(false)]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisibleAttribute(false)]
