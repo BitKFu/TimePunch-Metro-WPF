@@ -51,7 +51,12 @@ namespace TimePunch.Metro.Wpf.Metro
         /// The display won't disappear, when the mouse is moved out, but disappears
         /// when the user clicks
         /// </summary>
-        TouchFriendly
+        TouchFriendly,
+
+        /// <summary>
+        /// The Window will not be opened automatically by any event, but cloes if the user clis the screen
+        /// </summary>
+        Manual
     }
 
     /// <summary>
@@ -248,6 +253,8 @@ namespace TimePunch.Metro.Wpf.Metro
             {
                 case PinStyle.Undefined:
                     break;
+                case PinStyle.Manual:
+                    break;
                 case PinStyle.AlwaysOn:
                     break;
                 case PinStyle.AlwaysOff:
@@ -401,6 +408,9 @@ namespace TimePunch.Metro.Wpf.Metro
                         case PinStyle.AlwaysOff:
                             HookManager.MouseClick -= OnMouseClickOnScreen;
                             break;
+                        case PinStyle.Manual:
+                            HookManager.MouseClick -= OnMouseClickOnScreen;
+                            break;
                         case PinStyle.Fixed:
                             break;
                         case PinStyle.TouchFriendly:
@@ -423,6 +433,11 @@ namespace TimePunch.Metro.Wpf.Metro
                             HookManager.MouseMove += OnMouseMoveOnScreen;
                             break;
                         case PinStyle.AlwaysOff:
+                            HookManager.MouseClick += OnMouseClickOnScreen;
+                            AdjustSlidingBehaviour(Width, Height, DockedTo);
+                            BeginAnimation(fadeIn);
+                            break;
+                        case PinStyle.Manual:
                             HookManager.MouseClick += OnMouseClickOnScreen;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             BeginAnimation(fadeIn);
@@ -638,6 +653,7 @@ namespace TimePunch.Metro.Wpf.Metro
 
                     case PinStyle.AlwaysOff:
                     case PinStyle.TouchFriendly:
+                    case PinStyle.Manual:
                         if ((sliding = slideOut) != null && sliding.GetCurrentState() == ClockState.Active)
                             sliding.Stop();
 
@@ -726,6 +742,7 @@ namespace TimePunch.Metro.Wpf.Metro
             {
                 case PinStyle.Undefined:
                 case PinStyle.TouchFriendly:
+                case PinStyle.Manual:
                     break;
 
                 case PinStyle.AlwaysOn:
@@ -799,7 +816,7 @@ namespace TimePunch.Metro.Wpf.Metro
             var formLocation = new System.Drawing.Point((int)screenResolution.ConvertXDpi(e.Location.X), (int)screenResolution.ConvertYDpi(e.Location.Y));
 
             // Only interessting for Touch Friendly)
-            if (PinStyle != PinStyle.TouchFriendly && PinStyle != PinStyle.AlwaysOff)
+            if (PinStyle != PinStyle.TouchFriendly && PinStyle != PinStyle.AlwaysOff && PinStyle != PinStyle.Manual)
                 return;
 
             // if the screen is not hidden, than everything is ok
@@ -855,6 +872,7 @@ namespace TimePunch.Metro.Wpf.Metro
             switch (PinStyle)
             {
                 case PinStyle.Undefined:
+                case PinStyle.Manual:
                     break;
 
                 case PinStyle.AlwaysOn:
@@ -900,6 +918,7 @@ namespace TimePunch.Metro.Wpf.Metro
             switch (PinStyle)
             {
                 case PinStyle.Undefined:
+                case PinStyle.Manual:
                     break;
                 case PinStyle.AlwaysOn:
                     break;
@@ -928,6 +947,7 @@ namespace TimePunch.Metro.Wpf.Metro
             switch (PinStyle)
             {
                 case PinStyle.Undefined:
+                case PinStyle.Manual:
                     break;
 
                 case PinStyle.AlwaysOn:
