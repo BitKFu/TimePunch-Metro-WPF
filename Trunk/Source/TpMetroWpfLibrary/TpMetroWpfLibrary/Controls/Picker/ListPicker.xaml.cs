@@ -168,7 +168,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             }
 
             // Return the evaluted property content
-            DisplayValue = info.GetValue(SelectedItem, null).ToString();
+            var value = info.GetValue(SelectedItem, null);
+            DisplayValue = value == null ? string.Empty : value.ToString();
         }
 
         /// <summary>
