@@ -349,7 +349,11 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <typeparam name="T">the type of the property</typeparam>
         protected T GetPropertyValue<T>(string propertyName)
         {
-            return PropertyValues.ContainsKey(propertyName) ? (T)PropertyValues[propertyName] : default(T);
+            object result;
+            if (PropertyValues.TryGetValue(propertyName, out result))
+                return (T) result;
+
+            return default(T);
         }
 
         /// <summary>
