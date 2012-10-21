@@ -21,12 +21,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public TimePickerFullModeViewModel()
         {
             if (DateTimeFormatInfo.CurrentInfo != null)
-                IsDesignatorVisible = !string.IsNullOrEmpty(DateTimeFormatInfo.CurrentInfo.AMDesignator);
+                SetPropertyValue(() => IsDesignatorVisible,  !string.IsNullOrEmpty(DateTimeFormatInfo.CurrentInfo.AMDesignator));
 
             AllDesignators = new[] { new DesignatorInfo(0), new DesignatorInfo(1)};
-            AllHours = IsDesignatorVisible 
-                ? Enumerable.Range(1, 12).Concat(Enumerable.Range(1, 12)).Select(v => new HourInfo(v)).ToArray() 
-                : Enumerable.Range(0, 24).Select(v => new HourInfo(v)).ToArray();
+            AllHours = InitializeHours();
             AllMinutes = Enumerable.Range(0, 60).Select(v => new MinuteInfo(v)).ToArray();
         }
 
@@ -54,7 +52,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             FullModeHeader = request.FullModeHeader;
 
             SetPropertyValue(() => Value, request.Value);
-            SetPropertyValue(() => SelectedHour, AllHours[request.Value.Hour - (IsDesignatorVisible ? 1 : 0)]);
+            SetPropertyValue(() => SelectedHour, AllHours[request.Value.Hour]);
             SetPropertyValue(() => SelectedMinute, AllMinutes[request.Value.Minute]);
             SetPropertyValue(() => SelectedDesignator, AllDesignators[request.Value.Hour / 12]);
 
@@ -91,7 +89,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public bool IsDesignatorVisible
         {
             get { return GetPropertyValue(() => IsDesignatorVisible); }
-            set { SetPropertyValue(() => IsDesignatorVisible, value); }
+            set
+            {
+                if (SetPropertyValue(() => IsDesignatorVisible, value))
+                    AllHours = InitializeHours();
+            }
         }
 
         /// <summary>
@@ -240,16 +242,54 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// This method updates the Time Value
         /// </summary>
-        private void UpdateTimeValue()
+        internal void UpdateTimeValue()
         {
             if (SelectedHour == null || SelectedMinute == null || SelectedDesignator == null)
                 return;
 
             var currentHour = SelectedHour.Hour;
             if (IsDesignatorVisible)
-                currentHour = (currentHour%12) + (SelectedDesignator.DesignatorNumber == 1 ? 12 : 0);
+                currentHour = (currentHour % 12) + (SelectedDesignator.DesignatorNumber == 1 ? 12 : 0);
 
             SetPropertyValue(() => Value, new DateTime(Value.Year, Value.Month, Value.Day, currentHour, SelectedMinute.Minute, Value.Second, Value.Kind));
+        }
+
+        /// <summary>
+        /// Create the Hour Information
+        /// </summary>
+        /// <returns></returns>
+        private HourInfo[] InitializeHours()
+        {
+            if (!IsDesignatorVisible)
+                return Enumerable.Range(0, 24).Select(v => new HourInfo(v)).ToArray();
+
+            return new []
+                       {
+                        new HourInfo(12),    
+                        new HourInfo(1),    
+                        new HourInfo(2),    
+                        new HourInfo(3),    
+                        new HourInfo(4),    
+                        new HourInfo(5),    
+                        new HourInfo(6),    
+                        new HourInfo(7),    
+                        new HourInfo(8),    
+                        new HourInfo(9),    
+                        new HourInfo(10),    
+                        new HourInfo(11),    
+                        new HourInfo(12),    
+                        new HourInfo(1),    
+                        new HourInfo(2),    
+                        new HourInfo(3),    
+                        new HourInfo(4),    
+                        new HourInfo(5),    
+                        new HourInfo(6),    
+                        new HourInfo(7),    
+                        new HourInfo(8),    
+                        new HourInfo(9),    
+                        new HourInfo(10),    
+                        new HourInfo(11),    
+                       };
         }
 
         #endregion
