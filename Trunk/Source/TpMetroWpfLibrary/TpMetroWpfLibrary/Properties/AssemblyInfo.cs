@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -34,3 +35,5 @@ using System.Windows;
     //(used if a resource is not found in the page, 
     // app, or any theme specific resource dictionaries)
 )]
+
+[assembly: InternalsVisibleTo("TpMetroWpfLibrary.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010085efed5c96017ac612e0dac0046ff675bdce8301f0d44e32b6bfecc854fa93874f4718b2b6b195eda2ae15a449c1235d9e70a73c331c9012a990d004430628f2f765d1d4bf769054743737ce5740876e0175d45c2ab4158e6cb618aa753c64c3bebcccea391e89bd96a100f9b72ede1648c21479a694d8783cd881ba5cf293b6")]
