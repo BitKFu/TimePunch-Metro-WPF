@@ -137,7 +137,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Creates a command which is automatically disabled when the IsLoading indicator is set to true and
         /// enabled or disabled automatically based on the required permissions
         /// </summary>
-        protected void RegisterApplicationCommand(
+        protected virtual void RegisterApplicationCommand(
             ICommand commandToRegister, 
             Action<Object,ExecutedRoutedEventArgs> execute, 
             Action<Object,CanExecuteRoutedEventArgs> canExecute, 
@@ -158,7 +158,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="execute">the command action</param>
         /// <param name="canExecute">the predicate to check, if the command can be executed</param>
         /// <param name="disableOnLoading">a value indicating whether the command should be disabled when the <see cref="IsLoading"/> indicator is set to true</param>
-        protected ICommand RegisterCommand(
+        protected virtual ICommand RegisterCommand(
             Action<Object,ExecutedRoutedEventArgs> execute, 
             Action<Object,CanExecuteRoutedEventArgs> canExecute, 
             bool disableOnLoading)
@@ -221,7 +221,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Gets the event aggregator of the application.
         /// </summary>
-        protected IEventAggregator EventAggregator
+        protected virtual IEventAggregator EventAggregator
         {
             get { return Kernel.Instance.EventAggregator; }
         }
@@ -532,7 +532,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Performs a specific action on the UI thread.
         /// </summary>
         /// <param name="action">the action to execute</param>
-        protected void Dispatch(Action action)
+        protected virtual void Dispatch(Action action)
         {
             var application = Application.Current;
 
@@ -550,7 +550,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Performs an delayed action on the UI thread
         /// </summary>
         /// <param name="action">the action to execute</param>
-        protected void DispatchDelayed(Action action)
+        protected virtual void DispatchDelayed(Action action)
         {
             Application.Current.Dispatcher.BeginInvoke(action); 
         }
@@ -561,7 +561,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="action">the action to execute</param>
         /// <param name="delay">a delay in milliseconds to wait before the action is executed (pass a value
         /// greate or equal to zero to execute the action without any delay)</param>
-        protected void ExecuteAsync(Action action, int delay)
+        protected virtual void ExecuteAsync(Action action, int delay)
         {
             ExecuteAsync<object>(param => action(), null, delay);
         }
@@ -574,7 +574,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="parameter">the parameter to pass to the action</param>
         /// <param name="delay">a delay in milliseconds to wait before the action is executed (pass a value
         /// greate or equal to zero to execute the action without any delay)</param>
-        protected void ExecuteAsync<T>(Action<T> action, T parameter, int delay)
+        protected virtual void ExecuteAsync<T>(Action<T> action, T parameter, int delay)
         {
             // start new thread from the thread pool and pass it the action and the parameter
             ThreadPool.QueueUserWorkItem(
