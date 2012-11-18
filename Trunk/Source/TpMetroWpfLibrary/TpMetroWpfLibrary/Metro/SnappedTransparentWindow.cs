@@ -165,7 +165,6 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // Reduce Opacity Animation
             reduceOpacity = new Storyboard();
-            reduceOpacity.Completed += SlideInCompleted;
 
             var animation = new DoubleAnimation();
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -176,7 +175,6 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // FadeIn Animation
             fadeIn = new Storyboard();
-            fadeIn.Completed += SlideInCompleted;
 
             animation = new DoubleAnimation { To = 1.0 };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -186,7 +184,6 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // FadeOut Animation
             fadeOut = new Storyboard();
-            fadeOut.Completed += SlideOutCompleted;
 
             animation = new DoubleAnimation { To = 0.0 };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -196,7 +193,6 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // SlideOut Animation
             slideOut = new Storyboard();
-            slideOut.Completed += SlideOutCompleted;
 
             animation = new DoubleAnimation {EasingFunction = new ExponentialEase {EasingMode = EasingMode.EaseIn}};
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -214,7 +210,6 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // SlideIn Animation
             slideIn = new Storyboard();
-            slideIn.Completed += SlideInCompleted;
 
             animation = new DoubleAnimation { To = 0.0, EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut } };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -289,10 +284,23 @@ namespace TimePunch.Metro.Wpf.Metro
 
         #region Private Properties
 
+        private DateTime lastAnimation = DateTime.Now;
+
         /// <summary>
         /// Gets or sets a value indicating whether an animation has been started
         /// </summary>
-        private bool IsAnimating { get; set; }
+        private bool IsAnimating
+        {
+            get { return (DateTime.Now - lastAnimation) < AnimationDuration.TimeSpan; }
+        }
+
+        /// <summary>
+        /// Resets the IsAnimating value
+        /// </summary>
+        private void ResetIsAnimating()
+        {
+            lastAnimation = DateTime.Now;
+        }
 
         /// <summary>
         /// Gets or sets the sliding height
@@ -404,6 +412,7 @@ namespace TimePunch.Metro.Wpf.Metro
                             HookManager.KeyDown -= OnKeyPressed;
                             HookManager.KeyUp -= OnKeyUp;
                             HookManager.MouseMove -= OnMouseMoveOnScreen;
+                            isMagicKeyPressed = false;
                             break;
                         case PinStyle.AlwaysOff:
                             HookManager.MouseClick -= OnMouseClickOnScreen;
@@ -584,8 +593,14 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <param name="storyboard">Name of the storyboard</param>
         private void BeginAnimation(Storyboard storyboard)
         {
-            IsAnimating = true;
+            ResetIsAnimating();
             storyboard.Begin();
+
+            if (object.ReferenceEquals(storyboard, fadeIn) || object.ReferenceEquals(storyboard, slideIn) || object.ReferenceEquals(storyboard, reduceOpacity))
+                Hidden = false;
+
+            if (object.ReferenceEquals(storyboard, fadeOut) || object.ReferenceEquals(storyboard, slideOut))
+                Hidden = true;
         }
 
         /// <summary>
@@ -712,7 +727,6 @@ namespace TimePunch.Metro.Wpf.Metro
                 sliding.Stop();
 
             BeginAnimation(slideIn);
-            Hidden = false;
         }
 
         /// <summary>
@@ -728,7 +742,6 @@ namespace TimePunch.Metro.Wpf.Metro
                 sliding.Stop();
 
             BeginAnimation(slideOut);
-            Hidden = true;
         }
 
         /// <summary>
@@ -762,28 +775,6 @@ namespace TimePunch.Metro.Wpf.Metro
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        /// <summary>
-        /// Called when the SlideOut Animation has been completed
-        /// </summary>
-        /// <param name="sender">Sending object</param>
-        /// <param name="e">Event arguments</param>
-        private void SlideOutCompleted(object sender, EventArgs e)
-        {
-            Hidden = true;
-            IsAnimating = false;
-        }
-
-        /// <summary>
-        /// Called when the SlideIn Animation has been completed
-        /// </summary>
-        /// <param name="sender">Sening object</param>
-        /// <param name="e">Event arguments</param>
-        private void SlideInCompleted(object sender, EventArgs e)
-        {
-            Hidden = false;
-            IsAnimating = false;
         }
 
         /// <summary>
@@ -831,7 +822,7 @@ namespace TimePunch.Metro.Wpf.Metro
             // Check if the user pressed the magic key
             Storyboard sliding;
             latencyTimer.Stop();
-            if (IsMagicKeyPressed) 
+            if (IsMagicKeyPressed && PinStyle == PinStyle.AlwaysOn) 
                 return;
 
             // Stop the current animation and hide the window

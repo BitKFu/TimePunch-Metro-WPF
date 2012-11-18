@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace TimePunch.Metro.Wpf.Hooks {
@@ -14,7 +15,8 @@ namespace TimePunch.Metro.Wpf.Hooks {
         /// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/rectangl_0tiq.asp
         /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
-        private struct Point {
+        public struct Point
+        {
             /// <summary>
             /// Specifies the X-coordinate of the point. 
             /// </summary>
@@ -29,7 +31,7 @@ namespace TimePunch.Metro.Wpf.Hooks {
         /// The MSLLHOOKSTRUCT structure contains information about a low-level keyboard input event. 
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct MouseLLHookStruct {
+        public struct MouseLLHookStruct {
             /// <summary>
             /// Specifies a Point structure that contains the X- and Y-coordinates of the cursor, in screen coordinates. 
             /// </summary>
@@ -47,7 +49,7 @@ namespace TimePunch.Metro.Wpf.Hooks {
             ///XBUTTON2
             ///The second X button was pressed or released.
             /// </summary>
-            public int MouseData;
+            public uint MouseData;
             /// <summary>
             /// Specifies the event-injected flag. An application can use the following value to test the mouse Flags. Value Purpose 
             ///LLMHF_INJECTED Test the event-injected flag.  
@@ -56,15 +58,15 @@ namespace TimePunch.Metro.Wpf.Hooks {
             ///1-15
             ///Reserved.
             /// </summary>
-            public int Flags;
+            public uint Flags;
             /// <summary>
             /// Specifies the Time stamp for this message.
             /// </summary>
-            public int Time;
+            public uint Time;
             /// <summary>
             /// Specifies extra information associated with the message. 
             /// </summary>
-            public int ExtraInfo;
+            public IntPtr ExtraInfo;
         }
 
         /// <summary>

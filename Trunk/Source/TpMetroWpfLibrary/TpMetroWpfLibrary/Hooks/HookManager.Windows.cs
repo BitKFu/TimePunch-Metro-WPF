@@ -154,10 +154,10 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// </remarks>
         [DllImport("user32.dll", CharSet = CharSet.Auto,
             CallingConvention = CallingConvention.StdCall)]
-        private static extern int CallNextHookEx(
-            int idHook,
+        private static extern IntPtr CallNextHookEx(
+            IntPtr idHook,
             int nCode,
-            int wParam,
+            IntPtr wParam,
             IntPtr lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
@@ -195,11 +195,11 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// </remarks>
         [DllImport("user32.dll", CharSet = CharSet.Auto,
             CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        private static extern int SetWindowsHookEx(
+        private static extern IntPtr SetWindowsHookEx(
             int idHook,
             HookProc lpfn,
             IntPtr hMod,
-            int dwThreadId);
+            uint dwThreadId);
 
         /// <summary>
         /// The UnhookWindowsHookEx function removes a hook procedure installed in a hook chain by the SetWindowsHookEx function. 
@@ -216,7 +216,8 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// </remarks>
         [DllImport("user32.dll", CharSet = CharSet.Auto,
             CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        private static extern int UnhookWindowsHookEx(int idHook);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr idHook);
 
         /// <summary>
         /// The GetDoubleClickTime function retrieves the current double-click time for the mouse. A double-click is a series of two clicks of the 
