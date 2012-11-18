@@ -42,7 +42,7 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// <remarks>
         /// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/hooks/hookreference/hookfunctions/callwndproc.asp
         /// </remarks>
-        private delegate int HookProc(int nCode, int wParam, IntPtr lParam);
+        private delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         //##############################################################################
         #region Mouse hook processing
@@ -58,7 +58,7 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// <summary>
         /// Stores the handle to the mouse hook procedure.
         /// </summary>
-        private static int s_MouseHookHandle;
+        private static IntPtr s_MouseHookHandle;
 
         private static int m_OldX;
         private static int m_OldY;
@@ -87,7 +87,7 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// hooks will not receive hook notifications and may behave incorrectly as a result. If the hook 
         /// procedure does not call CallNextHookEx, the return value should be zero. 
         /// </returns>
-        private static int MouseHookProc(int nCode, int wParam, IntPtr lParam)
+        private static IntPtr MouseHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
             {
@@ -101,7 +101,7 @@ namespace TimePunch.Metro.Wpf.Hooks
                 bool mouseDown = false;
                 bool mouseUp = false;
 
-                switch (wParam)
+                switch ((int)wParam)
                 {
                     case WM_LBUTTONDOWN:
                         mouseDown = true;
@@ -207,7 +207,7 @@ namespace TimePunch.Metro.Wpf.Hooks
 
                 if (e.Handled)
                 {
-                    return -1;
+                    return new IntPtr(-1);
                 }
             }
 
@@ -218,22 +218,19 @@ namespace TimePunch.Metro.Wpf.Hooks
         private static void EnsureSubscribedToGlobalMouseEvents()
         {
             // install Mouse hook only if it is not installed and must be installed
-            if (s_MouseHookHandle == 0)
+            if (s_MouseHookHandle == IntPtr.Zero)
             {
-                using (Process curProcess = Process.GetCurrentProcess())
-                using (ProcessModule curModule = curProcess.MainModule)
-                {
                     //See comment of this field. To avoid GC to clean it up.
                     s_MouseDelegate = MouseHookProc;
                     //install hook
                     s_MouseHookHandle = SetWindowsHookEx(
                         WH_MOUSE_LL,
                         s_MouseDelegate,
-                        GetModuleHandle(curModule.ModuleName),
+                        GetModuleHandle("user32"),
                         0);
 
                     //If SetWindowsHookEx fails.
-                    if (s_MouseHookHandle == 0)
+                    if (s_MouseHookHandle == IntPtr.Zero)
                     {
                         //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
                         int errorCode = Marshal.GetLastWin32Error();
@@ -244,7 +241,6 @@ namespace TimePunch.Metro.Wpf.Hooks
                         throw new Win32Exception(errorCode);
 #endif
                     }
-                }
             }
         }
 
@@ -265,17 +261,17 @@ namespace TimePunch.Metro.Wpf.Hooks
 
         private static void ForceUnsunscribeFromGlobalMouseEvents()
         {
-            if (s_MouseHookHandle != 0)
+            if (s_MouseHookHandle != IntPtr.Zero)
             {
                 //uninstall hook
-                int result = UnhookWindowsHookEx(s_MouseHookHandle);
+                bool result = UnhookWindowsHookEx(s_MouseHookHandle);
                 //reset invalid handle
-                s_MouseHookHandle = 0;
+                s_MouseHookHandle = IntPtr.Zero;
                 //Free up for GC
                 s_MouseDelegate = null;
 
                 //if failed and exception must be thrown
-                if (result == 0)
+                if (result == false)
                 {
                     //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
                     int errorCode = Marshal.GetLastWin32Error();
@@ -304,7 +300,7 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// <summary>
         /// Stores the handle to the Keyboard hook procedure.
         /// </summary>
-        private static int s_KeyboardHookHandle;
+        private static IntPtr s_KeyboardHookHandle;
 
         /// <summary>
         /// A callback function which will be called every Time a keyboard activity detected.
@@ -330,17 +326,19 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// hooks will not receive hook notifications and may behave incorrectly as a result. If the hook 
         /// procedure does not call CallNextHookEx, the return value should be zero. 
         /// </returns>
-        private static int KeyboardHookProc(int nCode, Int32 wParam, IntPtr lParam)
+        private static IntPtr KeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
             //indicates if any of underlaing events set e.Handled flag
             bool handled = false;
 
             if (nCode >= 0)
             {
+                var wParamInt32 = wParam.ToInt32();
+
                 //read structure KeyboardHookStruct at lParam
                 KeyboardHookStruct MyKeyboardHookStruct = (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 //raise KeyDown
-                if (s_KeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))
+                if (s_KeyDown != null && (wParamInt32 == WM_KEYDOWN || wParamInt32 == WM_SYSKEYDOWN))
                 {
                     Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
                     KeyEventArgs e = new KeyEventArgs(keyData);
@@ -349,7 +347,7 @@ namespace TimePunch.Metro.Wpf.Hooks
                 }
 
                 // raise KeyPress
-                if (s_KeyPress != null && wParam == WM_KEYDOWN)
+                if (s_KeyPress != null && wParamInt32 == WM_KEYDOWN)
                 {
                     bool isDownShift = ((GetKeyState(VK_SHIFT) & 0x80) == 0x80 ? true : false);
                     bool isDownCapslock = (GetKeyState(VK_CAPITAL) != 0 ? true : false);
@@ -372,7 +370,7 @@ namespace TimePunch.Metro.Wpf.Hooks
                 }
 
                 // raise KeyUp
-                if (s_KeyUp != null && (wParam == WM_KEYUP || wParam == WM_SYSKEYUP))
+                if (s_KeyUp != null && (wParamInt32 == WM_KEYUP || wParamInt32 == WM_SYSKEYUP))
                 {
                     Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
                     KeyEventArgs e = new KeyEventArgs(keyData);
@@ -384,7 +382,7 @@ namespace TimePunch.Metro.Wpf.Hooks
 
             //if event handled in application do not handoff to other listeners
             if (handled)
-                return -1;
+                return new IntPtr(-1);
 
             //forward to other application
             return CallNextHookEx(s_KeyboardHookHandle, nCode, wParam, lParam);
@@ -393,32 +391,28 @@ namespace TimePunch.Metro.Wpf.Hooks
         private static void EnsureSubscribedToGlobalKeyboardEvents()
         {
             // install Keyboard hook only if it is not installed and must be installed
-            if (s_KeyboardHookHandle == 0)
+            if (s_KeyboardHookHandle == IntPtr.Zero)
             {
-                using (Process curProcess = Process.GetCurrentProcess())
-                using (ProcessModule curModule = curProcess.MainModule)
-                {
-                    //See comment of this field. To avoid GC to clean it up.
-                    s_KeyboardDelegate = KeyboardHookProc;
-                    //install hook
-                    s_KeyboardHookHandle = SetWindowsHookEx(
-                        WH_KEYBOARD_LL,
-                        s_KeyboardDelegate,
-                        GetModuleHandle(curModule.ModuleName),
-                        0);
+                //See comment of this field. To avoid GC to clean it up.
+                s_KeyboardDelegate = KeyboardHookProc;
+                //install hook
+                s_KeyboardHookHandle = SetWindowsHookEx(
+                    WH_KEYBOARD_LL,
+                    s_KeyboardDelegate,
+                    GetModuleHandle("user32"),
+                    0);
                     
-                    //If SetWindowsHookEx fails.
-                    if (s_KeyboardHookHandle == 0)
-                    {
-                        //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
-                        int errorCode = Marshal.GetLastWin32Error();
-                        //do cleanup
+                //If SetWindowsHookEx fails.
+                if (s_KeyboardHookHandle == IntPtr.Zero)
+                {
+                    //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+                    int errorCode = Marshal.GetLastWin32Error();
+                    //do cleanup
 
 #if DEBUG       // Surpress Exceptions in Production
-                        //Initializes and throws a new instance of the Win32Exception class with the specified error. 
-                        throw new Win32Exception(errorCode);
+                    //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+                    throw new Win32Exception(errorCode);
 #endif
-                    }
                 }
             }
         }
@@ -436,17 +430,17 @@ namespace TimePunch.Metro.Wpf.Hooks
 
         private static void ForceUnsunscribeFromGlobalKeyboardEvents()
         {
-            if (s_KeyboardHookHandle != 0)
+            if (s_KeyboardHookHandle != IntPtr.Zero)
             {
                 //uninstall hook
-                int result = UnhookWindowsHookEx(s_KeyboardHookHandle);
+                bool result = UnhookWindowsHookEx(s_KeyboardHookHandle);
                 //reset invalid handle
-                s_KeyboardHookHandle = 0;
+                s_KeyboardHookHandle = IntPtr.Zero;
                 //Free up for GC
                 s_KeyboardDelegate = null;
                 
                 //if failed and exception must be thrown
-                if (result == 0)
+                if (result == false)
                 {
                     //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
                     int errorCode = Marshal.GetLastWin32Error();
