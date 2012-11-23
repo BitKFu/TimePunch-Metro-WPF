@@ -289,7 +289,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <summary>
         /// Gets or sets a value indicating whether an animation has been started
         /// </summary>
-        private bool IsAnimating
+        protected bool IsAnimating
         {
             get { return (DateTime.Now - lastAnimation) < AnimationDuration.TimeSpan; }
         }
