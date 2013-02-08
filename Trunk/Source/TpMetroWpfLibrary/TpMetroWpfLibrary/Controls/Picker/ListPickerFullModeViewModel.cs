@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Events;
@@ -41,6 +42,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             FullModeHeader = request.FullModeHeader;
             SelectedItem = request.SelectedItem;
             ListPickerId = request.ListPickerId;
+
+            var firstOrDefault = request.ItemsSource.Cast<object>().FirstOrDefault();
+            UseFilterMethod = (firstOrDefault != null) && typeof(IItemFilter).IsAssignableFrom(firstOrDefault.GetType());
+
+            AddPropertyChangedNotification(() => FilterText, () => FilteredItemSource);
+            OnPropertyChanged(() => FilteredItemSource);
         }
 
         /// <summary>
@@ -59,6 +66,19 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             get { return GetPropertyValue(() => ItemsSource); }
             set { SetPropertyValue(() => ItemsSource, value); }
+        }
+
+        /// <summary>
+        /// Returns the filtered items source
+        /// </summary>
+        public IEnumerable FilteredItemSource
+        {
+            get
+            {
+                return UseFilterMethod
+                           ? ItemsSource.Cast<IItemFilter>().Where(item => item.IsValueAccepted(FilterText))
+                           : ItemsSource;
+            }
         }
 
         /// <summary>
@@ -86,6 +106,24 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             get { return GetPropertyValue(() => FullModeHeader); }
             set { SetPropertyValue(() => FullModeHeader, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Filter text
+        /// </summary>
+        public string FilterText
+        {
+            get { return GetPropertyValue(() => FilterText); }
+            set { SetPropertyValue(() => FilterText, value); }
+        }
+        
+        /// <summary>
+        /// Gets or sets the Filter text
+        /// </summary>
+        public bool UseFilterMethod
+        {
+            get { return GetPropertyValue(() => UseFilterMethod); }
+            set { SetPropertyValue(() => UseFilterMethod, value); }
         }
 
         #endregion
