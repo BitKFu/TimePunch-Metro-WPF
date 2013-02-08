@@ -3,6 +3,7 @@
 // All other rights reserved.
 
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
@@ -21,6 +22,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             ((ListPickerFullModeViewModel)DataContext).Initialize();
 
             InitializeComponent();
+            FilterTextBox.Focus();
         }
 
         /// <summary>
@@ -40,12 +42,31 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         private void ExecuteItemSelection(object sender)
         {
             var box = sender as ListBox;
-            if (box == null || box.SelectedItem == null)
+            if (box == null)
+                return;
+
+            if (box.SelectedItem == null && box.Items.Count == 1)
+                box.SelectedItem = box.Items.GetItemAt(0);
+
+            if (box.SelectedItem == null)
                 return;
 
             var context = ((ListPickerFullModeViewModel)DataContext);
             if (context.CheckCommand.CanExecute(null))
                 context.CheckCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// Listen to the key up event of the return in order to select the item
+        /// </summary>
+        /// <param name="sender">Listbox</param>
+        /// <param name="e">key event</param>
+        private void OnListBoxKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                ExecuteItemSelection(sender);
+            }
         }
     }
 }

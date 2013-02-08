@@ -151,6 +151,7 @@
     <Compile Include="Controls\Picker\DayInfo.cs" />
     <Compile Include="Controls\Picker\DesignatorInfo.cs" />
     <Compile Include="Controls\Picker\HourInfo.cs" />
+    <Compile Include="Controls\Picker\IItemFilter.cs" />
     <Compile Include="Controls\Picker\ListPicker.xaml.cs">
       <DependentUpon>ListPicker.xaml</DependentUpon>
     </Compile>
