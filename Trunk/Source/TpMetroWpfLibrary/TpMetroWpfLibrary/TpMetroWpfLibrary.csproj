@@ -220,6 +220,7 @@
     <Compile Include="Frames\AnimationMode.cs" />
     <Compile Include="Frames\FaderFrame.cs" />
     <Compile Include="Frames\SliderFrame.cs" />
+    <Compile Include="Helper\DeviceInfo.cs" />
     <Compile Include="Helper\PasswordBoxAssistent.cs" />
     <Compile Include="Helper\ScreenResolution.cs" />
     <Compile Include="Hooks\GlobalEventProvider.cs">
@@ -325,7 +326,9 @@
     <Resource Include="Images\appbar.save.png" />
     <Resource Include="Images\appbar.stop.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Styles\Calendar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,7 +12,7 @@
     <Grid x:Name="TimePickerContent"
             HorizontalAlignment="Stretch"
             IsHitTestVisible="True"
-            MouseLeftButtonUp="OnEnterFullModeViaClick"
+            MouseLeftButtonDown="OnEnterFullModeViaClick"
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
             Background="{StaticResource WinChromeBrush}">

@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.ViewModel;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
@@ -65,17 +67,28 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Value Property
         /// </summary>
-        public static DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(DateTime), typeof(DatePicker));
+        public static DependencyProperty ValueProperty 
+            = DependencyProperty.Register("Value", typeof(DateTime), typeof(DatePicker));
 
         /// <summary>
         /// FullMode Header that is shown in the fullmode page
         /// </summary>
-        public static DependencyProperty FullModeHeaderProperty = DependencyProperty.Register("FullModeHeader", typeof(string), typeof(DatePicker));
+        public static DependencyProperty FullModeHeaderProperty 
+            = DependencyProperty.Register("FullModeHeader", typeof(string), typeof(DatePicker));
 
         /// <summary>
         /// IsReadonly property specifies if the value shall be shown, but not enabled for editing
         /// </summary>
-        public static DependencyProperty IsReadonlyProperty = DependencyProperty.Register("IsReadonly", typeof(bool), typeof(DatePicker));
+        public static DependencyProperty IsReadonlyProperty
+            = DependencyProperty.Register("IsReadonly", typeof(bool), typeof(DatePicker));
+
+        /// <summary>
+        /// IsTouchSelectionEnabledProperty defines if the touch selection is enabled
+        /// </summary>
+        public static DependencyProperty IsTouchSelectionEnabledProperty 
+            = DependencyProperty.Register("IsTouchSelectionEnabled", typeof(bool), typeof(DatePicker), new PropertyMetadata(DeviceInfo.HasTouchInput()));
+
+        private bool isPickerVisible;
 
         #endregion
 
@@ -96,7 +109,26 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public DateTime Value
         {
             get { return (DateTime)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            set
+            {
+                SetValue(ValueProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the DatePicker Value
+        /// </summary>
+        public DateTime DatePickerValue
+        {
+            get { return Value; }
+            set
+            {
+                Value = value.Date.Add(Value.TimeOfDay);
+                IsPickerVisible = false;
+
+                if (PropertyChanged != null)
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("DatePickerValue"));
+            }
         }
 
         /// <summary>
@@ -119,10 +151,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
-                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
+            if (IsTouchSelectionEnabled)
+            {
+                oldAnimationMode =Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
+            }
         }
 
         /// <summary>
@@ -133,10 +166,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
-                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
+            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+            Kernel.Instance.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
         }
 
         #endregion
@@ -190,11 +221,46 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         }
 
         /// <summary>
+        /// Gets or sets the IsTouchSelectionEnabledProperty flag
+        /// </summary>
+        public bool IsTouchSelectionEnabled
+        {
+            get { return (bool)GetValue(IsTouchSelectionEnabledProperty); }
+            set { SetValue(IsTouchSelectionEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the IsPickerVisible flag
+        /// </summary>
+        public bool IsPickerVisible
+        {
+            get
+            {
+                return isPickerVisible;
+            }
+            set
+            {
+                isPickerVisible = value;
+                CalendarPopup.IsOpen = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the Picker Cursor 
         /// </summary>
         public Cursor PickerCursor
         {
             get { return IsReadonly || !IsEnabled ? Cursors.Arrow : Cursors.Hand; }
+        }
+
+        /// <summary>
+        /// Opens the Popup Calendar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenCalendarPopup(object sender, RoutedEventArgs e)
+        {
+            IsPickerVisible = !IsPickerVisible;
         }
     }
 }
