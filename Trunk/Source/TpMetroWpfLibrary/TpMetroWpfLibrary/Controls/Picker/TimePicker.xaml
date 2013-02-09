@@ -7,6 +7,7 @@
 
     <UserControl.Resources>
         <Converter:ShortTimeConverter x:Key="ShortTimeConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
     <Grid x:Name="TimePickerContent"
@@ -16,11 +17,23 @@
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
             Background="{StaticResource WinChromeBrush}">
+        
         <TextBlock 
+            Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
             Text="{Binding Value, Converter={StaticResource ShortTimeConverter}}" 
             Style="{StaticResource WinTextNormalStyle}" 
-            Visibility="{Binding LabelVisibility}"
-            Foreground="{StaticResource WinTextBoxForegroundBrush}"
-            Margin="{StaticResource WinMargin}"/>
+            IsEnabled="{Binding IsEnabled}"
+            Margin="{StaticResource WinMargin}"
+            Foreground="{StaticResource WinTextBoxForegroundBrush}"/>
+
+        <TextBox
+                Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"
+                Text="{Binding TimePickerValue, Converter={StaticResource ShortTimeConverter}, Mode=TwoWay}" 
+                Style="{StaticResource WinInputTextNormalStyle}" 
+                IsEnabled="{Binding IsEnabled}"
+                Foreground="{StaticResource WinTextBoxForegroundBrush}"
+                Background="Transparent"
+                BorderThickness="0"
+                Margin="{StaticResource WinMargin}"/>
     </Grid>
 </UserControl>

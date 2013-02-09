@@ -9,6 +9,7 @@ using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.ViewModel;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
@@ -76,6 +77,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public static DependencyProperty IsReadonlyProperty = DependencyProperty.Register("IsReadonly", typeof(bool), typeof(TimePicker));
 
+        /// <summary>
+        /// IsTouchSelectionEnabledProperty defines if the touch selection is enabled
+        /// </summary>
+        public static DependencyProperty IsTouchSelectionEnabledProperty
+            = DependencyProperty.Register("IsTouchSelectionEnabled", typeof(bool), typeof(TimePicker), new PropertyMetadata(DeviceInfo.HasTouchInput()));
+
         #endregion
 
         #region Properties
@@ -111,6 +118,21 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         }
 
         /// <summary>
+        /// Gets or sets the TimePicker Value
+        /// </summary>
+        public DateTime TimePickerValue
+        {
+            get { return Value; }
+            set
+            {
+                Value = Value.Date.Add(value.TimeOfDay);
+
+                if (PropertyChanged != null)
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("TimePickerValue"));
+            }
+        }
+
+        /// <summary>
         /// Gets the Unique Identifier used to identify the message from DatePickerFullModeViewModel
         /// </summary>
         public Guid TimePickerId
@@ -130,11 +152,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly) 
                 return;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
-                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+            if (IsTouchSelectionEnabled)
+            {
+                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+            }
         }
 
         /// <summary>
@@ -172,14 +194,6 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
                 Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
         }
 
-        /// <summary>
-        /// Gets the visibility of the date label
-        /// </summary>
-        public Visibility LabelVisibility
-        {
-            get { return IsEnabled ? Visibility.Visible : Visibility.Hidden; }
-        }
-
         #region Implementation of INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -200,6 +214,15 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
                 if (PropertyChanged != null)
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs("PickerCursor"));
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the IsTouchSelectionEnabledProperty flag
+        /// </summary>
+        public bool IsTouchSelectionEnabled
+        {
+            get { return (bool)GetValue(IsTouchSelectionEnabledProperty); }
+            set { SetValue(IsTouchSelectionEnabledProperty, value); }
         }
 
         /// <summary>

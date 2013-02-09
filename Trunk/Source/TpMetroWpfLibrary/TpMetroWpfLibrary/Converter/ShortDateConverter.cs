@@ -38,8 +38,10 @@ namespace TimePunch.Metro.Wpf.Converter
         /// <param name="value">The value that is produced by the binding target.</param><param name="targetType">The type to convert to.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
             DateTime result;
-            if (DateTime.TryParse(value.ToString(), out result))
+            if (DateTime.TryParse(value.ToString(), culture.DateTimeFormat, DateTimeStyles.None, out result))
                 return result;
 
             return fallbackDate;

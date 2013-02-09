@@ -24,8 +24,6 @@
     <!-- 30 percent Black -->
     <Color x:Key="WinDisabledColor">#4D000000</Color>
 
-
-
     <!-- TextBox colors -->
 
     <!-- 87 percent Black -->
@@ -1123,6 +1121,12 @@
             </Grid>
         </Border>
     </ControlTemplate>
+    
+    <!-- Big Calendar Style, used for the Date Picker Control -->
+    <Style x:Key="BigCalendar" TargetType="{x:Type Viewbox}">
+        <Setter Property="Width" Value="254"/>
+        <Setter Property="Height" Value="238"/>
+    </Style>
 </ResourceDictionary>
 
   
