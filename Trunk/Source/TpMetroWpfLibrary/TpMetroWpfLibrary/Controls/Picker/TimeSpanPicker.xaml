@@ -6,6 +6,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Converter:ShortTimeSpanConverter x:Key="ShortTimeSpanConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
     <Grid x:Name="TimeSpanPickerContent"
@@ -15,11 +16,24 @@
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
             Background="{StaticResource WinChromeBrush}">
+        
         <TextBlock 
+            Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
             Text="{Binding Value, Converter={StaticResource ShortTimeSpanConverter}}" 
             Style="{StaticResource WinTextNormalStyle}" 
+            IsEnabled="{Binding IsEnabled}"
             Foreground="{StaticResource WinTextBoxForegroundBrush}"
             Margin="{StaticResource WinMargin}"/>
+
+        <TextBox
+                Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"
+                Text="{Binding Value, Converter={StaticResource ShortTimeSpanConverter}, Mode=TwoWay}" 
+                Style="{StaticResource WinInputTextNormalStyle}" 
+                IsEnabled="{Binding IsEnabled}"
+                Foreground="{StaticResource WinTextBoxForegroundBrush}"
+                Background="Transparent"
+                BorderThickness="0"
+                Margin="{StaticResource WinMargin}"/>
     </Grid>
 
 </UserControl>

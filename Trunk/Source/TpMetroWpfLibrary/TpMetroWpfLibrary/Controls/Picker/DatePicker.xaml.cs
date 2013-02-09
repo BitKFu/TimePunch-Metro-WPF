@@ -262,5 +262,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             IsPickerVisible = !IsPickerVisible;
         }
+
+        private void ClosePopup(object sender, RoutedEventArgs e)
+        {
+            IsPickerVisible = false;
+        }
     }
 }

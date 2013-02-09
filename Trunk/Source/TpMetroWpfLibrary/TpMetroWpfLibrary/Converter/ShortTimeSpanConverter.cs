@@ -13,6 +13,8 @@ namespace TimePunch.Metro.Wpf.Converter
     /// </summary>
     public class ShortTimeSpanConverter : IValueConverter
     {
+        private TimeSpan fallbackTimeSpan;
+
         /// <summary>
         /// Converts a value. 
         /// </summary>
@@ -26,6 +28,7 @@ namespace TimePunch.Metro.Wpf.Converter
             if (timeSpan == TimeSpan.Zero)
                 return "-.-";
 
+            fallbackTimeSpan = timeSpan;
             return timeSpan.ToString(@"hh\:mm");
         }
 
@@ -38,7 +41,20 @@ namespace TimePunch.Metro.Wpf.Converter
         /// <param name="value">The value that is produced by the binding target.</param><param name="targetType">The type to convert to.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            TimeSpan result;
+            culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
+            // Try to convert to double
+            double dblValue;
+            if (double.TryParse(value.ToString(), NumberStyles.Number, culture.NumberFormat, out dblValue))
+                return TimeSpan.FromHours(Math.Max(0, Math.Min(23.99,dblValue)));
+
+            // Try to convert with TimeSpan first
+            if (TimeSpan.TryParse(value.ToString(), culture.DateTimeFormat, out result))
+                return result;
+
+            return fallbackTimeSpan;
+            
         }
     }
 }

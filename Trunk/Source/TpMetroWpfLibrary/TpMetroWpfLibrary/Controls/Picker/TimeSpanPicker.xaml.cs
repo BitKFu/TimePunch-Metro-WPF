@@ -9,6 +9,7 @@ using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.ViewModel;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
@@ -75,6 +76,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public static DependencyProperty IsReadonlyProperty = DependencyProperty.Register("IsReadonly", typeof(bool), typeof(TimeSpanPicker));
 
+        /// <summary>
+        /// IsTouchSelectionEnabledProperty defines if the touch selection is enabled
+        /// </summary>
+        public static DependencyProperty IsTouchSelectionEnabledProperty
+            = DependencyProperty.Register("IsTouchSelectionEnabled", typeof(bool), typeof(TimeSpanPicker), new PropertyMetadata(DeviceInfo.HasTouchInput()));
+
         #endregion
 
         #region Properties
@@ -117,11 +124,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
-                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+            if (IsTouchSelectionEnabled)
+            {
 
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
+                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance.EventAggregator.PublishMessage(new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
+            }
         }
 
         /// <summary>
@@ -160,14 +168,6 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         }
 
         /// <summary>
-        /// Gets the visibility of the date label
-        /// </summary>
-        public Visibility LabelVisibility
-        {
-            get { return IsEnabled ? Visibility.Visible : Visibility.Hidden; }
-        }
-
-        /// <summary>
         /// Gets or sets the IsReadonly flag
         /// </summary>
         public bool IsReadonly
@@ -182,6 +182,15 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             }
         }
 
+        /// <summary>
+        /// Gets or sets the IsTouchSelectionEnabledProperty flag
+        /// </summary>
+        public bool IsTouchSelectionEnabled
+        {
+            get { return (bool)GetValue(IsTouchSelectionEnabledProperty); }
+            set { SetValue(IsTouchSelectionEnabledProperty, value); }
+        }
+        
         /// <summary>
         /// Gets the Picker Cursor 
         /// </summary>

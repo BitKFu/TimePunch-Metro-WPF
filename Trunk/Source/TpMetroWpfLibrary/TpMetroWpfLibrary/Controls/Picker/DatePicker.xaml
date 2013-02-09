@@ -22,7 +22,7 @@
             <TextBlock 
                 Text="{Binding Value, Converter={StaticResource ShortDateConverter}}" 
                 Style="{StaticResource WinTextNormalStyle}" 
-                Visibility="{Binding LabelVisibility}"
+                IsEnabled="{Binding IsEnabled}"
                 Foreground="{StaticResource WinTextBoxForegroundBrush}"
                 Margin="{StaticResource WinMargin}">
             </TextBlock>
@@ -39,6 +39,7 @@
             <TextBox
                 Text="{Binding DatePickerValue, Converter={StaticResource ShortDateConverter}, Mode=TwoWay}" 
                 Style="{StaticResource WinInputTextNormalStyle}" 
+                IsEnabled="{Binding IsEnabled}"
                 Foreground="{StaticResource WinTextBoxForegroundBrush}"
                 Background="Transparent"
                 BorderThickness="0"
@@ -49,6 +50,8 @@
                 Name="CalendarButton"
                 Style="{StaticResource ChromeButtonStyle}"
                 Grid.Column="1"
+                IsEnabled="{Binding IsEnabled}"
+                IsTabStop="False"
                 Margin="{StaticResource WinMargin}"
                 Click="OpenCalendarPopup">
                 <Button.Content>
@@ -57,9 +60,10 @@
             </Button>
 
             <Popup Name="CalendarPopup" 
-               PlacementTarget="{Binding ElementName=CalendarButton}" 
-               Placement="MousePoint" PopupAnimation="Fade">
-                <Viewbox Width="254" Height="238">
+                   StaysOpen="False"
+                   PlacementTarget="{Binding ElementName=CalendarButton}" 
+                   Placement="MousePoint" PopupAnimation="Fade">
+                <Viewbox Style="{StaticResource BigCalendar}">
                     <Grid Background="LightGray">
                         <Calendar SelectedDate="{Binding DatePickerValue, Mode=TwoWay}" Background="White" UseLayoutRounding="False"/>
                     </Grid>

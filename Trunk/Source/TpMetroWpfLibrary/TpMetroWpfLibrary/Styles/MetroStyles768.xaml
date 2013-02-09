@@ -1106,6 +1106,13 @@
             </Grid>
         </Border>
     </ControlTemplate>
+
+    <!-- Big Calendar Style, used for the Date Picker Control -->
+    <Style x:Key="BigCalendar" TargetType="{x:Type Viewbox}">
+        <Setter Property="Width" Value="211"/>
+        <Setter Property="Height" Value="198"/>
+    </Style>
+
 </ResourceDictionary>
 
   
