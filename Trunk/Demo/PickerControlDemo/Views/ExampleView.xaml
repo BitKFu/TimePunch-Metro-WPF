@@ -47,6 +47,7 @@
         <TextBlock Grid.Row="2" Text="DatePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
         <Picker:DatePicker 
             FullModeHeader="Select the date"
+            IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="3" 
             Value="{Binding SelectedDate, Mode=TwoWay}"/>
@@ -55,6 +56,7 @@
         <TextBlock Grid.Row="4" Text="TimePicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
         <Picker:TimePicker 
             FullModeHeader="Select the time"
+            IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="5" 
             Value="{Binding SelectedDate, Mode=TwoWay}"/>
@@ -63,6 +65,7 @@
         <TextBlock Grid.Row="6" Text="TimeSpanPicker Demo" Style="{StaticResource WinTextGroupHeaderStyle}"/>
         <Picker:TimeSpanPicker 
             FullModeHeader="Select the timespan"
+            IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="7" 
             Value="{Binding SelectedTimeSpan, Mode=TwoWay}"/>

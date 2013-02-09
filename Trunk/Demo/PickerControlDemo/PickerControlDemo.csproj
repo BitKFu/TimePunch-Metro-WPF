@@ -49,7 +49,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TpMetroWpfLibrary">
+    <Reference Include="TpMetroWpfLibrary, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b8a5a1c8b90f14de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Output\Debug\TpMetroWpfLibrary.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
