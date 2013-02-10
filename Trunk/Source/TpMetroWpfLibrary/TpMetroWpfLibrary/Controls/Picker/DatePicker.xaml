@@ -55,7 +55,7 @@
                 Margin="{StaticResource WinMargin}"
                 Click="OpenCalendarPopup">
                 <Button.Content>
-                    <Image Source="/TpMetroWpfLibrary;component/Styles/Calendar.png"></Image>
+                    <Image Source="/TpMetroWpfLibrary;component/Images/Calendar.png"></Image>
                 </Button.Content>
             </Button>
 
