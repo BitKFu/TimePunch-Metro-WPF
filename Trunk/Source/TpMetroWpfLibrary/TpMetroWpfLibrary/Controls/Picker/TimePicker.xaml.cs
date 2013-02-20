@@ -167,11 +167,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly) 
                 return;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
-                new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+            if (IsTouchSelectionEnabled)
+            {
+                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+            }
         }
 
         #endregion
