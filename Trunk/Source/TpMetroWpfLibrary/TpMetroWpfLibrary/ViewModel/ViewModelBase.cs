@@ -60,7 +60,8 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewModelBase"/> class.
         /// </summary>
-        protected ViewModelBase()
+        /// <param name="eventAggregator">Used Event aggregator, or null if the default Kernel Event Aggregator shall be used</param>
+        protected ViewModelBase(IEventAggregator eventAggregator = null)
         {
             // initialize the maps
             propertyValues = new Dictionary<string, object>();
@@ -73,13 +74,9 @@ namespace TimePunch.Metro.Wpf.ViewModel
             if (!IsDesignMode)
             {
                 // subscribe to the event aggregator messages
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                this.eventAggregator = eventAggregator ?? Kernel.Instance.EventAggregator;
+                this.eventAggregator.Subscribe(this);
             }
-
-            // default dependend notifications
-            AddPropertyChangedNotification(() => IsLoading,   () => IsReady, () => ShowDefective);
-            AddPropertyChangedNotification(() => IsDefective, () => ShowDefective);
-            AddPropertyChangedNotification(() => Error,       () => IsDefective);
         }
 
         /// <summary>
@@ -108,7 +105,13 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        public abstract void Initialize();
+        public virtual void Initialize()
+        {
+            // default dependent notifications
+            AddPropertyChangedNotification(() => IsLoading, () => IsReady, () => ShowDefective);
+            AddPropertyChangedNotification(() => IsDefective, () => ShowDefective);
+            AddPropertyChangedNotification(() => Error, () => IsDefective);
+        }
 
         /// <summary>
         /// Initializes the page.
@@ -203,7 +206,12 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// This field is used to identify if the code is called in DesignMode or in real life ;)
         /// </summary>
-        private static bool isDesignMode;
+        private static readonly bool isDesignMode;
+
+        /// <summary>
+        /// Used Event Aggregator
+        /// </summary>
+        private readonly IEventAggregator eventAggregator;
 
         /// <summary>
         /// Gets the Property Changed Handler.
@@ -223,7 +231,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         protected virtual IEventAggregator EventAggregator
         {
-            get { return Kernel.Instance.EventAggregator; }
+            get { return eventAggregator; }
         }
 
         /// <summary>
@@ -468,7 +476,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         /// <typeparam name="TSource">the type of the source property</typeparam>
         /// <typeparam name="TDepend">the type of the dependent property</typeparam>
-        protected void AddPropertyChangedNotification<TSource, TDepend>(
+        protected virtual void AddPropertyChangedNotification<TSource, TDepend>(
             Expression<Func<TSource>> sourcePropertyAccessor, 
             params Expression<Func<TDepend>>[] dependentPropertyAccessors)
         {
@@ -494,7 +502,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Adds a new entry to the list of dependent command notifications.
         /// </summary>
         /// <typeparam name="TSource">the type of the source property</typeparam>
-        protected void AddPropertyChangedNotification<TSource>(Expression<Func<TSource>> sourcePropertyAccessor, params ICommand[] dependendCommands)
+        protected virtual void AddPropertyChangedNotification<TSource>(Expression<Func<TSource>> sourcePropertyAccessor, params ICommand[] dependendCommands)
         {
             // get the name of the source property
             var basePropertyName = GetPropertyName(sourcePropertyAccessor);
@@ -506,7 +514,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         /// <param name="basePropertyName">Name of the base property.</param>
         /// <param name="dependendCommands">The dependend commands.</param>
-        protected void AddPropertyChangedNotification(string basePropertyName, params ICommand[] dependendCommands)
+        protected virtual void AddPropertyChangedNotification(string basePropertyName, params ICommand[] dependendCommands)
         {
             IList<ICommand> notifications;
 

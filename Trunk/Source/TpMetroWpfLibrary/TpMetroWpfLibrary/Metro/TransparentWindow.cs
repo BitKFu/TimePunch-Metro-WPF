@@ -46,10 +46,12 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         static TransparentWindow()
         {
+// ReSharper disable ObjectCreationAsStatement
             new FrameworkElement();
+// ReSharper restore ObjectCreationAsStatement
 
             // Establish a new Style Property that uses the default Style "TransparentWindow", if no style has been set
-            StyleProperty.OverrideMetadata(typeof(TransparentWindow), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceStyle)));
+            StyleProperty.OverrideMetadata(typeof(TransparentWindow), new FrameworkPropertyMetadata(null, OnCoerceStyle));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TransparentWindow), new FrameworkPropertyMetadata(typeof(TransparentWindow)));
 
             EventManager.RegisterClassHandler(typeof(TransparentWindow), Thumb.DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
@@ -185,7 +187,7 @@ namespace TimePunch.Metro.Wpf.Metro
 
                     // Adjust the outer border
                     var border = (Border) GetTemplateChild("m_edgeBorder");
-                    Thickness thickness = new Thickness(
+                    var thickness = new Thickness(
                         (value & ResizeDirectionFlags.SizeW) == ResizeDirectionFlags.SizeW ? BORDER_SIZE : 0.0,
                         (value & ResizeDirectionFlags.SizeN) == ResizeDirectionFlags.SizeN ? BORDER_SIZE : 0.0,
                         (value & ResizeDirectionFlags.SizeE) == ResizeDirectionFlags.SizeE ? BORDER_SIZE : 0.0,
@@ -215,23 +217,23 @@ namespace TimePunch.Metro.Wpf.Metro
             // ReSharper restore PossibleNullReferenceException
         }        
         
-        private void UpdateBordersVisibility(ResizeDirectionFlags value)
-        {
-            // ReSharper disable PossibleNullReferenceException
-            ((Thumb)GetTemplateChild("PART_SizeN")).IsEnabled = (value & ResizeDirectionFlags.SizeN) == ResizeDirectionFlags.SizeN;
-            ((Thumb)GetTemplateChild("PART_SizeS")).IsEnabled = (value & ResizeDirectionFlags.SizeS) == ResizeDirectionFlags.SizeS; 
-            ((Thumb)GetTemplateChild("PART_SizeW")).IsEnabled = (value & ResizeDirectionFlags.SizeW) == ResizeDirectionFlags.SizeW;
-            ((Thumb)GetTemplateChild("PART_SizeE")).IsEnabled = (value & ResizeDirectionFlags.SizeE) == ResizeDirectionFlags.SizeE;
-            ((Thumb)GetTemplateChild("PART_SizeSE")).IsEnabled = (value & ResizeDirectionFlags.SizeSE) == ResizeDirectionFlags.SizeSE;
-            ((Thumb)GetTemplateChild("PART_SizeNW")).IsEnabled = (value & ResizeDirectionFlags.SizeNW) == ResizeDirectionFlags.SizeNW;
-            ((Thumb)GetTemplateChild("PART_SizeSW")).IsEnabled = (value & ResizeDirectionFlags.SizeSW) == ResizeDirectionFlags.SizeSW;
-            ((Thumb)GetTemplateChild("PART_SizeNE")).IsEnabled = (value & ResizeDirectionFlags.SizeNE) == ResizeDirectionFlags.SizeNE;
-            // ReSharper restore PossibleNullReferenceException
-        }
+        //private void UpdateBordersVisibility(ResizeDirectionFlags value)
+        //{
+        //    // ReSharper disable PossibleNullReferenceException
+        //    ((Thumb)GetTemplateChild("PART_SizeN")).IsEnabled = (value & ResizeDirectionFlags.SizeN) == ResizeDirectionFlags.SizeN;
+        //    ((Thumb)GetTemplateChild("PART_SizeS")).IsEnabled = (value & ResizeDirectionFlags.SizeS) == ResizeDirectionFlags.SizeS; 
+        //    ((Thumb)GetTemplateChild("PART_SizeW")).IsEnabled = (value & ResizeDirectionFlags.SizeW) == ResizeDirectionFlags.SizeW;
+        //    ((Thumb)GetTemplateChild("PART_SizeE")).IsEnabled = (value & ResizeDirectionFlags.SizeE) == ResizeDirectionFlags.SizeE;
+        //    ((Thumb)GetTemplateChild("PART_SizeSE")).IsEnabled = (value & ResizeDirectionFlags.SizeSE) == ResizeDirectionFlags.SizeSE;
+        //    ((Thumb)GetTemplateChild("PART_SizeNW")).IsEnabled = (value & ResizeDirectionFlags.SizeNW) == ResizeDirectionFlags.SizeNW;
+        //    ((Thumb)GetTemplateChild("PART_SizeSW")).IsEnabled = (value & ResizeDirectionFlags.SizeSW) == ResizeDirectionFlags.SizeSW;
+        //    ((Thumb)GetTemplateChild("PART_SizeNE")).IsEnabled = (value & ResizeDirectionFlags.SizeNE) == ResizeDirectionFlags.SizeNE;
+        //    // ReSharper restore PossibleNullReferenceException
+        //}
 
         private static void OnPreviewMouseDown(object sender,  MouseButtonEventArgs eventArgs)
         {
-            TransparentWindow transparentWindow = (TransparentWindow)sender;
+            var transparentWindow = (TransparentWindow)sender;
             if (transparentWindow.WindowState != WindowState.Normal || !transparentWindow.Dragable)
                 return;
 
@@ -250,11 +252,11 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private static void OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TransparentWindow transparentWindow = (TransparentWindow)sender;
-            Thumb thumb = e.OriginalSource as Thumb;
+            var transparentWindow = (TransparentWindow)sender;
+            var thumb = e.OriginalSource as Thumb;
             if (thumb != null && transparentWindow.WindowState == WindowState.Normal)
             {
-                Rect windowRect = new Rect(transparentWindow.Left, transparentWindow.Top, transparentWindow.ActualWidth, transparentWindow.ActualHeight);
+                var windowRect = new Rect(transparentWindow.Left, transparentWindow.Top, transparentWindow.ActualWidth, transparentWindow.ActualHeight);
                 double maxReducedHeight = Math.Max(0, transparentWindow.ActualHeight - transparentWindow.MinHeight);
                 double maxReducedWidth = Math.Max(0, transparentWindow.ActualWidth - transparentWindow.MinWidth);
                 double reducedHeight = e.VerticalChange;
@@ -327,10 +329,12 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <param name="rect">The rect.</param>
         protected virtual void SetWindowVisualRect(Rect rect)
         {
-            IntPtr mainWindowPtr = new WindowInteropHelper(this).Handle;
-            HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
-            Point deviceTopLeft = mainWindowSrc.CompositionTarget.TransformToDevice.Transform(rect.TopLeft);
-            Point deviceBottomRight = mainWindowSrc.CompositionTarget.TransformToDevice.Transform(rect.BottomRight);
+            var mainWindowPtr = new WindowInteropHelper(this).Handle;
+            var mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
+            if (mainWindowSrc == null || mainWindowSrc.CompositionTarget == null) 
+                return;
+            var deviceTopLeft = mainWindowSrc.CompositionTarget.TransformToDevice.Transform(rect.TopLeft);
+            var deviceBottomRight = mainWindowSrc.CompositionTarget.TransformToDevice.Transform(rect.BottomRight);
             SetWindowPos(mainWindowSrc.Handle,
                          IntPtr.Zero,
                          (int)(deviceTopLeft.X),
@@ -377,13 +381,13 @@ namespace TimePunch.Metro.Wpf.Metro
                     firstOnClosing = false;
             }
 
-            // Only visit on closing, if it's not prior canceld
+            // Only visit on closing, if it's not prior canceled
             if (!e.Cancel)
                 base.OnClosing(e);
         }
 
         /// <summary>
-        /// On closing, do an unsubscription of the event aggregator
+        /// On closing, do an unsubscribe of the event aggregator
         /// </summary>
         /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)

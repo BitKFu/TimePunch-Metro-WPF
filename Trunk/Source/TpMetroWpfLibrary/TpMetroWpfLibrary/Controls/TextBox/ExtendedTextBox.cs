@@ -28,13 +28,6 @@ namespace TimePunch.Metro.Wpf.Controls.TextBox
         }
 
         /// <summary>
-        /// Initializes this instance.
-        /// </summary>
-        public override void Initialize()
-        {
-        }
-
-        /// <summary>
         /// Initializes the page.
         /// This method will be called every time the user navigates to the page
         /// </summary>

@@ -20,6 +20,7 @@ namespace NavigationDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             FadeToPage1Command = RegisterCommand(ExecuteFadeToPage1Command, CanExecuteFadeToPage1Command, true);
             SlideToPage2Command = RegisterCommand(ExecuteSlideToPage2Command, CanExecuteSlideToPage2Command, true);
         }

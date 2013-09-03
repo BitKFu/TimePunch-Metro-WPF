@@ -19,6 +19,7 @@ namespace ExtendedTextBoxDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             SaveCommand = RegisterCommand(ExecuteSaveCommand, CanExecuteSaveCommand, true);
         }
 

@@ -19,6 +19,7 @@ namespace PickerControlDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             Months = new List<Resource>()
                          {
                              new Resource("January"),

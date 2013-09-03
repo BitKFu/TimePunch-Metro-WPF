@@ -9,7 +9,7 @@ namespace TpMetroWpfLibrary.Tests.Controller
     public class StubKernel : Kernel
     {
         private IEventAggregator eventAggregator;
-        private BaseController controller;
+        private INavigationController controller;
 
         #region Overrides of Kernel
 
@@ -26,7 +26,7 @@ namespace TpMetroWpfLibrary.Tests.Controller
         /// Gets the current used controller
         /// </summary>
         /// <returns></returns>
-        public override BaseController Controller
+        public override INavigationController Controller
         {
             get { return controller ?? (controller = new StubController()); }
         }

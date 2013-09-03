@@ -17,6 +17,7 @@ namespace TabControlDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
         }
 
         /// <summary>
