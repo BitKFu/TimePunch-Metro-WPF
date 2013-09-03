@@ -77,6 +77,13 @@ namespace TimePunch.Metro.Wpf.ViewModel
                 this.eventAggregator = eventAggregator ?? Kernel.Instance.EventAggregator;
                 this.eventAggregator.Subscribe(this);
             }
+
+            // default dependent notifications
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            AddPropertyChangedNotification(() => IsLoading, () => IsReady, () => ShowDefective);
+            AddPropertyChangedNotification(() => IsDefective, () => ShowDefective);
+            AddPropertyChangedNotification(() => Error, () => IsDefective);
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         /// <summary>
@@ -105,13 +112,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        public virtual void Initialize()
-        {
-            // default dependent notifications
-            AddPropertyChangedNotification(() => IsLoading, () => IsReady, () => ShowDefective);
-            AddPropertyChangedNotification(() => IsDefective, () => ShowDefective);
-            AddPropertyChangedNotification(() => Error, () => IsDefective);
-        }
+        public abstract void Initialize();
 
         /// <summary>
         /// Initializes the page.

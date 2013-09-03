@@ -18,7 +18,6 @@ namespace ProgressBarDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();
             ProgressCommand = RegisterCommand(ExecuteProgressCommand, CanExecuteProgressCommand, true);
         }
 
