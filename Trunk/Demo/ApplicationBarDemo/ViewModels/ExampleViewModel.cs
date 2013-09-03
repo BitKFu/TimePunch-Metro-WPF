@@ -31,8 +31,6 @@ namespace ApplicationBarDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();
-
             // Register the commands at all
             PrevCommand = RegisterCommand(ExecutePrevCommand, CanExecutePrevCommand, true);
             NextCommand = RegisterCommand(ExecuteNextCommand, CanExecuteNextCommand, true);

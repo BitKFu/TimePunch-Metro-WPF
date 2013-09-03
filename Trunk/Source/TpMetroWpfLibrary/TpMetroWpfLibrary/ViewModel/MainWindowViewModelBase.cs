@@ -19,8 +19,6 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();
-
             // This method registers the WPF Command Close and binds an execute and canExecute method to it.
             RegisterApplicationCommand(ApplicationCommands.Close, ExecuteCloseCommand, CanExecuteCloseCommand, true);
 
