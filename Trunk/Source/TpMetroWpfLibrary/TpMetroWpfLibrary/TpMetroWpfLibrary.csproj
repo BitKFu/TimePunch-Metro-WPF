@@ -128,6 +128,8 @@
     <Compile Include="Commands\DynamicCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\IKernel.cs" />
+    <Compile Include="Controller\INavigationController.cs" />
     <Compile Include="Controller\Kernel.cs" />
     <Compile Include="Controls\AppBar\ApplicationBar.xaml.cs">
       <DependentUpon>ApplicationBar.xaml</DependentUpon>

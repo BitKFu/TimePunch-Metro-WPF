@@ -21,6 +21,7 @@ namespace ListSwapDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             List1 = new ObservableCollection<Item>()
                         {
                             new Item(1, "January"),

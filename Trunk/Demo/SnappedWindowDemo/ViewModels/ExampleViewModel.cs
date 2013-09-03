@@ -20,6 +20,7 @@ namespace SnappedWindowDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             DockToBottomCommand = RegisterCommand(ExecuteDockToBottomCommand, CanExecuteDockToBottomCommand, true);
             DockToTopCommand = RegisterCommand(ExecuteDockToTopCommand, CanExecuteDockToTopCommand, true);
             DockToRightCommand = RegisterCommand(ExecuteDockToRightCommand, CanExecuteDockToRightCommand, true);

@@ -6,12 +6,12 @@ using TimePunch.Metro.Wpf.EventAggregation;
 
 namespace TimePunch.Metro.Wpf.Controller
 {
-    public abstract class Kernel
+    public abstract class Kernel : IKernel
     {
         /// <summary>
         /// Gets or sets the Kernel Instance
         /// </summary>
-        public static Kernel Instance { get; set; }
+        public static IKernel Instance { get; set; }
 
         /// <summary>
         /// Gets the event aggregator.
@@ -23,6 +23,6 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Gets the current used controller
         /// </summary>
         /// <returns></returns>
-        public abstract BaseController Controller { get; }
+        public abstract INavigationController Controller { get; }
     }
 }

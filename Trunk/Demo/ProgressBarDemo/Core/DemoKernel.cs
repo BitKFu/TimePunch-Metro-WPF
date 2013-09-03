@@ -9,8 +9,8 @@ namespace ProgressBarDemo.Core
     /// </summary>
     public class DemoKernel : Kernel
     {
-        private EventAggregator eventAggregator;
-        private BaseController controller;
+        private IEventAggregator eventAggregator;
+        private INavigationController controller;
 
         #region Overrides of Kernel
 
@@ -25,7 +25,7 @@ namespace ProgressBarDemo.Core
         /// <summary>
         /// Gets the concrete Controller. It is used to manage the navigation flow
         /// </summary>
-        public override BaseController Controller
+        public override INavigationController Controller
         {
             get { return controller ?? (controller = new DemoController()); }
         }

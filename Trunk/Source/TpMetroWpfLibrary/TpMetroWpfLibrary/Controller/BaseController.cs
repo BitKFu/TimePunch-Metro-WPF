@@ -30,7 +30,8 @@ namespace TimePunch.Metro.Wpf.Controller
         IHandleMessage<TimeSpanPickerFullModeRequest>,
         IHandleMessage<WindowStateApplicationCommand>,
         IHandleMessage<ForceBindingUpdateEvent>,
-        IHandleMessage<ChangeAnimationModeRequest>
+        IHandleMessage<ChangeAnimationModeRequest>, 
+        INavigationController
     {
         private NavigationMode navigationMode;
 
@@ -85,11 +86,14 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Attaches the controller to the root frame
         /// </summary>
         /// <param name="contentFrame">The Content Frame</param>
-        public void SetRootFrame(Frame contentFrame)
+        public virtual void SetRootFrame(Frame contentFrame)
         {
-            // wire events
-            contentFrame.Navigated += OnNavigated;
-            contentFrame.Navigating += OnNavigating;
+            if (contentFrame != null)
+            {
+                // wire events
+                contentFrame.Navigated += OnNavigated;
+                contentFrame.Navigating += OnNavigating;
+            }
 
             ContentFrame = contentFrame;
         }
@@ -147,7 +151,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Navigates to page.
         /// </summary>
         /// <param name="navigateToPage">The navigate to page.</param>
-        protected void NavigateToPage(string navigateToPage)
+        public virtual void NavigateToPage(string navigateToPage)
         {
             if (CurrentPage == null)
                 Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() =>
@@ -179,7 +183,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// </summary>
         /// <param name="navigateToPage">The navigate to page.</param>
         /// <param name="message">The message thas will be send to the page</param>
-        protected void NavigateToPage(string navigateToPage, object message)
+        public virtual void NavigateToPage(string navigateToPage, object message)
         {
             if (CurrentPage == null)
                 Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() => 
@@ -204,6 +208,17 @@ namespace TimePunch.Metro.Wpf.Controller
                 else
                     CurrentPage.Dispatcher.BeginInvoke((ThreadStart) (() => NavigateToPage(navigateToPage, message)));
             }
+        }
+
+        /// <summary>
+        /// Determines whether this instance [can go back].
+        /// </summary>
+        /// <returns>
+        /// 	<c>true</c> if this instance [can go back]; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool CanGoBack
+        {
+            get { return CurrentPage != null && CurrentPage.NavigationService != null && CurrentPage.NavigationService.CanGoBack; }
         }
 
         #endregion
@@ -266,7 +281,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <summary>
         /// Gets a value indicating whether the closing of the current window shall be forced.
         /// </summary>
-        public bool ForceClosing { get; private set; }
+        public virtual bool ForceClosing { get; private set; }
 
         #endregion
 
@@ -276,7 +291,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Handles a message of a specific type.
         /// </summary>
         /// <param name="message">the message to handle</param>
-        public void Handle(WindowStateApplicationCommand message)
+        public virtual void Handle(WindowStateApplicationCommand message)
         {
             Application.Current.MainWindow.WindowState = message.WindowState;
         }
@@ -335,22 +350,13 @@ namespace TimePunch.Metro.Wpf.Controller
 
         #endregion
 
-        /// <summary>
-        /// Determines whether this instance [can go back].
-        /// </summary>
-        /// <returns>
-        /// 	<c>true</c> if this instance [can go back]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool CanGoBack
-        {
-            get { return CurrentPage != null && CurrentPage.NavigationService != null ? CurrentPage.NavigationService.CanGoBack : false; } 
-        }
+        #region IHandleMessage<ChangeAnimationModeRequest>
 
         /// <summary>
         /// This method will change the animation mode
         /// </summary>
         /// <param name="message"></param>
-        public void Handle(ChangeAnimationModeRequest message)
+        public virtual void Handle(ChangeAnimationModeRequest message)
         {
             var animationFrame = ContentFrame as AnimationFrame;
             if (animationFrame == null)
@@ -361,5 +367,7 @@ namespace TimePunch.Metro.Wpf.Controller
             animationFrame.AnimationMode = message.AnimationMode;
             message.AnimationMode = oldMode;
         }
+
+        #endregion
     }
 }

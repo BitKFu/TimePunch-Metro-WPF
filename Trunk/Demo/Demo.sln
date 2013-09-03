@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationBarDemo", "ApplicationBarDemo\ApplicationBarDemo.csproj", "{0FC80037-5E1F-48A0-8A1A-099824415C56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyMetroDemo", "EmptyMetroDemo\EmptyMetroDemo.csproj", "{BB074728-A71B-435E-8B42-1453635E7866}"
@@ -26,47 +26,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListSwapDemo", "ListSwapDemo\ListSwapDemo.csproj", "{06B26885-7794-4757-AE48-6343CDFF5E26}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 13
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs34
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ApplicationBarDemo\\ApplicationBarDemo.csproj
-		SccProjectName1 = ApplicationBarDemo
-		SccLocalPath1 = ApplicationBarDemo
-		SccProjectUniqueName2 = EmptyMetroDemo\\EmptyMetroDemo.csproj
-		SccProjectName2 = EmptyMetroDemo
-		SccLocalPath2 = EmptyMetroDemo
-		SccProjectUniqueName3 = PickerControlDemo\\PickerControlDemo.csproj
-		SccProjectName3 = PickerControlDemo
-		SccLocalPath3 = PickerControlDemo
-		SccProjectUniqueName4 = PasswordCheckDemo\\PasswordCheckDemo.csproj
-		SccProjectName4 = PasswordCheckDemo
-		SccLocalPath4 = PasswordCheckDemo
-		SccProjectUniqueName5 = ProgressBarDemo\\ProgressBarDemo.csproj
-		SccProjectName5 = ProgressBarDemo
-		SccLocalPath5 = ProgressBarDemo
-		SccProjectUniqueName6 = TypographicDemo\\TypographicDemo.csproj
-		SccProjectName6 = TypographicDemo
-		SccLocalPath6 = TypographicDemo
-		SccProjectUniqueName7 = TabControlDemo\\TabControlDemo.csproj
-		SccProjectName7 = TabControlDemo
-		SccLocalPath7 = TabControlDemo
-		SccProjectUniqueName8 = SnappedWindowDemo\\SnappedWindowDemo.csproj
-		SccProjectName8 = SnappedWindowDemo
-		SccLocalPath8 = SnappedWindowDemo
-		SccProjectUniqueName9 = NavigationDemo\\NavigationDemo.csproj
-		SccProjectName9 = NavigationDemo
-		SccLocalPath9 = NavigationDemo
-		SccProjectUniqueName10 = CheckBoxDemo\\CheckBoxDemo.csproj
-		SccProjectName10 = CheckBoxDemo
-		SccLocalPath10 = CheckBoxDemo
-		SccProjectUniqueName11 = ExtendedTextBoxDemo\\ExtendedTextBoxDemo.csproj
-		SccProjectName11 = ExtendedTextBoxDemo
-		SccLocalPath11 = ExtendedTextBoxDemo
-		SccProjectUniqueName12 = ListSwapDemo\\ListSwapDemo.csproj
-		SccProjectName12 = ListSwapDemo
-		SccLocalPath12 = ListSwapDemo
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

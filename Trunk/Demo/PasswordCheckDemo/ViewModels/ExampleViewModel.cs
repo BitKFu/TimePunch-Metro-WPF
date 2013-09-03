@@ -18,6 +18,7 @@ namespace PasswordCheckDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             ValidateCommand = RegisterCommand(ExecuteValidateCommand, CanExecuteValidateCommand, true);
         }
 

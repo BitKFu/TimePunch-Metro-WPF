@@ -33,6 +33,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             CheckCommand = RegisterCommand(ExecuteCheckCommand, CanExecuteCheckCommand, true);
             CancelCommand = RegisterCommand(ExecuteCancelCommand, CanExecuteCancelCommand, true);
         }

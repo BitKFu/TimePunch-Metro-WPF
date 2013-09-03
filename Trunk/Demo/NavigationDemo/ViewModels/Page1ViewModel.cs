@@ -21,6 +21,7 @@ namespace NavigationDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
             GoBackCommand = RegisterCommand(ExecuteGoBackCommand, CanExecuteGoBackCommand, true);
         }
 

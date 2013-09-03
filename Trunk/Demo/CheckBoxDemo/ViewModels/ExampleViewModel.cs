@@ -17,6 +17,7 @@ namespace CheckBoxDemo.ViewModels
         /// </summary>
         public override void Initialize()
         {
+            base.Initialize();
         }
 
         /// <summary>
