@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TimePunch Metro WPF Library"
-#define MyAppVersion "1.2.2"
+#define MyAppVersion "1.3.0"
 #define MyAppPublisher "TimePunch KG"
 #define MyAppURL "http://tpmetrowpf.codeplex.com"
 
@@ -29,6 +29,6 @@ SolidCompression=true
 Name: english; MessagesFile: compiler:Default.isl
 
 [Files]
-Source: E:\Work\TimePunch Metro Wpf Library v1.2.2\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: E:\Work\TimePunch Metro Wpf Library v1.3.0\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
