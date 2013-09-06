@@ -141,7 +141,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Creates a command which is automatically disabled when the IsLoading indicator is set to true and
         /// enabled or disabled automatically based on the required permissions
         /// </summary>
-        protected virtual void RegisterApplicationCommand(
+        public virtual void RegisterApplicationCommand(
             ICommand commandToRegister, 
             Action<Object,ExecutedRoutedEventArgs> execute, 
             Action<Object,CanExecuteRoutedEventArgs> canExecute, 
@@ -162,7 +162,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="execute">the command action</param>
         /// <param name="canExecute">the predicate to check, if the command can be executed</param>
         /// <param name="disableOnLoading">a value indicating whether the command should be disabled when the <see cref="IsLoading"/> indicator is set to true</param>
-        protected virtual ICommand RegisterCommand(
+        public virtual ICommand RegisterCommand(
             Action<Object,ExecutedRoutedEventArgs> execute, 
             Action<Object,CanExecuteRoutedEventArgs> canExecute, 
             bool disableOnLoading)
@@ -477,7 +477,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         /// <typeparam name="TSource">the type of the source property</typeparam>
         /// <typeparam name="TDepend">the type of the dependent property</typeparam>
-        protected virtual void AddPropertyChangedNotification<TSource, TDepend>(
+        public virtual void AddPropertyChangedNotification<TSource, TDepend>(
             Expression<Func<TSource>> sourcePropertyAccessor, 
             params Expression<Func<TDepend>>[] dependentPropertyAccessors)
         {
@@ -503,7 +503,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Adds a new entry to the list of dependent command notifications.
         /// </summary>
         /// <typeparam name="TSource">the type of the source property</typeparam>
-        protected virtual void AddPropertyChangedNotification<TSource>(Expression<Func<TSource>> sourcePropertyAccessor, params ICommand[] dependendCommands)
+        public virtual void AddPropertyChangedNotification<TSource>(Expression<Func<TSource>> sourcePropertyAccessor, params ICommand[] dependendCommands)
         {
             // get the name of the source property
             var basePropertyName = GetPropertyName(sourcePropertyAccessor);
@@ -515,7 +515,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         /// <param name="basePropertyName">Name of the base property.</param>
         /// <param name="dependendCommands">The dependend commands.</param>
-        protected virtual void AddPropertyChangedNotification(string basePropertyName, params ICommand[] dependendCommands)
+        public virtual void AddPropertyChangedNotification(string basePropertyName, params ICommand[] dependendCommands)
         {
             IList<ICommand> notifications;
 
@@ -541,7 +541,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Performs a specific action on the UI thread.
         /// </summary>
         /// <param name="action">the action to execute</param>
-        protected virtual void Dispatch(Action action)
+        public virtual void Dispatch(Action action)
         {
             var application = Application.Current;
 
@@ -559,7 +559,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// Performs an delayed action on the UI thread
         /// </summary>
         /// <param name="action">the action to execute</param>
-        protected virtual void DispatchDelayed(Action action)
+        public virtual void DispatchDelayed(Action action)
         {
             Application.Current.Dispatcher.BeginInvoke(action); 
         }
@@ -570,7 +570,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="action">the action to execute</param>
         /// <param name="delay">a delay in milliseconds to wait before the action is executed (pass a value
         /// greate or equal to zero to execute the action without any delay)</param>
-        protected virtual void ExecuteAsync(Action action, int delay)
+        public virtual void ExecuteAsync(Action action, int delay)
         {
             ExecuteAsync<object>(param => action(), null, delay);
         }
@@ -583,7 +583,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="parameter">the parameter to pass to the action</param>
         /// <param name="delay">a delay in milliseconds to wait before the action is executed (pass a value
         /// greate or equal to zero to execute the action without any delay)</param>
-        protected virtual void ExecuteAsync<T>(Action<T> action, T parameter, int delay)
+        public virtual void ExecuteAsync<T>(Action<T> action, T parameter, int delay)
         {
             // start new thread from the thread pool and pass it the action and the parameter
             ThreadPool.QueueUserWorkItem(
@@ -620,7 +620,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// clean-up logic, such as removing event handlers.
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        public virtual void Dispose(bool disposing)
         {
             if (IsDesignMode)
                 return;
@@ -658,7 +658,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Gets the name of the property.
         /// </summary>
-        private static string GetPropertyName<T>(Expression<Func<T>> propertyAccessor)
+        public static string GetPropertyName<T>(Expression<Func<T>> propertyAccessor)
         {
             return ((MemberExpression)propertyAccessor.Body).Member.Name;
         }
