@@ -244,8 +244,12 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Handles the Navigation Request
         /// </summary>
         /// <param name="message">The Navigation goback request</param>
-        public void Handle(GoBackNavigationRequest message)
+        public virtual void Handle(GoBackNavigationRequest message)
         {
+            // Check, if we can go back
+            if (!CanGoBack)
+                return;
+
             // Now Go Back
             if (CurrentPage.Dispatcher.CheckAccess())
             {
