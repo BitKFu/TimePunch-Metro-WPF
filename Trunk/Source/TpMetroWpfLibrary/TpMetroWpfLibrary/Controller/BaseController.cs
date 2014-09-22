@@ -57,15 +57,35 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Handles a message of a specific type.
         /// </summary>
         /// <param name="message">the message to handle</param>
-        public void Handle(ForceBindingUpdateEvent message)
+        public virtual void Handle(ForceBindingUpdateEvent message)
         {
-            var focusObj = FocusManager.GetFocusedElement(Application.Current.MainWindow);
-            if (focusObj == null || !(focusObj is TextBox)) 
+            // Check, if we need to dispatch
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                var waitHandle = new AutoResetEvent(false);
+                Application.Current.Dispatcher.Invoke((Action)(
+                    () =>
+                    {
+                        Handle(message);
+                        waitHandle.Set();
+                    }));
+
+                waitHandle.WaitOne();
                 return;
-            
+            }
+
+            var topWindow = Application.Current.Windows.Count - 1;
+            var element = Application.Current.Windows[topWindow];
+            if (element == null)
+                return;
+
+            var focusObj = FocusManager.GetFocusedElement(element);
+            if (!(focusObj is TextBox))
+                return;
+
             var binding = (focusObj as TextBox).GetBindingExpression(TextBox.TextProperty);
 
-            if (binding != null) 
+            if (binding != null)
                 binding.UpdateSource();
         }
 
@@ -218,7 +238,18 @@ namespace TimePunch.Metro.Wpf.Controller
         /// </returns>
         public virtual bool CanGoBack
         {
-            get { return CurrentPage != null && CurrentPage.NavigationService != null && CurrentPage.NavigationService.CanGoBack; }
+            get
+            {
+                // Maybe we can't access it directly
+                if (CurrentPage != null && !CurrentPage.CheckAccess())
+                {
+                    bool result = false;
+                    CurrentPage.Dispatcher.Invoke((Action)(() => result = CanGoBack));
+                    return result;
+                }
+
+                return CurrentPage != null && CurrentPage.NavigationService != null && CurrentPage.NavigationService.CanGoBack;
+            }
         }
 
         #endregion
@@ -278,6 +309,13 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <param name="message">the message to handle</param>
         public virtual void Handle(CloseApplicationCommand message)
         {
+            // Maybe we can't access it directly
+            if (!Application.Current.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)));
+                return;
+            }
+
             ForceClosing = message.ForceClosing;
             Application.Current.MainWindow.Close();
         }
@@ -297,6 +335,13 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <param name="message">the message to handle</param>
         public virtual void Handle(WindowStateApplicationCommand message)
         {
+            // Maybe we can't access it directly
+            if (!Application.Current.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke((Action)(() => Handle(message)));
+                return;
+            }
+
             Application.Current.MainWindow.WindowState = message.WindowState;
         }
 
@@ -365,6 +410,13 @@ namespace TimePunch.Metro.Wpf.Controller
             var animationFrame = ContentFrame as AnimationFrame;
             if (animationFrame == null)
                 return;
+
+            // Maybe we can't access it directly
+            if (!animationFrame.CheckAccess())
+            {
+                animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)));
+                return;
+            }
 
             // Switch the Animation Mode
             AnimationMode oldMode = animationFrame.AnimationMode;
