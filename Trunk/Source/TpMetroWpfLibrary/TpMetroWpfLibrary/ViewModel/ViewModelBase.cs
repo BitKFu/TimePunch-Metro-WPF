@@ -628,11 +628,8 @@ namespace TimePunch.Metro.Wpf.ViewModel
             if (IsDisposed)
                 throw new ObjectDisposedException("ViewModel has already been disposed");
 
-            if (disposing)
-            {
-                // unsubscribe from the event aggregator
-                Dispatch(() => EventAggregator.Unsubscribe(this));
-            }
+            // UnSubscribe from the event aggregator
+            Dispatch(() => EventAggregator.Unsubscribe(this));
 
             IsDisposed = true;
         }
