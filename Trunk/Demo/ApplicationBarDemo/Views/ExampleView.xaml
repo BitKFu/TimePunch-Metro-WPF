@@ -27,9 +27,11 @@
             <AppBar:ApplicationBar.Icons>
                 <AppBar:ApplicationBarIcon ImageSource="/TpMetroWpfLibrary;component/Images/appbar.prev.png"
                                            Description="previous"
+                                           IsCancel="True"
                                            Command="{Binding PrevCommand}"/>
                 <AppBar:ApplicationBarIcon ImageSource="/TpMetroWpfLibrary;component/Images/appbar.next.png"
                                            Description="next"
+                                           IsDefault="True"
                                            Command="{Binding NextCommand}"/>
             </AppBar:ApplicationBar.Icons>
             
