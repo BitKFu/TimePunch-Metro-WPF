@@ -42,7 +42,10 @@ namespace TimePunch.Metro.Wpf.Converter
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan result;
-            culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
+            // try zero
+            if (value != null && string.IsNullOrWhiteSpace(value.ToString()))
+                return TimeSpan.Zero;
 
             // Try to convert to double
             double dblValue;

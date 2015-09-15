@@ -26,9 +26,9 @@ namespace TimePunch.Metro.Wpf.Converter
         {
             var timeValue = (DateTime)value;
             fallbackTime = timeValue;
-            return timeValue.ToString("t", culture);
+            return timeValue.ToShortTimeString();
         }
-
+         
         /// <summary>
         /// Converts a value. 
         /// </summary>
