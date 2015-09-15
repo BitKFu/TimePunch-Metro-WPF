@@ -26,7 +26,7 @@ namespace TimePunch.Metro.Wpf.Converter
         {
             var timeValue = (DateTime)value;
             fallbackTime = timeValue;
-            return timeValue.ToShortTimeString();
+            return timeValue.ToString("t", culture);
         }
 
         /// <summary>
@@ -38,12 +38,24 @@ namespace TimePunch.Metro.Wpf.Converter
         /// <param name="value">The value that is produced by the binding target.</param><param name="targetType">The type to convert to.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-
             // Try to convert to double
             double dblValue;
             if (double.TryParse(value.ToString(), NumberStyles.Number, culture.NumberFormat, out dblValue))
-                return fallbackTime.Date.AddHours(Math.Max(0, Math.Min(23.99, dblValue)));
+            {
+                // Maybe we have a format like 2000 - means 20 o´clock / 730 - means 7:30
+                if (dblValue > 100)
+                {
+                    var hours = (int) (Math.Abs(dblValue)/100);
+                    var minutes = (int)Math.Abs(dblValue)%100;
+                    return fallbackTime.Date.AddHours(Math.Min(23,hours)).AddMinutes(Math.Min(59,minutes));
+                }
+                else
+                {
+                    // Maybe the double value is below 24
+                    if (dblValue < 24)
+                        return fallbackTime.Date.AddHours(Math.Max(0, Math.Min(23.99, dblValue)));
+                }
+            }
 
             // Try to convert with DateTime first
             DateTime result;

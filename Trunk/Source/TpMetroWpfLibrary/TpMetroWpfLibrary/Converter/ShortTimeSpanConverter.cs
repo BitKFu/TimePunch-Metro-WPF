@@ -47,7 +47,21 @@ namespace TimePunch.Metro.Wpf.Converter
             // Try to convert to double
             double dblValue;
             if (double.TryParse(value.ToString(), NumberStyles.Number, culture.NumberFormat, out dblValue))
-                return TimeSpan.FromHours(Math.Max(0, Math.Min(23.99,dblValue)));
+            {
+                // Maybe we have a format like 2000 - means 20 o´clock / 730 - means 7:30
+                if (dblValue > 100)
+                {
+                    var hours = (int)(Math.Abs(dblValue) / 100);
+                    var minutes = (int)Math.Abs(dblValue) % 100;
+                    return TimeSpan.FromHours(Math.Min(23, hours)).Add(TimeSpan.FromMinutes(Math.Min(59, minutes)));
+                }
+                else
+                {
+                    // Maybe the double value is below 24
+                    if (dblValue < 24)
+                        return TimeSpan.FromHours(Math.Max(0, Math.Min(23.99, dblValue)));
+                }
+            }
 
             // Try to convert with TimeSpan first
             if (TimeSpan.TryParse(value.ToString(), culture.DateTimeFormat, out result))
