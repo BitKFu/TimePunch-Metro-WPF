@@ -49,9 +49,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TpMetroWpfLibrary">
-      <HintPath>..\..\Output\Debug\TpMetroWpfLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -110,6 +107,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\TpMetroWpfLibrary\TpMetroWpfLibrary\TpMetroWpfLibrary.csproj">
+      <Project>{18c832bb-9c4b-401b-96ab-7bc4fc4472dc}</Project>
+      <Name>TpMetroWpfLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

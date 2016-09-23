@@ -807,27 +807,42 @@
                             </Grid>
                             <Border x:Name="IndeterminateRoot" Margin="{TemplateBinding Padding}" Visibility="Collapsed">
                                 <Grid HorizontalAlignment="Left">
-                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R1" Opacity="0" CacheMode="BitmapCache">
+                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R1" Opacity="0">
+                                        <Rectangle.CacheMode>
+                                            <BitmapCache></BitmapCache>
+                                        </Rectangle.CacheMode>
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="R1TT"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R2" Opacity="0" CacheMode="BitmapCache">
+                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R2" Opacity="0">
+                                        <Rectangle.CacheMode>
+                                            <BitmapCache></BitmapCache>
+                                        </Rectangle.CacheMode>
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="R2TT"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R3" Opacity="0" CacheMode="BitmapCache">
+                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R3" Opacity="0" >
+                                        <Rectangle.CacheMode>
+                                            <BitmapCache></BitmapCache>
+                                        </Rectangle.CacheMode>
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="R3TT"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R4" Opacity="0" CacheMode="BitmapCache">
+                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R4" Opacity="0" >
+                                        <Rectangle.CacheMode>
+                                            <BitmapCache></BitmapCache>
+                                        </Rectangle.CacheMode>
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="R4TT"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R5" Opacity="0" CacheMode="BitmapCache">
+                                    <Rectangle Fill="{TemplateBinding Foreground}" Height="4" IsHitTestVisible="False" Width="4" x:Name="R5" Opacity="0">
+                                        <Rectangle.CacheMode>
+                                            <BitmapCache></BitmapCache>
+                                        </Rectangle.CacheMode>
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="R5TT"/>
                                         </Rectangle.RenderTransform>
