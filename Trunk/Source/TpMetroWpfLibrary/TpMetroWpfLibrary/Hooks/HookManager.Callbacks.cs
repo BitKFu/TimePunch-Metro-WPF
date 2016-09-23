@@ -89,129 +89,133 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// </returns>
         private static IntPtr MouseHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0)
+            try
             {
-                //Marshall the data from callback.
-                MouseLLHookStruct mouseHookStruct = (MouseLLHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseLLHookStruct));
-
-                //detect button clicked
-                MouseButtons button = MouseButtons.None;
-                short mouseDelta = 0;
-                int clickCount = 0;
-                bool mouseDown = false;
-                bool mouseUp = false;
-
-                switch ((int)wParam)
+                if (nCode == 0)
                 {
-                    case WM_LBUTTONDOWN:
-                        mouseDown = true;
-                        button = MouseButtons.Left;
-                        clickCount = 1;
-                        break;
-                    case WM_LBUTTONUP:
-                        mouseUp = true;
-                        button = MouseButtons.Left;
-                        clickCount = 1;
-                        break;
-                    case WM_LBUTTONDBLCLK: 
-                        button = MouseButtons.Left;
-                        clickCount = 2;
-                        break;
-                    case WM_RBUTTONDOWN:
-                        mouseDown = true;
-                        button = MouseButtons.Right;
-                        clickCount = 1;
-                        break;
-                    case WM_RBUTTONUP:
-                        mouseUp = true;
-                        button = MouseButtons.Right;
-                        clickCount = 1;
-                        break;
-                    case WM_RBUTTONDBLCLK: 
-                        button = MouseButtons.Right;
-                        clickCount = 2;
-                        break;
-                    case WM_MOUSEWHEEL:
-                        //If the message is WM_MOUSEWHEEL, the high-order word of MouseData member is the wheel delta. 
-                        //One wheel click is defined as WHEEL_DELTA, which is 120. 
-                        //(value >> 16) & 0xffff; retrieves the high-order word from the given 32-bit value
-                        mouseDelta = (short)((mouseHookStruct.MouseData >> 16) & 0xffff);
-                       
-                    //TODO: X BUTTONS (I havent them so was unable to test)
-                        //If the message is WM_XBUTTONDOWN, WM_XBUTTONUP, WM_XBUTTONDBLCLK, WM_NCXBUTTONDOWN, WM_NCXBUTTONUP, 
-                        //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released, 
-                        //and the low-order word is reserved. This value can be one or more of the following values. 
-                        //Otherwise, MouseData is not used. 
-                        break;
-                }
+                    //Marshall the data from callback.
+                    MouseLLHookStruct mouseHookStruct =
+                        (MouseLLHookStruct) Marshal.PtrToStructure(lParam, typeof (MouseLLHookStruct));
 
-                //generate event 
-                MouseEventExtArgs e = new MouseEventExtArgs(
-                                                   button,
-                                                   clickCount,
-                                                   mouseHookStruct.Point.X,
-                                                   mouseHookStruct.Point.Y,
-                                                   mouseDelta);
+                    //detect button clicked
+                    MouseButtons button = MouseButtons.None;
+                    short mouseDelta = 0;
+                    int clickCount = 0;
+                    bool mouseDown = false;
+                    bool mouseUp = false;
 
-                //Mouse up
-                if (s_MouseUp!=null && mouseUp)
-                {
-                    s_MouseUp.Invoke(null, e);
-                }
-
-                //Mouse down
-                if (s_MouseDown != null && mouseDown)
-                {
-                    s_MouseDown.Invoke(null, e);
-                }
-
-                //If someone listens to click and a click is heppened
-                if (s_MouseClick != null && clickCount>0)
-                {
-                    s_MouseClick.Invoke(null, e);
-                }
-
-                //If someone listens to click and a click is heppened
-                if (s_MouseClickExt != null && clickCount > 0)
-                {
-                    s_MouseClickExt.Invoke(null, e);
-                }
-
-                //If someone listens to double click and a click is heppened
-                if (s_MouseDoubleClick != null && clickCount == 2)
-                {
-                    s_MouseDoubleClick.Invoke(null, e);
-                }
-
-                //Wheel was moved
-                if (s_MouseWheel!=null && mouseDelta!=0)
-                {
-                    s_MouseWheel.Invoke(null, e);
-                }
-
-                //If someone listens to move and there was a change in coordinates raise move event
-                if ((s_MouseMove!=null || s_MouseMoveExt!=null) && (m_OldX != mouseHookStruct.Point.X || m_OldY != mouseHookStruct.Point.Y))
-                {
-                    m_OldX = mouseHookStruct.Point.X;
-                    m_OldY = mouseHookStruct.Point.Y;
-                    if (s_MouseMove != null)
+                    switch ((int) wParam)
                     {
-                        s_MouseMove.Invoke(null, e);
+                        case WM_LBUTTONDOWN:
+                            mouseDown = true;
+                            button = MouseButtons.Left;
+                            clickCount = 1;
+                            break;
+                        case WM_LBUTTONUP:
+                            mouseUp = true;
+                            button = MouseButtons.Left;
+                            clickCount = 1;
+                            break;
+                        case WM_LBUTTONDBLCLK:
+                            button = MouseButtons.Left;
+                            clickCount = 2;
+                            break;
+                        case WM_RBUTTONDOWN:
+                            mouseDown = true;
+                            button = MouseButtons.Right;
+                            clickCount = 1;
+                            break;
+                        case WM_RBUTTONUP:
+                            mouseUp = true;
+                            button = MouseButtons.Right;
+                            clickCount = 1;
+                            break;
+                        case WM_RBUTTONDBLCLK:
+                            button = MouseButtons.Right;
+                            clickCount = 2;
+                            break;
+                        case WM_MOUSEWHEEL:
+                            //If the message is WM_MOUSEWHEEL, the high-order word of MouseData member is the wheel delta. 
+                            //One wheel click is defined as WHEEL_DELTA, which is 120. 
+                            //(value >> 16) & 0xffff; retrieves the high-order word from the given 32-bit value
+                            mouseDelta = (short) ((mouseHookStruct.MouseData >> 16) & 0xffff);
+
+                            //TODO: X BUTTONS (I havent them so was unable to test)
+                            //If the message is WM_XBUTTONDOWN, WM_XBUTTONUP, WM_XBUTTONDBLCLK, WM_NCXBUTTONDOWN, WM_NCXBUTTONUP, 
+                            //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released, 
+                            //and the low-order word is reserved. This value can be one or more of the following values. 
+                            //Otherwise, MouseData is not used. 
+                            break;
                     }
 
-                    if (s_MouseMoveExt != null)
-                    {
-                        s_MouseMoveExt.Invoke(null, e);
-                    }
-                }
+                    //generate event 
+                    var e = new MouseEventExtArgs(
+                        button,
+                        clickCount,
+                        mouseHookStruct.Point.X,
+                        mouseHookStruct.Point.Y,
+                        mouseDelta);
 
-                if (e.Handled)
-                {
-                    return new IntPtr(-1);
+                    //Mouse up
+                    if (s_MouseUp != null && mouseUp)
+                    {
+                        s_MouseUp.Invoke(null, e);
+                    }
+
+                    //Mouse down
+                    if (s_MouseDown != null && mouseDown)
+                    {
+                        s_MouseDown.Invoke(null, e);
+                    }
+
+                    //If someone listens to click and a click is heppened
+                    if (s_MouseClick != null && clickCount > 0)
+                    {
+                        s_MouseClick.Invoke(null, e);
+                    }
+
+                    //If someone listens to click and a click is heppened
+                    if (s_MouseClickExt != null && clickCount > 0)
+                    {
+                        s_MouseClickExt.Invoke(null, e);
+                    }
+
+                    //If someone listens to double click and a click is heppened
+                    if (s_MouseDoubleClick != null && clickCount == 2)
+                    {
+                        s_MouseDoubleClick.Invoke(null, e);
+                    }
+
+                    //Wheel was moved
+                    if (s_MouseWheel != null && mouseDelta != 0)
+                    {
+                        s_MouseWheel.Invoke(null, e);
+                    }
+
+                    //If someone listens to move and there was a change in coordinates raise move event
+                    if ((s_MouseMove != null || s_MouseMoveExt != null) &&
+                        (m_OldX != mouseHookStruct.Point.X || m_OldY != mouseHookStruct.Point.Y))
+                    {
+                        m_OldX = mouseHookStruct.Point.X;
+                        m_OldY = mouseHookStruct.Point.Y;
+                        if (s_MouseMove != null)
+                        {
+                            s_MouseMove.Invoke(null, e);
+                        }
+
+                        if (s_MouseMoveExt != null)
+                        {
+                            s_MouseMoveExt.Invoke(null, e);
+                        }
+                    }
                 }
             }
+            catch (Exception)
+            {
+                // Ignore errors that occure while low level callbacks
+            }
 
-            //call next hook
+            //forward to other application
             return CallNextHookEx(s_MouseHookHandle, nCode, wParam, lParam);
         }
 
@@ -328,61 +332,69 @@ namespace TimePunch.Metro.Wpf.Hooks
         /// </returns>
         private static IntPtr KeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            //indicates if any of underlaing events set e.Handled flag
-            bool handled = false;
-
-            if (nCode >= 0)
+            try
             {
-                var wParamInt32 = wParam.ToInt32();
+                //indicates if any of underlaing events set e.Handled flag
+                bool handled = false;
 
-                //read structure KeyboardHookStruct at lParam
-                KeyboardHookStruct MyKeyboardHookStruct = (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
-                //raise KeyDown
-                if (s_KeyDown != null && (wParamInt32 == WM_KEYDOWN || wParamInt32 == WM_SYSKEYDOWN))
+                if (nCode == 0)
                 {
-                    Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
-                    KeyEventArgs e = new KeyEventArgs(keyData);
-                    s_KeyDown.Invoke(null, e);
-                    handled = e.Handled;
-                }
+                    var wParamInt32 = wParam.ToInt32();
 
-                // raise KeyPress
-                if (s_KeyPress != null && wParamInt32 == WM_KEYDOWN)
-                {
-                    bool isDownShift = ((GetKeyState(VK_SHIFT) & 0x80) == 0x80 ? true : false);
-                    bool isDownCapslock = (GetKeyState(VK_CAPITAL) != 0 ? true : false);
-
-                    byte[] keyState = new byte[256];
-                    GetKeyboardState(keyState);
-                    byte[] inBuffer = new byte[2];
-                    if (ToAscii(MyKeyboardHookStruct.VirtualKeyCode,
-                              MyKeyboardHookStruct.ScanCode,
-                              keyState,
-                              inBuffer,
-                              MyKeyboardHookStruct.Flags) == 1)
+                    //read structure KeyboardHookStruct at lParam
+                    KeyboardHookStruct MyKeyboardHookStruct =
+                        (KeyboardHookStruct) Marshal.PtrToStructure(lParam, typeof (KeyboardHookStruct));
+                    //raise KeyDown
+                    if (s_KeyDown != null && (wParamInt32 == WM_KEYDOWN || wParamInt32 == WM_SYSKEYDOWN))
                     {
-                        char key = (char)inBuffer[0];
-                        if ((isDownCapslock ^ isDownShift) && Char.IsLetter(key)) key = Char.ToUpper(key);
-                        KeyPressEventArgs e = new KeyPressEventArgs(key);
-                        s_KeyPress.Invoke(null, e);
+                        Keys keyData = (Keys) MyKeyboardHookStruct.VirtualKeyCode;
+                        KeyEventArgs e = new KeyEventArgs(keyData);
+                        s_KeyDown.Invoke(null, e);
+                        handled = e.Handled;
+                    }
+
+                    // raise KeyPress
+                    if (s_KeyPress != null && wParamInt32 == WM_KEYDOWN)
+                    {
+                        bool isDownShift = ((GetKeyState(VK_SHIFT) & 0x80) == 0x80 ? true : false);
+                        bool isDownCapslock = (GetKeyState(VK_CAPITAL) != 0 ? true : false);
+
+                        byte[] keyState = new byte[256];
+                        GetKeyboardState(keyState);
+                        byte[] inBuffer = new byte[2];
+                        if (ToAscii(MyKeyboardHookStruct.VirtualKeyCode,
+                            MyKeyboardHookStruct.ScanCode,
+                            keyState,
+                            inBuffer,
+                            MyKeyboardHookStruct.Flags) == 1)
+                        {
+                            char key = (char) inBuffer[0];
+                            if ((isDownCapslock ^ isDownShift) && Char.IsLetter(key)) key = Char.ToUpper(key);
+                            KeyPressEventArgs e = new KeyPressEventArgs(key);
+                            s_KeyPress.Invoke(null, e);
+                            handled = handled || e.Handled;
+                        }
+                    }
+
+                    // raise KeyUp
+                    if (s_KeyUp != null && (wParamInt32 == WM_KEYUP || wParamInt32 == WM_SYSKEYUP))
+                    {
+                        Keys keyData = (Keys) MyKeyboardHookStruct.VirtualKeyCode;
+                        KeyEventArgs e = new KeyEventArgs(keyData);
+                        s_KeyUp.Invoke(null, e);
                         handled = handled || e.Handled;
                     }
+
                 }
 
-                // raise KeyUp
-                if (s_KeyUp != null && (wParamInt32 == WM_KEYUP || wParamInt32 == WM_SYSKEYUP))
-                {
-                    Keys keyData = (Keys)MyKeyboardHookStruct.VirtualKeyCode;
-                    KeyEventArgs e = new KeyEventArgs(keyData);
-                    s_KeyUp.Invoke(null, e);
-                    handled = handled || e.Handled;
-                }
-
+                //if event handled in application do not handoff to other listeners
+                if (handled)
+                    return IntPtr.Zero;
             }
-
-            //if event handled in application do not handoff to other listeners
-            if (handled)
-                return new IntPtr(-1);
+            catch (Exception)
+            {
+                // Ignore errors that occure while low level callbacks
+            }
 
             //forward to other application
             return CallNextHookEx(s_KeyboardHookHandle, nCode, wParam, lParam);
