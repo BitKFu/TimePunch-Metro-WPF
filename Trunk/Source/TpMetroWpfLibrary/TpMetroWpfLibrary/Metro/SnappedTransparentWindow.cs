@@ -415,15 +415,15 @@ namespace TimePunch.Metro.Wpf.Metro
                             isMagicKeyPressed = false;
                             break;
                         case PinStyle.AlwaysOff:
-                            HookManager.MouseClick -= OnMouseClickOnScreen;
+                            HookManager.MouseDown -= OnMouseClickOnScreen;
                             break;
                         case PinStyle.Manual:
-                            HookManager.MouseClick -= OnMouseClickOnScreen;
+                            HookManager.MouseDown -= OnMouseClickOnScreen;
                             break;
                         case PinStyle.Fixed:
                             break;
                         case PinStyle.TouchFriendly:
-                            HookManager.MouseClick -= OnMouseClickOnScreen;
+                            HookManager.MouseDown -= OnMouseClickOnScreen;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException("value");
@@ -442,19 +442,19 @@ namespace TimePunch.Metro.Wpf.Metro
                             HookManager.MouseMove += OnMouseMoveOnScreen;
                             break;
                         case PinStyle.AlwaysOff:
-                            HookManager.MouseClick += OnMouseClickOnScreen;
+                            HookManager.MouseDown += OnMouseClickOnScreen;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             BeginAnimation(fadeIn);
                             break;
                         case PinStyle.Manual:
-                            HookManager.MouseClick += OnMouseClickOnScreen;
+                            HookManager.MouseDown += OnMouseClickOnScreen;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             BeginAnimation(fadeIn);
                             break;
                         case PinStyle.Fixed:
                             break;
                         case PinStyle.TouchFriendly:
-                            HookManager.MouseClick += OnMouseClickOnScreen;
+                            HookManager.MouseDown += OnMouseClickOnScreen;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             break;
                         default:
