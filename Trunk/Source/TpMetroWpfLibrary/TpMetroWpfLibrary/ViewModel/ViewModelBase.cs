@@ -382,7 +382,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
                 {
                     if (typeof(T).IsValueType)
                     {
-                        valueChanged = !previousValue.Equals(value);
+                        valueChanged = previousValue == null || !previousValue.Equals(value);
                     }
                     else
                     {
