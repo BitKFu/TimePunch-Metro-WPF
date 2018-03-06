@@ -3,6 +3,7 @@
 // All other rights reserved.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Contains the values of all properties of the view model.
         /// </summary>
-        private readonly IDictionary<string, object> propertyValues;
+        private readonly ConcurrentDictionary<string, object> propertyValues;
 
         /// <summary>
         /// Contains the dependent notifications that shall be send if a property changes.
@@ -64,7 +65,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         protected ViewModelBase(IEventAggregator eventAggregator = null)
         {
             // initialize the maps
-            propertyValues = new Dictionary<string, object>();
+            propertyValues = new ConcurrentDictionary<string, object>();
             dependentNotifications = new Dictionary<string, IList<string>>();
             dependentCommandNotifications = new Dictionary<string, IList<ICommand>>();
 
@@ -238,7 +239,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <summary>
         /// Gets the dictionary of the property values, which maps the name of a property to its current value. 
         /// </summary>
-        protected IDictionary<string, Object> PropertyValues
+        protected ConcurrentDictionary<string, Object> PropertyValues
         {
             get { return propertyValues; }
         }
@@ -372,32 +373,34 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <returns>True if the property value has been updated, otherwise false</returns>
         protected bool SetPropertyValue<T>(Expression<Func<T>> propertyAccessor, T value) 
         {
-            bool valueChanged;
+            bool valueChanged = false;
 
             string propertyName = GetPropertyName(propertyAccessor);
             if (PropertyValues.ContainsKey(propertyName))
             {
-                var previousValue = GetPropertyValue<T>(propertyName);
-
-                if (typeof(T).IsValueType)
+                PropertyValues.AddOrUpdate(propertyName, value, (key, previousValue) =>
                 {
-                    valueChanged = !previousValue.Equals(value);
-                }
-                else
-                {
-// ReSharper disable CompareNonConstrainedGenericWithNull
-                    valueChanged = previousValue != null ? !previousValue.Equals(value) : value != null;
-// ReSharper restore CompareNonConstrainedGenericWithNull
-                }
+                    if (typeof(T).IsValueType)
+                    {
+                        valueChanged = !previousValue.Equals(value);
+                    }
+                    else
+                    {
+                        // ReSharper disable CompareNonConstrainedGenericWithNull
+                        valueChanged = !previousValue?.Equals(value) ?? value != null;
+                        // ReSharper restore CompareNonConstrainedGenericWithNull
+                    }
 
-                PropertyValues[propertyName] = value;
+                    return value;
+                });
+
                 if (valueChanged)
                     OnPropertyChanged(propertyName);
             }
             else
             {
                 valueChanged = true;
-                PropertyValues.Add(propertyName, value);
+                PropertyValues.AddOrUpdate(propertyName, value, (key, previousValue) => value);
 
                 OnPropertyChanged(propertyName);
             }
