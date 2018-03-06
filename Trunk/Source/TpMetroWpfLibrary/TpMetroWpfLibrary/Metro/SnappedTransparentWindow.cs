@@ -62,7 +62,7 @@ namespace TimePunch.Metro.Wpf.Metro
     /// <summary>
     /// The snapped transparent window class is used to build transparent, dockable windows
     /// </summary>
-    public class SnappedTransparentWindow : TransparentWindow, INotifyPropertyChanged
+    public class SnappedTransparentWindow : TransparentWindow, INotifyPropertyChanged, IDisposable
     {
         #region Private Fields
 
@@ -645,7 +645,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <summary>
         /// This method stops the sliding animation
         /// </summary>
-        private void OnStopSliding()
+        protected void OnStopSliding()
         {
             Storyboard sliding, opacity;
             try
@@ -996,6 +996,44 @@ namespace TimePunch.Metro.Wpf.Metro
             Top = rect.Top;
             Width = rect.Width;
             Height = rect.Height;
+        }
+
+        ~SnappedTransparentWindow()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                latencyTimer?.Dispose();
+
+                // Remove all hooks
+                docker.OnDockingChanged -= OnDockingChanged;
+
+                Loaded -= Initialize;
+                MouseEnter -= OnWindowEnterArea;
+                MouseLeave -= OnWindowLeaveArea;
+
+                TouchEnter -= OnWindowEnterTouchArea;
+                MouseLeftButtonUp -= OnMouseLeftButtonUp;
+
+                // Remove the window hooks
+                OnStopSliding();
+                PinStyle = PinStyle.Undefined;
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Dispose(true);
         }
     }
 }

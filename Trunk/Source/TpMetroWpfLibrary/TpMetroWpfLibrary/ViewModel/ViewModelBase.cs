@@ -552,7 +552,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
                 if (application.Dispatcher.CheckAccess())
                     action(); // execute directly
                 else
-                    application.Dispatcher.BeginInvoke(action); // place the action on the Dispatcher of the UI thread
+                    application.Dispatcher.Invoke(action); // place the action on the Dispatcher of the UI thread
         }
 
         /// <summary>
