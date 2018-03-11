@@ -564,7 +564,16 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// <param name="action">the action to execute</param>
         public virtual void DispatchDelayed(Action action)
         {
-            Application.Current.Dispatcher.BeginInvoke(action); 
+            var application = Application.Current;
+
+            if (application == null)
+                action();
+            else
+                // check, if we have access to the UI thread
+            if (application.Dispatcher.CheckAccess())
+                action(); // execute directly
+            else
+                application.Dispatcher.BeginInvoke(action); // place the action on the Dispatcher of the UI thread
         }
 
         /// <summary>
@@ -632,7 +641,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
                 throw new ObjectDisposedException("ViewModel has already been disposed");
 
             // UnSubscribe from the event aggregator
-            Dispatch(() => EventAggregator.Unsubscribe(this));
+            DispatchDelayed(() => EventAggregator.Unsubscribe(this));
 
             IsDisposed = true;
         }
