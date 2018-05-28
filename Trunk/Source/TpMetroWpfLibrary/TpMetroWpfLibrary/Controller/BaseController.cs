@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Controls.Picker;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
@@ -68,7 +69,7 @@ namespace TimePunch.Metro.Wpf.Controller
                     {
                         Handle(message);
                         waitHandle.Set();
-                    }));
+                    }), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
 
                 waitHandle.WaitOne();
                 return;
@@ -244,7 +245,7 @@ namespace TimePunch.Metro.Wpf.Controller
                 if (CurrentPage != null && !CurrentPage.CheckAccess())
                 {
                     bool result = false;
-                    CurrentPage.Dispatcher.Invoke((Action)(() => result = CanGoBack));
+                    CurrentPage.Dispatcher.Invoke((Action)(() => result = CanGoBack), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
                     return result;
                 }
 
@@ -253,6 +254,12 @@ namespace TimePunch.Metro.Wpf.Controller
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Set an standard invocation timeout of 5 seconds
+        /// </summary>
+        public static TimeSpan InvocationTimeout { get; set; } = TimeSpan.FromSeconds(5);
 
         #region Properties
 
@@ -312,7 +319,7 @@ namespace TimePunch.Metro.Wpf.Controller
             // Maybe we can't access it directly
             if (!Application.Current.CheckAccess())
             {
-                Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)));
+                Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
                 return;
             }
 
@@ -338,7 +345,7 @@ namespace TimePunch.Metro.Wpf.Controller
             // Maybe we can't access it directly
             if (!Application.Current.CheckAccess())
             {
-                Application.Current.Dispatcher.Invoke((Action)(() => Handle(message)));
+                Application.Current.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
                 return;
             }
 
@@ -414,7 +421,7 @@ namespace TimePunch.Metro.Wpf.Controller
             // Maybe we can't access it directly
             if (!animationFrame.CheckAccess())
             {
-                animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)));
+                animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
                 return;
             }
 

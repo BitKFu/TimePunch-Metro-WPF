@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Commands;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.EventAggregation;
@@ -92,7 +93,8 @@ namespace TimePunch.Metro.Wpf.ViewModel
         /// </summary>
         ~ViewModelBase()
         {
-            Dispose(false);
+            if (!IsDisposed)
+                Dispose(false);
         }
 
         /// <summary>
@@ -551,11 +553,17 @@ namespace TimePunch.Metro.Wpf.ViewModel
             if (application == null)
                 action();
             else
+            {
                 // check, if we have access to the UI thread
                 if (application.Dispatcher.CheckAccess())
+                {
                     action(); // execute directly
+                }
                 else
-                    application.Dispatcher.Invoke(action); // place the action on the Dispatcher of the UI thread
+                {
+                    application.Dispatcher.Invoke(action, DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout); // place the action on the Dispatcher of the UI thread
+                }
+            }
         }
 
         /// <summary>
@@ -637,12 +645,13 @@ namespace TimePunch.Metro.Wpf.ViewModel
             if (IsDesignMode)
                 return;
 
+#if DEBUG
             if (IsDisposed)
                 throw new ObjectDisposedException("ViewModel has already been disposed");
+#endif
 
             // UnSubscribe from the event aggregator
             DispatchDelayed(() => EventAggregator.Unsubscribe(this));
-
             IsDisposed = true;
         }
 

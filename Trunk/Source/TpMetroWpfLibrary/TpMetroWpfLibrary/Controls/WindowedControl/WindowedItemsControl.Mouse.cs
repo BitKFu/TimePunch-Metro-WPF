@@ -40,10 +40,7 @@ namespace TimePunch.Metro.Wpf.Controls.WindowedControl
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (leaveTimer != null)
-            {
-                leaveTimer.Dispose();
-            }
+            leaveTimer?.Dispose();
             leaveTimer = null;
 
             base.OnMouseEnter(e);

@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
@@ -452,7 +454,7 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
             slideAnimation.Completed += (EventHandler)
                 ((s, e) =>
                     {
-                        Dispatcher.Invoke((Action)(() => Clip = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight - menuItemHeight))));
+                        Dispatcher.Invoke((Action)(() => Clip = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight - menuItemHeight))), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
                         isAnimating = false;
                     }); 
             LayoutTranslation.BeginAnimation(TranslateTransform.YProperty, slideAnimation);
