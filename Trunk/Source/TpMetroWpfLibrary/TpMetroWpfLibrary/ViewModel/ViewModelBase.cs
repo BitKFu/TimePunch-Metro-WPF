@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -561,7 +562,19 @@ namespace TimePunch.Metro.Wpf.ViewModel
                 }
                 else
                 {
-                    application.Dispatcher.Invoke(action, DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout); // place the action on the Dispatcher of the UI thread
+                    try
+                    {
+                        application.Dispatcher.Invoke(
+                            action,
+                            DispatcherPriority.Normal,
+                            CancellationToken.None,
+                            BaseController.InvocationTimeout); // place the action on the Dispatcher of the UI thread
+                    }
+                    catch (TimeoutException)
+                    {
+                        Trace.TraceWarning("Can't dispatch action in time, so try to invoke async");
+                        application.Dispatcher.InvokeAsync(action);
+                    }
                 }
             }
         }

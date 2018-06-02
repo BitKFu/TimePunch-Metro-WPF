@@ -3,6 +3,7 @@
 // All other rights reserved.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -64,12 +65,22 @@ namespace TimePunch.Metro.Wpf.Controller
             if (!Application.Current.Dispatcher.CheckAccess())
             {
                 var waitHandle = new AutoResetEvent(false);
-                Application.Current.Dispatcher.Invoke((Action)(
+                var action = (Action)(
                     () =>
                     {
                         Handle(message);
                         waitHandle.Set();
-                    }), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                    });
+
+                try
+                {
+                    Application.Current.Dispatcher.Invoke(action, DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                }
+                catch (TimeoutException)
+                {
+                    Trace.TraceWarning("Can't dispatch ForceBindingUpdateEvent in time, so try to invoke async");
+                    Application.Current.Dispatcher.InvokeAsync(action);
+                }
 
                 waitHandle.WaitOne();
                 return;
@@ -245,7 +256,17 @@ namespace TimePunch.Metro.Wpf.Controller
                 if (CurrentPage != null && !CurrentPage.CheckAccess())
                 {
                     bool result = false;
-                    CurrentPage.Dispatcher.Invoke((Action)(() => result = CanGoBack), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                    try
+                    {
+                        CurrentPage.Dispatcher.Invoke((Action) (() => result = CanGoBack), DispatcherPriority.Normal,
+                            CancellationToken.None, BaseController.InvocationTimeout);
+                    }
+                    catch (TimeoutException)
+                    {
+                        Trace.TraceWarning("Can't dispatch CanGoBack in time, assume false");
+                        result = false;
+                    }
+
                     return result;
                 }
 
@@ -319,7 +340,16 @@ namespace TimePunch.Metro.Wpf.Controller
             // Maybe we can't access it directly
             if (!Application.Current.CheckAccess())
             {
-                Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                try
+                {
+                    Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal,
+                        CancellationToken.None, BaseController.InvocationTimeout);
+                }
+                catch (TimeoutException)
+                {
+                    Trace.TraceWarning("Can't dispatch CloseApplicationCommand in time, so try to invoke async");
+                    Application.Current.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                }
                 return;
             }
 
@@ -345,7 +375,16 @@ namespace TimePunch.Metro.Wpf.Controller
             // Maybe we can't access it directly
             if (!Application.Current.CheckAccess())
             {
-                Application.Current.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                try
+                {
+                    Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal,
+                        CancellationToken.None, BaseController.InvocationTimeout);
+                }
+                catch (TimeoutException)
+                {
+                    Trace.TraceWarning("Can't dispatch WindowStateApplicationCommand in time, so try to invoke async");
+                    Application.Current.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                }
                 return;
             }
 
@@ -414,14 +453,22 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <param name="message"></param>
         public virtual void Handle(ChangeAnimationModeRequest message)
         {
-            var animationFrame = ContentFrame as AnimationFrame;
-            if (animationFrame == null)
+            if (!(ContentFrame is AnimationFrame animationFrame))
                 return;
 
             // Maybe we can't access it directly
             if (!animationFrame.CheckAccess())
             {
-                animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                try
+                {
+                    animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                }
+                catch (TimeoutException)
+                {
+                    Trace.TraceWarning("Can't dispatch ChangeAnimationModeRequest in time, so try to invoke async");
+                    animationFrame.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                }
+
                 return;
             }
 

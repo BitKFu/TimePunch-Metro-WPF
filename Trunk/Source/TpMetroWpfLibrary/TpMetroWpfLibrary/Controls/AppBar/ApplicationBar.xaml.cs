@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -453,10 +454,21 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
 
             slideAnimation.Completed += (EventHandler)
                 ((s, e) =>
+                {
+                    var action = (Action) (() => Clip = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight - menuItemHeight)));
+                    try
                     {
-                        Dispatcher.Invoke((Action)(() => Clip = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight - menuItemHeight))), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
-                        isAnimating = false;
-                    }); 
+                        Dispatcher.Invoke(action, DispatcherPriority.Normal,
+                            CancellationToken.None, BaseController.InvocationTimeout);
+                    }
+                    catch (TimeoutException)
+                    {
+                        Trace.TraceWarning("Can't dispatch animation in time, so try to invoke async");
+                        Dispatcher.InvokeAsync(action);
+                    }
+
+                    isAnimating = false;
+                }); 
             LayoutTranslation.BeginAnimation(TranslateTransform.YProperty, slideAnimation);
         }
 
