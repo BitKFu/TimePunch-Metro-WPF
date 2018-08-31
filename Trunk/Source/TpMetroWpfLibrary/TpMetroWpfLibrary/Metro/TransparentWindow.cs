@@ -78,6 +78,9 @@ namespace TimePunch.Metro.Wpf.Metro
         /// <param name="e"></param>
         private void OnWindowStateChanged(object sender, EventArgs e)
         {
+            if (GetValue(ResizeDirectionsProperty) == null)
+                return;
+
             switch (WindowState)
             {
                 case WindowState.Normal:
@@ -171,7 +174,16 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         public ResizeDirectionFlags ResizeDirections
         {
-            get { return (ResizeDirectionFlags) GetValue(ResizeDirectionsProperty); }
+            get => (ResizeDirectionFlags?) GetValue(ResizeDirectionsProperty) ??
+                   ResizeDirectionFlags.SizeN |
+                   ResizeDirectionFlags.SizeS |
+                   ResizeDirectionFlags.SizeW |
+                   ResizeDirectionFlags.SizeE |
+                   ResizeDirectionFlags.SizeSE |
+                   ResizeDirectionFlags.SizeNW |
+                   ResizeDirectionFlags.SizeSW |
+                   ResizeDirectionFlags.SizeNE;
+
             set
             {
                 var oldValue = (ResizeDirectionFlags?)GetValue(ResizeDirectionsProperty);
@@ -217,20 +229,6 @@ namespace TimePunch.Metro.Wpf.Metro
             // ReSharper restore PossibleNullReferenceException
         }        
         
-        //private void UpdateBordersVisibility(ResizeDirectionFlags value)
-        //{
-        //    // ReSharper disable PossibleNullReferenceException
-        //    ((Thumb)GetTemplateChild("PART_SizeN")).IsEnabled = (value & ResizeDirectionFlags.SizeN) == ResizeDirectionFlags.SizeN;
-        //    ((Thumb)GetTemplateChild("PART_SizeS")).IsEnabled = (value & ResizeDirectionFlags.SizeS) == ResizeDirectionFlags.SizeS; 
-        //    ((Thumb)GetTemplateChild("PART_SizeW")).IsEnabled = (value & ResizeDirectionFlags.SizeW) == ResizeDirectionFlags.SizeW;
-        //    ((Thumb)GetTemplateChild("PART_SizeE")).IsEnabled = (value & ResizeDirectionFlags.SizeE) == ResizeDirectionFlags.SizeE;
-        //    ((Thumb)GetTemplateChild("PART_SizeSE")).IsEnabled = (value & ResizeDirectionFlags.SizeSE) == ResizeDirectionFlags.SizeSE;
-        //    ((Thumb)GetTemplateChild("PART_SizeNW")).IsEnabled = (value & ResizeDirectionFlags.SizeNW) == ResizeDirectionFlags.SizeNW;
-        //    ((Thumb)GetTemplateChild("PART_SizeSW")).IsEnabled = (value & ResizeDirectionFlags.SizeSW) == ResizeDirectionFlags.SizeSW;
-        //    ((Thumb)GetTemplateChild("PART_SizeNE")).IsEnabled = (value & ResizeDirectionFlags.SizeNE) == ResizeDirectionFlags.SizeNE;
-        //    // ReSharper restore PossibleNullReferenceException
-        //}
-
         private static void OnPreviewMouseDown(object sender,  MouseButtonEventArgs eventArgs)
         {
             var transparentWindow = (TransparentWindow)sender;
