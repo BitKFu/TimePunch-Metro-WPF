@@ -24,6 +24,9 @@ namespace TimePunch.Metro.Wpf.Converter
         /// <param name="value">The value produced by the binding source.</param><param name="targetType">The type of the binding target property.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null || (value is string && value.ToString() == string.Empty))
+                return "-.-";
+
             var timeValue = (DateTime)value;
             fallbackTime = timeValue;
             return timeValue.ToShortTimeString();
@@ -38,9 +41,15 @@ namespace TimePunch.Metro.Wpf.Converter
         /// <param name="value">The value that is produced by the binding target.</param><param name="targetType">The type to convert to.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Use the current culture
+            culture = CultureInfo.CurrentCulture;
+
+            // try zero
+            if (string.IsNullOrWhiteSpace(value?.ToString()) || value?.ToString() == "-.-")
+                return targetType == typeof(DateTime) ? DateTime.MinValue : (DateTime?)null;
+
             // Try to convert to double
-            double dblValue;
-            if (double.TryParse(value.ToString(), NumberStyles.Number, culture.NumberFormat, out dblValue))
+            if (double.TryParse(value.ToString(), NumberStyles.Number, culture.NumberFormat, out var dblValue))
             {
                 // Maybe we have a format like 2000 - means 20 o´clock / 730 - means 7:30
                 if (dblValue > 100)
@@ -58,8 +67,7 @@ namespace TimePunch.Metro.Wpf.Converter
             }
 
             // Try to convert with DateTime first
-            DateTime result;
-            if (DateTime.TryParse(value.ToString(), culture.DateTimeFormat, DateTimeStyles.None, out result))
+            if (DateTime.TryParse(value.ToString(), culture.DateTimeFormat, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowInnerWhite, out var result))
                 return result;
 
             return fallbackTime;
