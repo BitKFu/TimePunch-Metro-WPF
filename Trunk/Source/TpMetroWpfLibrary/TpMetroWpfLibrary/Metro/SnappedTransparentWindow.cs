@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Docking;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.Hooks;
@@ -594,6 +595,14 @@ namespace TimePunch.Metro.Wpf.Metro
         private void BeginAnimation(Storyboard storyboard)
         {
             ResetIsAnimating();
+            storyboard.Completed += (s,e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Topmost = false; // important
+                    Topmost = true; // important
+                });
+            };
             storyboard.Begin();
 
             if (object.ReferenceEquals(storyboard, fadeIn) || object.ReferenceEquals(storyboard, slideIn) || object.ReferenceEquals(storyboard, reduceOpacity))
@@ -719,7 +728,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">Event arguments</param>
-        protected void OnSlideIn(object sender, EventArgs e)
+        protected virtual void OnSlideIn(object sender, EventArgs e)
         {
             Storyboard sliding;
             latencyTimer.Stop();
@@ -734,7 +743,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">Event arguments</param>
-        protected void OnSlideOut(object sender, EventArgs e)
+        protected virtual void OnSlideOut(object sender, EventArgs e)
         {
             Storyboard sliding;
             latencyTimer.Stop();

@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyCompanyAttribute("TimePunch KG")]
 [assembly: AssemblyProductAttribute("TimePunch Metro WPF Library")]
 [assembly: AssemblyCopyrightAttribute("(c) by TimePunch KG")]
-[assembly: AssemblyVersionAttribute("1.7.4.0")]
+[assembly: AssemblyVersionAttribute("1.7.5.0")]
 [assembly: AssemblyDelaySignAttribute(false)]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisibleAttribute(false)]
