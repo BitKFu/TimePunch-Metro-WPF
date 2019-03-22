@@ -176,6 +176,14 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // FadeIn Animation
             fadeIn = new Storyboard();
+            fadeIn.Completed += (s, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Topmost = false; // important
+                    Topmost = true; // important
+                });
+            };
 
             animation = new DoubleAnimation { To = 1.0 };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -211,6 +219,14 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // SlideIn Animation
             slideIn = new Storyboard();
+            slideIn.Completed += (s, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Topmost = false; // important
+                    Topmost = true; // important
+                });
+            };
 
             animation = new DoubleAnimation { To = 0.0, EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut } };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -595,14 +611,6 @@ namespace TimePunch.Metro.Wpf.Metro
         private void BeginAnimation(Storyboard storyboard)
         {
             ResetIsAnimating();
-            storyboard.Completed += (s,e) =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    Topmost = false; // important
-                    Topmost = true; // important
-                });
-            };
             storyboard.Begin();
 
             if (object.ReferenceEquals(storyboard, fadeIn) || object.ReferenceEquals(storyboard, slideIn) || object.ReferenceEquals(storyboard, reduceOpacity))
