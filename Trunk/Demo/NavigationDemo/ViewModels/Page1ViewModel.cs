@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Events;
 
 namespace NavigationDemo.ViewModels
 {

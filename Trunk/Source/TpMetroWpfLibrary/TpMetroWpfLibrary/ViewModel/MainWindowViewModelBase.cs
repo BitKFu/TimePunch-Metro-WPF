@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Metro;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.ViewModel
 {

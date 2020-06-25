@@ -14,6 +14,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.MVVM.Controller;
+using Kernel = TimePunch.Metro.Wpf.Controller.Kernel;
 
 namespace TimePunch.Metro.Wpf.Metro
 {

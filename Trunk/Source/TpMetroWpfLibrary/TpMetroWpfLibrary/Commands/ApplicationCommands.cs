@@ -34,7 +34,7 @@ namespace TimePunch.Metro.Wpf.Commands
         /// <returns></returns>
         public static CommandBindingCollection GetRegisterCommandBindings(UIElement element)
         {
-            return (element != null ? (CommandBindingCollection)element.GetValue(RegisterCommandBindingsProperty) : null);
+            return (CommandBindingCollection) element?.GetValue(RegisterCommandBindingsProperty);
         }
 
         /// <summary>
@@ -45,12 +45,10 @@ namespace TimePunch.Metro.Wpf.Commands
         private static void OnRegisterCommandBindingChanged
         (DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var element = sender as UIElement;
-            if (element == null) 
+            if (!(sender is UIElement element)) 
                 return;
-            
-            var bindings = e.NewValue as CommandBindingCollection;
-            if (bindings != null)
+
+            if (e.NewValue is CommandBindingCollection bindings)
                 element.CommandBindings.AddRange(bindings);
         }
     }

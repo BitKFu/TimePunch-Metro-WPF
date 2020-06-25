@@ -8,9 +8,11 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Controller;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.Events;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {
@@ -21,11 +23,6 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
     /// </summary>
     public partial class ListPicker : IHandleMessage<ListPickerSelectItemRequest>, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Unique Identifier used to identify the message from ListPickerFullModeViewModel
-        /// </summary>
-        private readonly Guid listPickerId = Guid.NewGuid(); 
-
         #region Dependency Properties
 
         /// <summary>
@@ -100,8 +97,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public IEnumerable ItemsSource
         {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         /// <summary>
@@ -109,8 +106,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
 
         /// <summary>
@@ -118,8 +115,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string DisplayMemberPath
         {
-            get { return (string) GetValue(DisplayMemberPathProperty); }
-            set { SetValue(DisplayMemberPathProperty, value); }
+            get => (string) GetValue(DisplayMemberPathProperty);
+            set => SetValue(DisplayMemberPathProperty, value);
         }
 
         /// <summary>
@@ -127,8 +124,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string FullModeHeader
         {
-            get { return (string) GetValue(FullModeHeaderProperty); }
-            set { SetValue(FullModeHeaderProperty, value); }
+            get => (string) GetValue(FullModeHeaderProperty);
+            set => SetValue(FullModeHeaderProperty, value);
         }
 
         /// <summary>
@@ -136,8 +133,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string DisplayValue
         {
-            get { return (string)GetValue(DisplayValueProperty); }
-            set { SetValue(DisplayValueProperty, value); }
+            get => (string)GetValue(DisplayValueProperty);
+            set => SetValue(DisplayValueProperty, value);
         }
 
         /// <summary>
@@ -163,22 +160,19 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             var info = SelectedItem.GetType().GetProperty(DisplayMemberPath);
             if (info == null)
             {
-                DisplayValue = string.Format("<{0}> not found", DisplayMemberPath);
+                DisplayValue = $"<{DisplayMemberPath}> not found";
                 return;
             }
 
             // Return the evaluted property content
             var value = info.GetValue(SelectedItem, null);
-            DisplayValue = value == null ? string.Empty : value.ToString();
+            DisplayValue = value?.ToString() ?? string.Empty;
         }
 
         /// <summary>
         /// Gets the Unique Identifier used to identify the message from ListPickerFullModeViewModel
         /// </summary>
-        public Guid ListPickerId
-        {
-            get { return listPickerId; }
-        }
+        public Guid ListPickerId { get; } = Guid.NewGuid();
 
         #endregion
 
@@ -267,7 +261,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public bool IsReadonly
         {
-            get { return (bool)GetValue(IsReadonlyProperty); }
+            get => (bool)GetValue(IsReadonlyProperty);
             set
             {
                 SetValue(IsReadonlyProperty, value);
@@ -280,10 +274,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets the Picker Cursor 
         /// </summary>
-        public Cursor PickerCursor
-        {
-            get { return IsReadonly || !IsEnabled ? Cursors.Arrow : Cursors.Hand; }
-        }
+        public Cursor PickerCursor => IsReadonly || !IsEnabled ? Cursors.Arrow : Cursors.Hand;
 
         #region Implementation of INotifyPropertyChanged
 

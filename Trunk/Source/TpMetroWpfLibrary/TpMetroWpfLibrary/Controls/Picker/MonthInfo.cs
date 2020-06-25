@@ -11,13 +11,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         // 1 through 12
         public int MonthNumber { set; get; }
 
-        public string MonthName
-        {
-            get
-            {
-                return DateTimeFormatInfo.CurrentInfo.MonthNames[MonthNumber - 1];
-            }
-        }
+        public string MonthName => DateTimeFormatInfo.CurrentInfo.MonthNames[MonthNumber - 1];
 
         public override string ToString()
         {

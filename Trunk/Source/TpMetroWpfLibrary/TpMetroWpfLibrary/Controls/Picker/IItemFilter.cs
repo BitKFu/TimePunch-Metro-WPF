@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TimePunch.Metro.Wpf.Controls.Picker
+﻿namespace TimePunch.Metro.Wpf.Controls.Picker
 {
     /// <summary>
     /// Item Filter used to filter list items

@@ -9,6 +9,9 @@ using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Events;
+using TimePunch.MVVM.ViewModels;
+using ViewModelBase = TimePunch.Metro.Wpf.ViewModel.ViewModelBase;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {
@@ -32,8 +35,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="extraData">The extra Data, if there's any. Otherwise NULL</param>
         public override void InitializePage(object extraData)
         {
-            var request = extraData as ListPickerFullModeRequest;
-            if (request == null)
+            if (!(extraData is ListPickerFullModeRequest request))
                 return;
 
             // Initialize Page
@@ -44,7 +46,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             ListPickerId = request.ListPickerId;
 
             var firstOrDefault = request.ItemsSource.Cast<object>().FirstOrDefault();
-            UseFilterMethod = (firstOrDefault != null) && typeof(IItemFilter).IsAssignableFrom(firstOrDefault.GetType());
+            UseFilterMethod = firstOrDefault is IItemFilter;
 
             AddPropertyChangedNotification(() => FilterText, () => FilteredItemSource);
             OnPropertyChanged(() => FilteredItemSource);

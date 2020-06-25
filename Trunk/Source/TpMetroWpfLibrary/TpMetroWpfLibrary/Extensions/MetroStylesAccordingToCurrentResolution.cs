@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using TimePunch.Metro.Wpf.Helper;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.Extensions
 {

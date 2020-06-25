@@ -15,17 +15,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public int Year { set; get; }
         public int Month { set; get; }
 
-        public string DayOfWeek
-        {
-            get
-            {
-                return DateTimeFormatInfo.CurrentInfo.DayNames[(int)new DateTime(Year, Month, DayNumber).DayOfWeek];
-            }
-        }
+        public string DayOfWeek => DateTimeFormatInfo.CurrentInfo.DayNames[(int)new DateTime(Year, Month, DayNumber).DayOfWeek];
 
         public override string ToString()
         {
-            return String.Format("{0} {1}", DayNumber, DayOfWeek);
+            return $"{DayNumber} {DayOfWeek}";
         }
     }
 }

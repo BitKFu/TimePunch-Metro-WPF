@@ -3,8 +3,8 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Controls.Picker;
-using TimePunch.Metro.Wpf.EventAggregation;
-using TimePunch.Metro.Wpf.Events;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.Events;
 using TpMetroWpfLibrary.Tests.Controller;
 
 namespace TpMetroWpfLibrary.Tests.Controls.Picker

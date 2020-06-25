@@ -7,6 +7,8 @@ using System.Windows.Media.Imaging;
 using TimePunch.Metro.Wpf.Resources;
 using TimePunch.Metro.Wpf.ViewModel;
 using TimePunch.Metro.Wpf.Controls.AppBar;
+using TimePunch.MVVM.ViewModels;
+using ViewModelBase = TimePunch.Metro.Wpf.ViewModel.ViewModelBase;
 
 namespace TimePunch.Metro.Wpf.Controls.TextBox
 {

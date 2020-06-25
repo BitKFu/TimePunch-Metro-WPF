@@ -1,6 +1,6 @@
 ﻿using NavigationDemo.NavigationEvents;
 using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
+using TimePunch.MVVM.EventAggregation;
 
 namespace NavigationDemo.Core
 {

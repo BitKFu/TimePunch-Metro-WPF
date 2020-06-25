@@ -5,8 +5,8 @@
 using System;
 using System.Linq;
 using System.Windows.Input;
-using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Events;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {

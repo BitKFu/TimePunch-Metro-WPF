@@ -5,14 +5,15 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Helper;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Controller;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.Events;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {

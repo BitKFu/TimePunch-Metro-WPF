@@ -22,10 +22,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the selected item
         /// </summary>
-        public TimeSpan Value { get; private set; }
+        public TimeSpan Value { get; }
 
         /// <summary>
         /// Gets the TimePicker Id
         /// </summary>
-        public Guid TimeSpanPickerId { get; private set; }}
+        public Guid TimeSpanPickerId { get; }}
 }

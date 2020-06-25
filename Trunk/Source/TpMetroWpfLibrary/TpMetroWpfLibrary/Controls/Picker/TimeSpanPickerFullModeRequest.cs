@@ -24,16 +24,16 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the selected Date Value
         /// </summary>
-        public TimeSpan Value { get; private set; }
+        public TimeSpan Value { get;  }
 
         /// <summary>
         /// Gets or sets the FullMode Header
         /// </summary>
-        public string FullModeHeader { get; private set; }
+        public string FullModeHeader { get;  }
 
         /// <summary>
         /// Gets the TimePicker Id
         /// </summary>
-        public Guid TimeSpanPickerId { get; private set; }    
+        public Guid TimeSpanPickerId { get; }    
     }
 }

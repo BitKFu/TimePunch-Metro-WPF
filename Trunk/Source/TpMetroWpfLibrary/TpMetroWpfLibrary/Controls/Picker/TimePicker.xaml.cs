@@ -8,10 +8,12 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Helper;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Controller;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.Events;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {
@@ -22,11 +24,6 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
     /// </summary>
     public partial class TimePicker : IHandleMessage<TimePickerSelectRequest>, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Unique Identifier used to identify the message from TimePickerFullModeViewModel
-        /// </summary>
-        private readonly Guid timePickerId = Guid.NewGuid();
-        
         #region Constructor
 
         /// <summary>
@@ -93,7 +90,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string FullModeHeader
         {
-            get { return (string)GetValue(FullModeHeaderProperty); }
+            get => (string)GetValue(FullModeHeaderProperty);
             set
             {
                 if (FullModeHeader == value)
@@ -106,9 +103,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Debug.WriteLine("TimePicker Value Changed to {0}", d.GetValue(e.Property));
-            
-            var picker = d as TimePicker;
-            if (picker != null && picker.PropertyChanged != null)
+
+            if (d is TimePicker picker && picker.PropertyChanged != null)
                 picker.PropertyChanged.Invoke(picker, new PropertyChangedEventArgs("TimePickerValue"));
         }
 
@@ -117,8 +113,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public DateTime Value
         {
-            get { return (DateTime)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get => (DateTime)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
 
         /// <summary>
@@ -126,17 +122,14 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public DateTime TimePickerValue
         {
-            get { return Value; }
-            set { Value = Value.Date.Add(value.TimeOfDay); }
+            get => Value;
+            set => Value = Value.Date.Add(value.TimeOfDay);
         }
 
         /// <summary>
         /// Gets the Unique Identifier used to identify the message from DatePickerFullModeViewModel
         /// </summary>
-        public Guid TimePickerId
-        {
-            get { return timePickerId; }
-        }
+        public Guid TimePickerId { get; } = Guid.NewGuid();
 
         #endregion
 
@@ -204,7 +197,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public bool IsReadonly
         {
-            get { return (bool) GetValue(IsReadonlyProperty); }
+            get => (bool) GetValue(IsReadonlyProperty);
             set
             {
                 SetValue(IsReadonlyProperty, value);
@@ -219,16 +212,13 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public bool IsTouchSelectionEnabled
         {
-            get { return (bool)GetValue(IsTouchSelectionEnabledProperty); }
-            set { SetValue(IsTouchSelectionEnabledProperty, value); }
+            get => (bool)GetValue(IsTouchSelectionEnabledProperty);
+            set => SetValue(IsTouchSelectionEnabledProperty, value);
         }
 
         /// <summary>
         /// Gets the Picker Cursor 
         /// </summary>
-        public Cursor PickerCursor
-        {
-            get { return IsReadonly || !IsEnabled ? Cursors.Arrow : Cursors.Hand; }
-        }
+        public Cursor PickerCursor => IsReadonly || !IsEnabled ? Cursors.Arrow : Cursors.Hand;
     }
 }

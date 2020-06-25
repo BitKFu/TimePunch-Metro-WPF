@@ -33,26 +33,26 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the ItemsSource
         /// </summary>
-        public IEnumerable ItemsSource { get; private set; }
+        public IEnumerable ItemsSource { get;}
 
         /// <summary>
         /// Gets or sets the selected item
         /// </summary>
-        public object SelectedItem { get; private set; }
+        public object SelectedItem { get; }
 
         /// <summary>
         /// Gets or sets the FullModeItemTemplate
         /// </summary>
-        public DataTemplate FullModeItemTemplate { get; private set; }
+        public DataTemplate FullModeItemTemplate { get; }
 
         /// <summary>
         /// Gets or sets the FullMode Header
         /// </summary>
-        public string FullModeHeader { get; private set; }
+        public string FullModeHeader { get; }
 
         /// <summary>
         /// Gets the ListPicker Id
         /// </summary>
-        public Guid ListPickerId { get; private set; }
+        public Guid ListPickerId { get;  }
     }
 }

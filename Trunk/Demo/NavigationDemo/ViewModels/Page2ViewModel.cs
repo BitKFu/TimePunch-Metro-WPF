@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using TimePunch.Metro.Wpf.Events;
+﻿using System.Windows.Input;
 using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Events;
 
 namespace NavigationDemo.ViewModels
 {

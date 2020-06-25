@@ -128,14 +128,15 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="TpMVVM_Wpf, Version=0.3.0.0, Culture=neutral, PublicKeyToken=0e9ec715575165a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\TimePunch-MVVM.0.3.0\lib\net452\TpMVVM_Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ApplicationCommands.cs" />
-    <Compile Include="Commands\DynamicCommand.cs" />
-    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Controller\IKernel.cs" />
     <Compile Include="Controller\INavigationController.cs" />
@@ -211,19 +212,12 @@
     <Compile Include="Docking\OnTaskBarMovedEventHandlerArgs.cs" />
     <Compile Include="Docking\TaskBar.cs" />
     <Compile Include="Docking\TaskBarDocker.cs" />
-    <Compile Include="EventAggregation\EventAggregator.cs" />
-    <Compile Include="EventAggregation\IEventAggregator.cs" />
-    <Compile Include="EventAggregation\IHandleMessage.cs" />
     <Compile Include="Events\ApplicationClosedEvent.cs" />
     <Compile Include="Events\ApplicationIsClosingEvent.cs" />
     <Compile Include="Events\ChangeAnimationModeRequest.cs" />
     <Compile Include="Events\CloseApplicationCommand.cs" />
     <Compile Include="Events\ForceBindingUpdateEvent.cs" />
-    <Compile Include="Events\GoBackNavigationRequest.cs" />
     <Compile Include="Events\HideMenuItemsRequest.cs" />
-    <Compile Include="Events\NavigatedEvent.cs" />
-    <Compile Include="Events\NavigationCompletedEvent.cs" />
-    <Compile Include="Events\NavigationEvent.cs" />
     <Compile Include="Events\WindowStateApplicationCommand.cs" />
     <Compile Include="Extensions\StylesAccordingToCurrentResolution.cs" />
     <Compile Include="Extensions\MetroStylesAccordingToCurrentResolution.cs" />
@@ -269,6 +263,7 @@
     <EmbeddedResource Include="Resources\CommonResources.resx" />
     <None Include="Images\appbar.icons.pdn" />
     <AppDesigner Include="Properties\" />
+    <None Include="packages.config" />
     <None Include="TpMetroWpfLibrary.snk" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
+using TimePunch.MVVM.Controller;
+using TimePunch.MVVM.EventAggregation;
+using Kernel = TimePunch.Metro.Wpf.Controller.Kernel;
 
 namespace TpMetroWpfLibrary.Tests.Controller
 {

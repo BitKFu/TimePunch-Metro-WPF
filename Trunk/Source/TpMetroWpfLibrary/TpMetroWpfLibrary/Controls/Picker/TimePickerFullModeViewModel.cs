@@ -6,8 +6,10 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
-using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.Events;
+using TimePunch.MVVM.ViewModels;
+using ViewModelBase = TimePunch.Metro.Wpf.ViewModel.ViewModelBase;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {
@@ -44,8 +46,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="extraData">The extra Data, if there's any. Otherwise NULL</param>
         public override void InitializePage(object extraData)
         {
-            var request = extraData as TimePickerFullModeRequest;
-            if (request == null)
+            if (!(extraData is TimePickerFullModeRequest request))
                 return;
 
             // Initialize Page

@@ -10,7 +10,7 @@ namespace CheckBoxDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetRootFrame(ContentFrame);
+            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }

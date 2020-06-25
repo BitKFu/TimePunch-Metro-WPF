@@ -1,5 +1,5 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
+using TimePunch.MVVM.EventAggregation;
 
 namespace PasswordCheckDemo.Core
 {

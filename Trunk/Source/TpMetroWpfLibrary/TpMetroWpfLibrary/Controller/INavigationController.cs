@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace TimePunch.Metro.Wpf.Controller
 {
@@ -19,7 +15,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <summary>
         /// Initializes the Navigation Controller
         /// </summary>
-        void SetRootFrame(Frame contentFrame);
+        void SetContentFrame(Frame contentFrame);
 
         /// <summary>
         /// Navigates to page.

@@ -4,27 +4,23 @@
 
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Controls.Picker;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Frames;
 using TimePunch.Metro.Wpf.Helper;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.EventAggregation;
 
 namespace TimePunch.Metro.Wpf.Controller
 {
     /// <summary>
     /// Base class for module specific controllers
     /// </summary>
-    public abstract class BaseController :
-        IHandleMessage<GoBackNavigationRequest>,
+    public abstract class BaseController : TimePunch.MVVM.Controller.BaseController,
         IHandleMessage<CloseApplicationCommand>,
         IHandleMessage<ListPickerFullModeRequest>,
         IHandleMessage<DatePickerFullModeRequest>,
@@ -32,20 +28,17 @@ namespace TimePunch.Metro.Wpf.Controller
         IHandleMessage<TimeSpanPickerFullModeRequest>,
         IHandleMessage<WindowStateApplicationCommand>,
         IHandleMessage<ForceBindingUpdateEvent>,
-        IHandleMessage<ChangeAnimationModeRequest>, 
+        IHandleMessage<ChangeAnimationModeRequest>,
         INavigationController
     {
-        private NavigationMode navigationMode;
-
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the BaseController class.
         /// </summary>
-        protected BaseController()
+        protected BaseController() 
+            : base(Kernel.Instance.EventAggregator)
         {
-            EventAggregator = Kernel.Instance.EventAggregator;
-            EventAggregator.Subscribe(this);
         }
 
         /// <summary>
@@ -74,7 +67,7 @@ namespace TimePunch.Metro.Wpf.Controller
 
                 try
                 {
-                    Application.Current.Dispatcher.Invoke(action, DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                    Application.Current.Dispatcher.Invoke(action, DispatcherPriority.Normal, CancellationToken.None, InvocationTimeout);
                 }
                 catch (TimeoutException)
                 {
@@ -115,75 +108,10 @@ namespace TimePunch.Metro.Wpf.Controller
         #region Methods
 
         /// <summary>
-        /// Attaches the controller to the root frame
-        /// </summary>
-        /// <param name="contentFrame">The Content Frame</param>
-        public virtual void SetRootFrame(Frame contentFrame)
-        {
-            if (contentFrame != null)
-            {
-                // wire events
-                contentFrame.Navigated += OnNavigated;
-                contentFrame.Navigating += OnNavigating;
-            }
-
-            ContentFrame = contentFrame;
-        }
-
-        /// <summary>
-        /// Gets or sets the content frame
-        /// </summary>
-        protected Frame ContentFrame { get; set; }
-
-        /// <summary>
-        /// Called when the NavigationService navigates to a new page inside the application
-        /// </summary>
-        /// <param name="sender">The sending object</param>
-        /// <param name="e">Navigating Event Args</param>
-        protected virtual void OnNavigated(object sender, NavigationEventArgs e)
-        {
-            var page = e.Content as Page;
-
-            // keep track of the current page
-            CurrentPage = page;
-            if (page == null) return;
-
-            // Send NavigationCompletedEvent, if it's a normal navigation request
-            object context = page.DataContext;
-            if (context != null)
-            {
-                // Send Navigated Request
-                Type requestType = typeof (NavigationCompletedEvent<>).MakeGenericType(new[] {context.GetType()});
-
-                MethodInfo publishMessage = EventAggregator.GetType().GetMethod("PublishMessage");
-                publishMessage = publishMessage.GetGenericMethodDefinition().MakeGenericMethod(new[] {requestType});
-                publishMessage.Invoke(EventAggregator, new[] { Activator.CreateInstance(requestType, navigationMode) });
-            }
-
-            // Initializes the Page if the DataContext is derived from the ViewModelBase
-            var viewModelBase = page.DataContext as ViewModelBase;
-            if (viewModelBase != null)
-                viewModelBase.InitializePage(e.ExtraData);
-
-            EventAggregator.PublishMessage(new NavigatedEvent());
-        }
-
-        /// <summary>
-        /// On Navigation Handler
-        /// </summary>
-        /// <param name="sender">The sending object</param>
-        /// <param name="e">Navigating Cancel Event Args</param>
-        protected virtual void OnNavigating(object sender, NavigatingCancelEventArgs e)
-        {
-            navigationMode = e.NavigationMode;
-            EventAggregator.PublishMessage(new NavigationEvent(e));
-        }
-
-        /// <summary>
         /// Navigates to page.
         /// </summary>
         /// <param name="navigateToPage">The navigate to page.</param>
-        public virtual void NavigateToPage(string navigateToPage)
+        public override void NavigateToPage(string navigateToPage)
         {
             if (CurrentPage == null)
                 Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() =>
@@ -215,7 +143,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// </summary>
         /// <param name="navigateToPage">The navigate to page.</param>
         /// <param name="message">The message thas will be send to the page</param>
-        public virtual void NavigateToPage(string navigateToPage, object message)
+        public override void NavigateToPage(string navigateToPage, object message)
         {
             if (CurrentPage == null)
                 Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() => 
@@ -242,91 +170,6 @@ namespace TimePunch.Metro.Wpf.Controller
             }
         }
 
-        /// <summary>
-        /// Determines whether this instance [can go back].
-        /// </summary>
-        /// <returns>
-        /// 	<c>true</c> if this instance [can go back]; otherwise, <c>false</c>.
-        /// </returns>
-        public virtual bool CanGoBack
-        {
-            get
-            {
-                // Maybe we can't access it directly
-                if (CurrentPage != null && !CurrentPage.CheckAccess())
-                {
-                    bool result = false;
-                    try
-                    {
-                        CurrentPage.Dispatcher.Invoke((Action) (() => result = CanGoBack), DispatcherPriority.Normal,
-                            CancellationToken.None, BaseController.InvocationTimeout);
-                    }
-                    catch (TimeoutException)
-                    {
-                        Trace.TraceWarning("Can't dispatch CanGoBack in time, assume false");
-                        result = false;
-                    }
-
-                    return result;
-                }
-
-                return CurrentPage != null && CurrentPage.NavigationService != null && CurrentPage.NavigationService.CanGoBack;
-            }
-        }
-
-        #endregion
-
-
-        /// <summary>
-        /// Set an standard invocation timeout of 5 seconds
-        /// </summary>
-        public static TimeSpan InvocationTimeout { get; set; } = TimeSpan.FromSeconds(5);
-
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the controller that used for monitor the navigational messages
-        /// </summary>
-        protected IEventAggregator EventAggregator { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current page.
-        /// </summary>
-        /// <value>The current page.</value>
-        public Page CurrentPage { get; private set; }
-
-        #endregion Properties
-
-        #region IHandleMessage<GoBackNavigationRequest> Members
-
-        /// <summary>
-        /// Handles the Navigation Request
-        /// </summary>
-        /// <param name="message">The Navigation goback request</param>
-        public virtual void Handle(GoBackNavigationRequest message)
-        {
-            // Check, if we can go back
-            if (!CanGoBack)
-                return;
-
-            // Now Go Back
-            if (CurrentPage.Dispatcher.CheckAccess())
-            {
-                // When going back, delete an potential error and clear the state
-                var baseModel = CurrentPage.DataContext as ViewModelBase;
-                if (baseModel != null && baseModel.IsDefective)
-                    baseModel.Error = string.Empty;
-
-                if (CurrentPage.NavigationService == null)
-                    return;
-
-                if (CurrentPage.NavigationService.CanGoBack)
-                    CurrentPage.NavigationService.GoBack();
-            }
-            else
-                CurrentPage.Dispatcher.BeginInvoke((ThreadStart)(() => Handle(message)));
-        }
-
         #endregion
 
         #region IHandleMessage<CloseApplicationCommand>
@@ -342,19 +185,20 @@ namespace TimePunch.Metro.Wpf.Controller
             {
                 try
                 {
-                    Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal,
-                        CancellationToken.None, BaseController.InvocationTimeout);
+                    Application.Current.Dispatcher.Invoke(() => Handle(message), DispatcherPriority.Normal,
+                        CancellationToken.None, InvocationTimeout);
                 }
                 catch (TimeoutException)
                 {
                     Trace.TraceWarning("Can't dispatch CloseApplicationCommand in time, so try to invoke async");
-                    Application.Current.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                    Application.Current.Dispatcher.InvokeAsync(() => Handle(message));
                 }
                 return;
             }
 
             ForceClosing = message.ForceClosing;
-            Application.Current.MainWindow.Close();
+            if (Application.Current.MainWindow != null)
+                Application.Current.MainWindow.Close();
         }
 
         /// <summary>
@@ -377,18 +221,19 @@ namespace TimePunch.Metro.Wpf.Controller
             {
                 try
                 {
-                    Application.Current.Dispatcher.Invoke((Action) (() => Handle(message)), DispatcherPriority.Normal,
-                        CancellationToken.None, BaseController.InvocationTimeout);
+                    Application.Current.Dispatcher.Invoke(() => Handle(message), DispatcherPriority.Normal,
+                        CancellationToken.None, InvocationTimeout);
                 }
                 catch (TimeoutException)
                 {
                     Trace.TraceWarning("Can't dispatch WindowStateApplicationCommand in time, so try to invoke async");
-                    Application.Current.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                    Application.Current.Dispatcher.InvokeAsync(() => Handle(message));
                 }
                 return;
             }
 
-            Application.Current.MainWindow.WindowState = message.WindowState;
+            if (Application.Current.MainWindow != null)
+                Application.Current.MainWindow.WindowState = message.WindowState;
         }
 
         #endregion
@@ -461,12 +306,12 @@ namespace TimePunch.Metro.Wpf.Controller
             {
                 try
                 {
-                    animationFrame.Dispatcher.Invoke((Action)(() => Handle(message)), DispatcherPriority.Normal, CancellationToken.None, BaseController.InvocationTimeout);
+                    animationFrame.Dispatcher.Invoke(() => Handle(message), DispatcherPriority.Normal, CancellationToken.None, InvocationTimeout);
                 }
                 catch (TimeoutException)
                 {
                     Trace.TraceWarning("Can't dispatch ChangeAnimationModeRequest in time, so try to invoke async");
-                    animationFrame.Dispatcher.InvokeAsync((Action)(() => Handle(message)));
+                    animationFrame.Dispatcher.InvokeAsync(() => Handle(message));
                 }
 
                 return;

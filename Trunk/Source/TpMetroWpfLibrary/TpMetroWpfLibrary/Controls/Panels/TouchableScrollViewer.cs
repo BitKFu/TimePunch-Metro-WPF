@@ -8,7 +8,7 @@ namespace TimePunch.Metro.Wpf.Controls.Panels
 {
     public class TouchableScrollViewer : ScrollViewer
     {
-        private double offset = 0;
+        private double offset;
 
         public TouchableScrollViewer()
         {
@@ -19,11 +19,6 @@ namespace TimePunch.Metro.Wpf.Controls.Panels
         {
             offset = e.VerticalOffset;
             base.OnScrollChanged(e);
-        }
-
-        protected override void OnManipulationStarting(System.Windows.Input.ManipulationStartingEventArgs e)
-        {
-            base.OnManipulationStarting(e);
         }
 
         protected override void OnManipulationDelta(System.Windows.Input.ManipulationDeltaEventArgs e)

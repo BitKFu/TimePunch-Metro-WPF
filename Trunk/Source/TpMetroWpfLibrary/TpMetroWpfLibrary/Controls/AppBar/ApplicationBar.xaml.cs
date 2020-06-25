@@ -19,10 +19,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Controller;
-using TimePunch.Metro.Wpf.EventAggregation;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Metro;
-using TimePunch.Metro.Wpf.ViewModel;
+using TimePunch.MVVM.EventAggregation;
+using TimePunch.MVVM.ViewModels;
 
 namespace TimePunch.Metro.Wpf.Controls.AppBar
 {

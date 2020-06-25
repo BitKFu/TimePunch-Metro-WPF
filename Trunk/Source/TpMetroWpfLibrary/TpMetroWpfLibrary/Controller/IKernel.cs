@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.EventAggregation;
+﻿using TimePunch.MVVM.Controller;
+using TimePunch.MVVM.EventAggregation;
 
 namespace TimePunch.Metro.Wpf.Controller
 {
