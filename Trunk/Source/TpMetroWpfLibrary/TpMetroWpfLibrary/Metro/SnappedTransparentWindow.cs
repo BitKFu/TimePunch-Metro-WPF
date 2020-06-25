@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using TimePunch.Metro.Wpf.Docking;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.Hooks;
@@ -175,6 +176,14 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // FadeIn Animation
             fadeIn = new Storyboard();
+            fadeIn.Completed += (s, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Topmost = false; // important
+                    Topmost = true; // important
+                });
+            };
 
             animation = new DoubleAnimation { To = 1.0 };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -210,6 +219,14 @@ namespace TimePunch.Metro.Wpf.Metro
 
             // SlideIn Animation
             slideIn = new Storyboard();
+            slideIn.Completed += (s, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Topmost = false; // important
+                    Topmost = true; // important
+                });
+            };
 
             animation = new DoubleAnimation { To = 0.0, EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut } };
             BindingOperations.SetBinding(animation, Timeline.DurationProperty, new Binding("AnimationDuration") { Source = this, Mode = BindingMode.OneWay });
@@ -719,7 +736,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">Event arguments</param>
-        protected void OnSlideIn(object sender, EventArgs e)
+        protected virtual void OnSlideIn(object sender, EventArgs e)
         {
             Storyboard sliding;
             latencyTimer.Stop();
@@ -734,7 +751,7 @@ namespace TimePunch.Metro.Wpf.Metro
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">Event arguments</param>
-        protected void OnSlideOut(object sender, EventArgs e)
+        protected virtual void OnSlideOut(object sender, EventArgs e)
         {
             Storyboard sliding;
             latencyTimer.Stop();

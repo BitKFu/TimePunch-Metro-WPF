@@ -61,8 +61,18 @@ namespace TimePunch.Metro.Wpf.Controller
                 var action = (Action)(
                     () =>
                     {
-                        Handle(message);
-                        waitHandle.Set();
+                        try
+                        {
+                            Handle(message);
+                        }
+                        catch (Exception)
+                        {
+                            // Do nothing here
+                        }
+                        finally
+                        {
+                            waitHandle.Set();
+                        }
                     });
 
                 try
@@ -75,7 +85,7 @@ namespace TimePunch.Metro.Wpf.Controller
                     Application.Current.Dispatcher.InvokeAsync(action);
                 }
 
-                waitHandle.WaitOne();
+                waitHandle.WaitOne(BaseController.InvocationTimeout);
                 return;
             }
 
