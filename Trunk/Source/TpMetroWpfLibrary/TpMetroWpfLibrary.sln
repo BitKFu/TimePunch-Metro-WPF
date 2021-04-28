@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpMetroWpfLibrary", "TpMetroWpfLibrary\TpMetroWpfLibrary.csproj", "{18C832BB-9C4B-401B-96AB-7BC4FC4472DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpMetroWpfLibrary.Tests", "TpMetroWpfLibrary.Tests\TpMetroWpfLibrary.Tests.csproj", "{C375E58F-50EF-44F2-B345-E221F2910BC3}"
@@ -13,21 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs34
-		SccProjectUniqueName0 = TpMetroWpfLibrary.Tests\\TpMetroWpfLibrary.Tests.csproj
-		SccProjectName0 = TpMetroWpfLibrary.Tests
-		SccLocalPath0 = TpMetroWpfLibrary.Tests
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = TpMetroWpfLibrary\\TpMetroWpfLibrary.csproj
-		SccProjectName2 = TpMetroWpfLibrary
-		SccLocalPath2 = TpMetroWpfLibrary
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = TpMetroWpfLibrary.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -52,5 +39,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E125E12-083E-4FD7-9E8F-C1D5223F76EE}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = TpMetroWpfLibrary.vsmdi
 	EndGlobalSection
 EndGlobal
