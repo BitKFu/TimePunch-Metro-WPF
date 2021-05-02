@@ -11,11 +11,11 @@
             MouseLeftButtonDown="OnEnterFullModeViaClick"
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
-            Background="{StaticResource WinChromeBrush}">
+            Background="{DynamicResource WinChromeBrush}">
         <TextBlock 
             Text="{Binding DisplayValue}" 
-            Style="{StaticResource WinTextNormalStyle}" 
-            Foreground="{StaticResource WinTextBoxForegroundBrush}"
+            Style="{DynamicResource WinTextNormalStyle}" 
+            Foreground="{DynamicResource WinTextBoxForegroundBrush}"
             Margin="{StaticResource WinMargin}"/>
     </Grid>
 </UserControl>

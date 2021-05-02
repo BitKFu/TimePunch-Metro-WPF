@@ -29,8 +29,17 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
     /// <summary>
     /// Interaction logic for ApplicationBar.xaml
     /// </summary>
-    public partial class ApplicationBar : UserControl, IHandleMessage<HideMenuItemsRequest>
+    public partial class ApplicationBar : UserControl, IHandleMessage<HideMenuItemsRequest>, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Image Source Dependency Property
+        /// </summary>
+        public static DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ApplicationBar));
+        public static DependencyProperty IconsProperty = DependencyProperty.Register("Icons", typeof(ObservableCollection<ApplicationBarIcon>), typeof(ApplicationBar));
+
+        // Property Changed Event
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Initializes a new Application Bar 
         /// </summary>
@@ -49,10 +58,10 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
 
-            Background = (Brush) TryFindResource("WinChromeBrush");
-
             if (!ViewModelBase.IsDesignMode)
                 Kernel.Instance.EventAggregator.Subscribe(this);
+
+            SetResourceReference(ImageSourceProperty, "BurgerMenu");
         }
 
         /// <summary>
@@ -147,8 +156,48 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
         /// <summary>
         /// Gets or sets the Application Bar Icons
         /// </summary>
-        [Category("Behavior"), Description("Contains the icons shown in the application bar.")]
-        public ObservableCollection<ApplicationBarIcon> Icons { get; set; }
+        [Category("Behavior"), Description("Contains the icons shown in the application bar."), NotifyParentProperty(true)]
+        public ObservableCollection<ApplicationBarIcon> Icons
+        {
+            get { return (ObservableCollection<ApplicationBarIcon>)GetValue(IconsProperty); }
+            set
+            {
+                if (Icons == value)
+                    return;
+
+                SetValue(IconsProperty, value);
+                OnNotifyPropertyChanged("Icons");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the image source 
+        /// </summary>
+        [Category("Behavior"), DefaultValue(""), Description("Image source of the application bar icon"), NotifyParentProperty(true)]
+        public ImageSource ImageSource
+        {
+            get { return (ImageSource)GetValue(ImageSourceProperty); }
+            set
+            {
+                if (ImageSource == value)
+                    return;
+
+                SetValue(ImageSourceProperty, value);
+                OnNotifyPropertyChanged("ImageSource");
+            }
+        }
+
+        /// <summary>
+        /// Notify on property change
+        /// </summary>
+        /// <param name="property">name of the property</param>
+        private void OnNotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged == null)
+                return;
+
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
+        }
 
         /// <summary>
         /// This method will be called, if the icon collection changes
@@ -228,13 +277,13 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
 
                 var button = new Button
                                   {
-                                      Style = (Style) TryFindResource("ChromeButtonStyle"),
                                       Margin = new Thickness(12,3,12,3),
-                                      Content = content,
                                       Focusable = newItem.Focusable,
                                       IsDefault = newItem.IsDefault,
                                       IsCancel = newItem.IsCancel
                                   };
+                button.SetResourceReference(Control.StyleProperty, "ChromeButtonStyle");
+                
                 stack.Children.Add(button);
 
                 // Description text
@@ -242,9 +291,9 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
                                     {
                                         Text = newItem.Description,
                                         HorizontalAlignment = HorizontalAlignment.Center,
-                                        Style = (Style)TryFindResource("WinTextSmallStyle"),
                                         Focusable = newItem.Focusable
                                     };
+                textBlock.SetResourceReference(Control.StyleProperty, "WinTextSmallStyle");
                 stack.Children.Add(textBlock);
 
                 // Add bindings
@@ -254,7 +303,7 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
                 binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.DescriptionProperty) };
                 textBlock.SetBinding(TextBlock.TextProperty, binding);
 
-                binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.ImageSourceProperty) };
+                binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.ImageSourceProperty)};
                 content.SetBinding(Image.SourceProperty, binding);
 
                 binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.IsDefaultProperty)};
@@ -265,7 +314,10 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
 
                 binding = new Binding() { Source = newItem, Path = new PropertyPath(VisibilityProperty) };
                 stack.SetBinding(VisibilityProperty, binding);
-                
+
+                button.Resources.Add("Image", content);
+                button.SetResourceReference(Button.ContentProperty, "Image");
+
                 // Add it to the collection
                 IconPanel.Children.Insert(newStartingIndex, stack);
                 newStartingIndex++;

@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Style="{StaticResource ChromeButtonStyle}" Margin="{StaticResource WinMargin}" 
+        <Button Grid.Column="0" Style="{DynamicResource ChromeButtonStyle}" Margin="{StaticResource WinMargin}" 
                         Visibility="{Binding Command, ElementName=DisplayErrorCtrl, Converter ={StaticResource ObjectToVisibilityConverter}}"
                         Command="{Binding Command, ElementName=DisplayErrorCtrl}">
             <Button.Content>
@@ -29,6 +29,6 @@
                            TextWrapping="Wrap" 
                            VerticalAlignment="Center"
                            Margin="{StaticResource WinMargin}"
-                           Style="{StaticResource WinTextAccentStyle}"/>
+                           Style="{DynamicResource WinTextAccentStyle}"/>
     </Grid>
 </UserControl>

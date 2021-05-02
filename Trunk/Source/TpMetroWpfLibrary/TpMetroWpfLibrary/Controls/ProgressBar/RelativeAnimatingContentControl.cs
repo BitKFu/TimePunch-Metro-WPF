@@ -512,7 +512,7 @@ namespace TimePunch.Metro.Wpf.Controls.ProgressBar
 // the difference: except this style will not use the UI thread at
 // runtime when IsIndeterminate=true.
 // 
-// <ProgressBar Style="{StaticResource PerformanceProgressBar}"
+// <ProgressBar Style="{DynamicResource PerformanceProgressBar}"
 //              IsIndeterminate="true"/>
 //
 -->

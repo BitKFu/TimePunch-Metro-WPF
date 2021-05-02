@@ -24,7 +24,7 @@
         <!-- Header -->
         <TextBlock Grid.Row="0" 
             Text="{Binding FullModeHeader}" 
-            Style="{StaticResource WinTextGroupHeaderStyle}" 
+            Style="{DynamicResource WinTextGroupHeaderStyle}" 
             Margin="{StaticResource WinMargin}"/>
 
         <!-- Content -->
@@ -61,7 +61,7 @@
 
                                 <TextBlock Text="{Binding Hour, Converter={StaticResource NumberToFixedStringConverter}}"
                                        VerticalAlignment="Center"
-                                       Style="{StaticResource WinTextExtraLargeStyle}" />
+                                       Style="{DynamicResource WinTextExtraLargeStyle}" />
 
                                 <Rectangle Fill="#80FFFFFF">
                                     <Rectangle.Visibility>
@@ -116,7 +116,7 @@
 
                                 <TextBlock Text="{Binding Minute, Converter={StaticResource NumberToFixedStringConverter}}"
                                        VerticalAlignment="Center"
-                                       Style="{StaticResource WinTextExtraLargeStyle}" />
+                                       Style="{DynamicResource WinTextExtraLargeStyle}" />
 
                                 <Rectangle Fill="#80FFFFFF">
                                     <Rectangle.Visibility>
@@ -173,7 +173,7 @@
 
                                 <TextBlock Text="{Binding}"
                                        VerticalAlignment="Center"
-                                       Style="{StaticResource WinTextExtraLargeStyle}" />
+                                       Style="{DynamicResource WinTextExtraLargeStyle}" />
 
                                 <Rectangle Fill="#80FFFFFF">
                                     <Rectangle.Visibility>
@@ -207,7 +207,7 @@
         </Grid>
 
         <!-- Application Bar -->
-        <AppBar:ApplicationBar Grid.Row="2" Background="{StaticResource WinChromeBrush}">
+        <AppBar:ApplicationBar Grid.Row="2" Background="{DynamicResource WinChromeBrush}">
             <AppBar:ApplicationBar.Icons>
                 <AppBar:ApplicationBarIcon ImageSource="/TpMetroWpfLibrary;component/Images/appbar.check.png"
                                            Description="{x:Static Resources:CommonResources.Button_Ok}"

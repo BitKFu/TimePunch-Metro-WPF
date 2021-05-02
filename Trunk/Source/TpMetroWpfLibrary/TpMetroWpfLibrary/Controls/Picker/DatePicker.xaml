@@ -15,15 +15,15 @@
             MouseLeftButtonDown="OnEnterFullModeViaClick"
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
-            Background="{StaticResource WinChromeBrush}">
+            Background="{DynamicResource WinChromeBrush}">
 
         <Grid Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <TextBlock 
                 Text="{Binding Value, Converter={StaticResource ShortDateConverter}}" 
-                Style="{StaticResource WinTextNormalStyle}" 
+                Style="{DynamicResource WinTextNormalStyle}" 
                 IsEnabled="{Binding IsEnabled}"
-                Foreground="{StaticResource WinTextBoxForegroundBrush}"
+                Foreground="{DynamicResource WinTextBoxForegroundBrush}"
                 Margin="{StaticResource WinMargin}">
             </TextBlock>
         
@@ -38,10 +38,10 @@
 
             <TextBox
                 Text="{Binding DatePickerValue, Converter={StaticResource ShortDateConverter}, Mode=TwoWay}" 
-                Style="{StaticResource WinInputTextNormalStyle}" 
+                Style="{DynamicResource WinInputTextNormalStyle}" 
                 IsEnabled="{Binding IsEnabled}"
                 IsReadOnly="{Binding IsReadonly}"
-                Foreground="{StaticResource WinTextBoxForegroundBrush}"
+                Foreground="{DynamicResource WinTextBoxForegroundBrush}"
                 Background="Transparent"
                 BorderThickness="0"
                 Margin="{StaticResource WinMargin}">
@@ -49,7 +49,7 @@
 
             <Button
                 Name="CalendarButton"
-                Style="{StaticResource ChromeButtonStyle}"
+                Style="{DynamicResource ChromeButtonStyle}"
                 Grid.Column="1"
                 IsEnabled="{Binding IsEnabled}"
                 IsTabStop="False"
@@ -64,7 +64,7 @@
                    StaysOpen="False"
                    PlacementTarget="{Binding ElementName=CalendarButton}" 
                    Placement="MousePoint" PopupAnimation="Fade">
-                <Viewbox Style="{StaticResource BigCalendar}">
+                <Viewbox Style="{DynamicResource BigCalendar}">
                     <Grid Background="LightGray">
                         <Calendar SelectedDate="{Binding DatePickerValue, Mode=TwoWay}" Background="White" UseLayoutRounding="False"/>
                     </Grid>

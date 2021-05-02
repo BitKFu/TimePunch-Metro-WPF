@@ -25,6 +25,9 @@ namespace TimePunch.Metro.Wpf.Controls.TextBox
         public ExtendedTextBoxViewModel(ExtendedTextBox box)
         {
             textBox = box;
+            if (IsDesignMode)
+                return;
+            
             ApplyCommand = RegisterCommand(ExecuteApplyCommand, CanExecuteApplyCommand, true);
             CancelCommand = RegisterCommand(ExecuteCancelCommand, CanExecuteCancelCommand, true);
         }

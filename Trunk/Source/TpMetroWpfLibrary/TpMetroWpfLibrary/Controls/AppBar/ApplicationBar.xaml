@@ -2,8 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:appbar="clr-namespace:TimePunch.Metro.Wpf.Controls.AppBar" 
+             d:DataContext="{d:DesignInstance Type=appbar:ApplicationBar}"
              mc:Ignorable="d" 
+             x:Name="AppBar"
+             Background="{DynamicResource WinChromeBrush}"
              d:DesignHeight="100" d:DesignWidth="300">
    
     <UserControl.RenderTransform>
@@ -32,13 +35,14 @@
 
             <!-- Fixed button to show menu items -->
             <Button Grid.Column="2" HorizontalAlignment="Right"
-                        Style="{StaticResource ChromeButtonStyle}" 
+                        Style="{DynamicResource ChromeButtonStyle}" 
                         Margin="3" 
                         Click="SwitchMenuItemVisibility">
 
                 <Button.Content>
-                    <Image Source="/TpMetroWpfLibrary;component/Images/appbar.overflowdots.png" Stretch="UniformToFill" 
-                           Width="{StaticResource ApplicationBarIconSize}" Height="{StaticResource ApplicationBarIconSize}" />
+                    <Image Source="{Binding ElementName=AppBar, Path=ImageSource}" Stretch="UniformToFill" 
+                           Width="{StaticResource ApplicationBarIconSize}" 
+                           Height="{StaticResource ApplicationBarIconSize}" />
                 </Button.Content>
             </Button>
 

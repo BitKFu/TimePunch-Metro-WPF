@@ -15,23 +15,23 @@
             MouseLeftButtonDown="OnEnterFullModeViaClick"
             TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
-            Background="{StaticResource WinChromeBrush}">
+            Background="{DynamicResource WinChromeBrush}">
         
         <TextBlock 
             Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
             Text="{Binding Value, Converter={StaticResource ShortTimeSpanConverter}}" 
-            Style="{StaticResource WinTextNormalStyle}" 
+            Style="{DynamicResource WinTextNormalStyle}" 
             IsEnabled="{Binding IsEnabled}"
-            Foreground="{StaticResource WinTextBoxForegroundBrush}"
+            Foreground="{DynamicResource WinTextBoxForegroundBrush}"
             Margin="{StaticResource WinMargin}"/>
 
         <TextBox
                 Visibility="{Binding IsTouchSelectionEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"
                 Text="{Binding Value, Converter={StaticResource ShortTimeSpanConverter}, Mode=TwoWay}" 
-                Style="{StaticResource WinInputTextNormalStyle}" 
+                Style="{DynamicResource WinInputTextNormalStyle}" 
                 IsEnabled="{Binding IsEnabled}"
                 IsReadOnly="{Binding IsReadonly}"
-                Foreground="{StaticResource WinTextBoxForegroundBrush}"
+                Foreground="{DynamicResource WinTextBoxForegroundBrush}"
                 Background="Transparent"
                 BorderThickness="0"
                 Margin="{StaticResource WinMargin}"/>

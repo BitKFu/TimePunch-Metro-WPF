@@ -347,6 +347,8 @@
         x:Key="ErrorBrush"
         Color="Red" />
 
+    <ImageSource x:Key="BurgerMenu">pack://application:,,,/TpMetroWpfLibrary;component/Images/appbar.overflowdots.png</ImageSource>
+
     <!-- Global Styles -->
     <System:Double x:Key="PickerBox">96</System:Double>
     
@@ -675,7 +677,7 @@
 							x:Name="InteractiveBorder"
 							MinWidth="{TemplateBinding MinWidth}"
 							MinHeight="{TemplateBinding MinHeight}"
-							Background="{StaticResource HoverHyperlinkBackgroundBrush}"
+							Background="{DynamicResource HoverHyperlinkBackgroundBrush}"
 							BorderThickness="1,1,1,1"
 							Opacity="0"
 							BorderBrush="{StaticResource HoverHyperlinkBackgroundBrush}"
@@ -688,7 +690,7 @@
 							Opacity="0.2">
                             <TextBlock
 								x:Name="InteractiveElement"
-								Foreground="{StaticResource HoverHyperlinkForegroundBrush}"
+								Foreground="{DynamicResource HoverHyperlinkForegroundBrush}"
 								FontSize="{TemplateBinding FontSize}"
 								FontWeight="{TemplateBinding FontWeight}"
 								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -964,7 +966,7 @@
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" Style="{StaticResource WinTextNormalStyle}" x:Name="Header" TextAlignment="Left"/>
+                    <TextBlock Text="{Binding}" Style="{DynamicResource WinTextNormalStyle}" x:Name="Header" TextAlignment="Left"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -1054,7 +1056,7 @@
 
                                     <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                         <Button x:Name="MinimizeButton" 
-                                                Style="{StaticResource ChromeButtonStyleHidden}" 
+                                                Style="{DynamicResource ChromeButtonStyleHidden}" 
                                                 Padding="4"
                                                 Command="Metro:TransparentWindow.MinimizeCommand" 
                                                 x:Uid="MinimizeButton">
@@ -1062,7 +1064,7 @@
                                         </Button>
 
                                         <Button x:Name="MaximizeButton" 
-                                                Style="{StaticResource ChromeButtonStyleHidden}" 
+                                                Style="{DynamicResource ChromeButtonStyleHidden}" 
                                                 Padding="4"
                                                 Command="Metro:TransparentWindow.MaximizeCommand" 
                                                 x:Uid="MaximizeButton">
@@ -1070,7 +1072,7 @@
                                         </Button>
                                         
                                         <Button x:Name="NormalizeButton" 
-                                                Style="{StaticResource ChromeButtonStyleHidden}" 
+                                                Style="{DynamicResource ChromeButtonStyleHidden}" 
                                                 Padding="4"
                                                 Command="Metro:TransparentWindow.NormalizeCommand" 
                                                 x:Uid="NormalizeButton">
@@ -1078,7 +1080,7 @@
                                         </Button>
 
                                         <Button x:Name="CloseButton" 
-                                                Style="{StaticResource ChromeButtonStyle}" 
+                                                Style="{DynamicResource ChromeButtonStyle}" 
                                                 Padding="4"
                                                 Command="ApplicationCommands.Close" 
                                                 x:Uid="CloseButton">
@@ -1089,14 +1091,14 @@
                             </Border>
                         </AdornerDecorator>
 
-                        <Thumb Name="PART_SizeNE" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNESW" Width="12" Height="12" VerticalAlignment="Top" HorizontalAlignment="Right" />
-                        <Thumb Name="PART_SizeSW" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNESW" Width="12" Height="12" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
-                        <Thumb Name="PART_SizeNW" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNWSE" Width="12" Height="12" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                        <Thumb Name="PART_SizeSE" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNWSE" Width="12" Height="12" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
-                        <Thumb Name="PART_SizeN" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNS" Height="12" VerticalAlignment="Top" Margin="12,0,12,0" />
-                        <Thumb Name="PART_SizeS" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeNS" Height="12" VerticalAlignment="Bottom" Margin="12,0,12,0" />
-                        <Thumb Name="PART_SizeW" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeWE" Width="12" HorizontalAlignment="Left" Margin="0,12,0,12" />
-                        <Thumb Name="PART_SizeE" Style="{StaticResource TransparentWindowResizeThumbStyle}" Cursor="SizeWE" Width="12" HorizontalAlignment="Right" Margin="0,12,0,12" />
+                        <Thumb Name="PART_SizeNE" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNESW" Width="12" Height="12" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                        <Thumb Name="PART_SizeSW" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNESW" Width="12" Height="12" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                        <Thumb Name="PART_SizeNW" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNWSE" Width="12" Height="12" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Thumb Name="PART_SizeSE" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNWSE" Width="12" Height="12" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                        <Thumb Name="PART_SizeN" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNS" Height="12" VerticalAlignment="Top" Margin="12,0,12,0" />
+                        <Thumb Name="PART_SizeS" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeNS" Height="12" VerticalAlignment="Bottom" Margin="12,0,12,0" />
+                        <Thumb Name="PART_SizeW" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeWE" Width="12" HorizontalAlignment="Left" Margin="0,12,0,12" />
+                        <Thumb Name="PART_SizeE" Style="{DynamicResource TransparentWindowResizeThumbStyle}" Cursor="SizeWE" Width="12" HorizontalAlignment="Right" Margin="0,12,0,12" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1130,7 +1132,7 @@
             		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             	</Grid.Resources>
                 
-            	<TextBlock Text="{Binding EmptyText, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource WinTextSmallStyle}" 
+            	<TextBlock Text="{Binding EmptyText, RelativeSource={RelativeSource TemplatedParent}}" Style="{DynamicResource WinTextSmallStyle}" 
                            Visibility="{Binding IsEmpty, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
             </Grid>
