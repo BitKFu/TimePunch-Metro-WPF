@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using TypographicDemo.Core;
 using TimePunch.Metro.Wpf.Controller;
+using TimePunch.MVVM.Controller;
 
 namespace TypographicDemo
 {

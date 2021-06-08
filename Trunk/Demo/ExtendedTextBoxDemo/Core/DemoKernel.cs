@@ -1,5 +1,7 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
+using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
+using BaseController = TimePunch.MVVM.Controller.BaseController;
 
 namespace ExtendedTextBoxDemo.Core
 {
@@ -10,7 +12,7 @@ namespace ExtendedTextBoxDemo.Core
     public class DemoKernel : Kernel
     {
         private IEventAggregator eventAggregator;
-        private INavigationController controller;
+        private BaseController controller;
 
         #region Overrides of Kernel
 
@@ -25,7 +27,7 @@ namespace ExtendedTextBoxDemo.Core
         /// <summary>
         /// Gets the concrete Controller. It is used to manage the navigation flow
         /// </summary>
-        public override INavigationController Controller
+        public override IBaseController Controller
         {
             get { return controller ?? (controller = new DemoController()); }
         }

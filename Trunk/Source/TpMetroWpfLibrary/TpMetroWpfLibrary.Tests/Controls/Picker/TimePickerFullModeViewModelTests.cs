@@ -3,6 +3,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Controls.Picker;
+using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
 using TimePunch.MVVM.Events;
 using TpMetroWpfLibrary.Tests.Controller;

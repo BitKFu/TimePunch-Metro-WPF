@@ -35,6 +35,7 @@
                            Margin="{StaticResource WinMargin}"
                            DisplayMemberPath="Text"
                            FullModeHeader="Month selection"
+                           Filter="{Binding FilterMonth}"
                            SelectedItem="{Binding SelectedMonth, Mode=TwoWay}">
             <Picker:ListPicker.FullModeItemTemplate>
                 <DataTemplate>

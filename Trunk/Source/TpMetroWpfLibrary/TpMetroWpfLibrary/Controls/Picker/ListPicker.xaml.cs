@@ -17,6 +17,14 @@ using TimePunch.MVVM.ViewModels;
 namespace TimePunch.Metro.Wpf.Controls.Picker
 {
     /// <summary>
+    /// Filter Delegate to replace the IItemFilter interface
+    /// </summary>
+    /// <param name="text">displayed text</param>
+    /// <param name="filter">filter input</param>
+    /// <returns></returns>
+    public delegate bool ListPickerFilterDelegate(string text, string filter);
+
+    /// <summary>
     /// The ListPicker is a modification and extension to the DatePicker that Charles Petzold described.
     /// It's designed to work like the ListPicker of Windows Phone 7
     /// <see cref="http://msdn.microsoft.com/de-de/magazine/gg309180.aspx"/>
@@ -46,6 +54,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// IsReadonly property specifies if the value shall be shown, but not enabled for editing
         /// </summary>
         public static DependencyProperty IsReadonlyProperty = DependencyProperty.Register("IsReadonly", typeof(bool), typeof(ListPicker));
+
+        /// <summary>
+        /// Defines a filter property
+        /// </summary>
+        public static DependencyProperty FilterProperty =  DependencyProperty.Register("Filter", typeof(ListPickerFilterDelegate), typeof(ListPicker));
 
         private static object OnCoerceValueCallback(DependencyObject d, object basevalue)
         {
@@ -138,6 +151,15 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         }
 
         /// <summary>
+        /// Gets the Display Value
+        /// </summary>
+        public ListPickerFilterDelegate Filter
+        {
+            get => (ListPickerFilterDelegate)GetValue(FilterProperty);
+            set => SetValue(FilterProperty, value);
+        }
+
+        /// <summary>
         /// Updates the DisplayValue
         /// </summary>
         private void UpdateDisplayValue()
@@ -220,7 +242,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
             Kernel.Instance.EventAggregator.PublishMessage(
-                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId));
+                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
         }
 
         /// <summary>
@@ -232,7 +254,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
             Kernel.Instance.EventAggregator.PublishMessage(
-                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId));
+                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
         }
 
         #endregion
@@ -282,5 +304,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         private ChangeAnimationModeRequest oldAnimationMode;
 
         #endregion
+
+
     }
 }

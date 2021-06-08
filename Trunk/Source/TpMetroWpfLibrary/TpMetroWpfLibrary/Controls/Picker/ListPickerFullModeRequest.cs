@@ -16,18 +16,23 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Initializes a new instance of the ListPickerFullModeRequest
         /// </summary>
-        /// <param name="fullModeHeader"></param>
-        /// <param name="itemsSource"></param>
-        /// <param name="selectedItem"></param>
-        /// <param name="fullModeItemTemplate"></param>
-        /// <param name="listPickerId"></param>
-        public ListPickerFullModeRequest(string fullModeHeader, IEnumerable itemsSource, object selectedItem, DataTemplate fullModeItemTemplate, Guid listPickerId)
+        public ListPickerFullModeRequest(
+            string fullModeHeader, 
+            IEnumerable itemsSource, 
+            object selectedItem, 
+            DataTemplate fullModeItemTemplate, 
+            Guid listPickerId,
+            ListPickerFilterDelegate? filterDelegate,
+            string displayMemberPath
+            )
         {
             FullModeHeader = fullModeHeader;
             ItemsSource = itemsSource;
             SelectedItem = selectedItem;
             FullModeItemTemplate = fullModeItemTemplate;
             ListPickerId = listPickerId;
+            FilterDelegate = filterDelegate;
+            DisplayMemberPath = displayMemberPath;
         }
 
         /// <summary>
@@ -54,5 +59,15 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Gets the ListPicker Id
         /// </summary>
         public Guid ListPickerId { get;  }
+
+        /// <summary>
+        /// Gets the list picker filter delegate
+        /// </summary>
+        public ListPickerFilterDelegate? FilterDelegate { get; }
+
+        /// <summary>
+        /// Gets the display member path
+        /// </summary>
+        public string DisplayMemberPath { get; }
     }
 }

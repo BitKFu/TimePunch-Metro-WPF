@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TimePunch.Metro.Wpf.Controls.Picker;
 using TimePunch.Metro.Wpf.ViewModel;
 
 namespace PickerControlDemo.ViewModels
@@ -102,6 +103,13 @@ namespace PickerControlDemo.ViewModels
         {
             get { return GetPropertyValue(() => SelectedTimeSpan); }
             set { SetPropertyValue(() => SelectedTimeSpan, value); }
+        }
+
+        public ListPickerFilterDelegate FilterMonth => FilterMonthMethod;
+
+        private static bool FilterMonthMethod(string text, string filter)
+        {
+            return filter == null || text.StartsWith(filter, StringComparison.InvariantCultureIgnoreCase);
         }
 
         #endregion

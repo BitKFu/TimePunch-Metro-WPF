@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.MVVM.Controller;
-using Kernel = TimePunch.Metro.Wpf.Controller.Kernel;
 
 namespace TimePunch.Metro.Wpf.Metro
 {
@@ -375,7 +374,7 @@ namespace TimePunch.Metro.Wpf.Metro
             if (firstOnClosing && IsMainWindow)
             {
                 var closingEvent = Kernel.Instance.EventAggregator.PublishMessage(new ApplicationIsClosingEvent());
-                e.Cancel = !Kernel.Instance.Controller.ForceClosing && closingEvent.Cancel;
+                e.Cancel = !((INavigationController)Kernel.Instance.Controller).ForceClosing && closingEvent.Cancel;
                 
                 if (!e.Cancel)
                     firstOnClosing = false;

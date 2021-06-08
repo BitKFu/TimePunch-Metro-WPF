@@ -18,9 +18,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Threading;
-using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Metro;
+using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
 using TimePunch.MVVM.ViewModels;
 

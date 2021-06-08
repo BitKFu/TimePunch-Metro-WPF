@@ -349,6 +349,14 @@ namespace TimePunch.Metro.Wpf.Docking
         }
 
         #endregion
+
+        /// <summary>
+        /// Used to Update the display settings
+        /// </summary>
+        public void Update()
+        {
+            Dock(DockedTo, ActiveScreenIndex);
+        }
     }
 
     public static class ScreenExtension

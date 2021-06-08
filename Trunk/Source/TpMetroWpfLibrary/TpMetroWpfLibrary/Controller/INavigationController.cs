@@ -3,7 +3,7 @@
 namespace TimePunch.Metro.Wpf.Controller
 {
     /// <summary>
-    /// Interface for the Base Controller
+    /// Interface for the Navigation Base Controller
     /// </summary>
     public interface INavigationController
     {

@@ -7,7 +7,7 @@ using TimePunch.Metro.Wpf.Controls.Picker;
 
 namespace PickerControlDemo
 {
-    public class Resource : IItemFilter
+    public class Resource //: IItemFilter
     {
         /// <summary>
         /// Initializes a new instance of a Resource class

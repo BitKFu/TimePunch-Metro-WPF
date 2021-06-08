@@ -1,7 +1,7 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
-using Kernel = TimePunch.Metro.Wpf.Controller.Kernel;
+using BaseController = TimePunch.MVVM.Controller.BaseController;
 
 namespace TpMetroWpfLibrary.Tests.Controller
 {
@@ -11,7 +11,7 @@ namespace TpMetroWpfLibrary.Tests.Controller
     public class StubKernel : Kernel
     {
         private IEventAggregator eventAggregator;
-        private INavigationController controller;
+        private BaseController controller;
 
         #region Overrides of Kernel
 
@@ -28,7 +28,7 @@ namespace TpMetroWpfLibrary.Tests.Controller
         /// Gets the current used controller
         /// </summary>
         /// <returns></returns>
-        public override INavigationController Controller
+        public override IBaseController Controller
         {
             get { return controller ?? (controller = new StubController()); }
         }

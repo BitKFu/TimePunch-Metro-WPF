@@ -13,6 +13,7 @@ using TimePunch.Metro.Wpf.Controls.Picker;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Frames;
 using TimePunch.Metro.Wpf.Helper;
+using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
 
 namespace TimePunch.Metro.Wpf.Controller
@@ -38,13 +39,6 @@ namespace TimePunch.Metro.Wpf.Controller
         /// </summary>
         protected BaseController() 
             : base(Kernel.Instance.EventAggregator)
-        {
-        }
-
-        /// <summary>
-        /// This method can do some initializations
-        /// </summary>
-        public virtual void Init()
         {
         }
 
@@ -85,7 +79,7 @@ namespace TimePunch.Metro.Wpf.Controller
                     Application.Current.Dispatcher.InvokeAsync(action);
                 }
 
-                waitHandle.WaitOne(BaseController.InvocationTimeout);
+                waitHandle.WaitOne(MVVM.Controller.BaseController.InvocationTimeout);
                 return;
             }
 
@@ -106,7 +100,7 @@ namespace TimePunch.Metro.Wpf.Controller
 
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
-        /// <see cref="BaseController"/> is reclaimed by garbage collection.
+        /// <see cref="MVVM.Controller.BaseController"/> is reclaimed by garbage collection.
         /// </summary>
         ~BaseController()
         {
@@ -116,6 +110,7 @@ namespace TimePunch.Metro.Wpf.Controller
         #endregion Constructors
 
         #region Methods
+
 
         /// <summary>
         /// Navigates to page.

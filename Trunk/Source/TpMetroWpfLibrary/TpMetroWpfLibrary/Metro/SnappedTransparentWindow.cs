@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using TimePunch.Metro.Wpf.Docking;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.Hooks;
@@ -252,6 +253,18 @@ namespace TimePunch.Metro.Wpf.Metro
 
             TouchEnter += OnWindowEnterTouchArea;
             MouseLeftButtonUp += OnMouseLeftButtonUp;
+
+            SystemEvents.DisplaySettingsChanged += UpdateDisplaySettings;
+        }
+
+        /// <summary>
+        /// Used to update the transparent window size
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateDisplaySettings(object sender, EventArgs e)
+        {
+            docker.Update();
         }
 
         /// <summary>

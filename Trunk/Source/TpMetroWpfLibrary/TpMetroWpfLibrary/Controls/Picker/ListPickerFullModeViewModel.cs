@@ -44,9 +44,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             FullModeHeader = request.FullModeHeader;
             SelectedItem = request.SelectedItem;
             ListPickerId = request.ListPickerId;
-
-            var firstOrDefault = request.ItemsSource.Cast<object>().FirstOrDefault();
-            UseFilterMethod = firstOrDefault is IItemFilter;
+            FilterDelegate = request.FilterDelegate;
+            DisplayMemberPath = request.DisplayMemberPath;
 
             AddPropertyChangedNotification(() => FilterText, () => FilteredItemSource);
             OnPropertyChanged(() => FilteredItemSource);
@@ -77,8 +76,10 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             get
             {
-                return UseFilterMethod
-                           ? ItemsSource.Cast<IItemFilter>().Where(item => item.IsValueAccepted(FilterText))
+                var dmp = DisplayMemberPath;
+                return FilterDelegate != null
+                           ? ItemsSource.Cast<object>()
+                               .Where(item => FilterDelegate(item.GetType().GetProperty(dmp).GetValue(item).ToString(), FilterText))
                            : ItemsSource;
             }
         }
@@ -118,14 +119,23 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             get { return GetPropertyValue(() => FilterText); }
             set { SetPropertyValue(() => FilterText, value); }
         }
-        
+
         /// <summary>
-        /// Gets or sets the Filter text
+        /// Gets the list picker filter delegate
         /// </summary>
-        public bool UseFilterMethod
+        public ListPickerFilterDelegate? FilterDelegate
         {
-            get { return GetPropertyValue(() => UseFilterMethod); }
-            set { SetPropertyValue(() => UseFilterMethod, value); }
+            get { return GetPropertyValue(() => FilterDelegate); }
+            set { SetPropertyValue(() => FilterDelegate, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the display member path
+        /// </summary>
+        public string DisplayMemberPath
+        {
+            get { return GetPropertyValue(() => DisplayMemberPath); }
+            set { SetPropertyValue(() => DisplayMemberPath, value); }
         }
 
         #endregion
