@@ -4,17 +4,14 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using Microsoft.Win32;
 using TimePunch.Metro.Wpf.Docking;
-using TimePunch.Metro.Wpf.Helper;
 using TimePunch.Metro.Wpf.Hooks;
 using Binding = System.Windows.Data.Binding;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
@@ -92,11 +89,6 @@ namespace TimePunch.Metro.Wpf.Metro
         /// Flag indicating whether the window shall slide in on activation or not
         /// </summary>
         private bool showOnActivate = true;
-
-        /// <summary>
-        /// Used to get the DPI of the screen
-        /// </summary>
-        private readonly ScreenResolution screenResolution = new ScreenResolution();
 
         #endregion
 
@@ -226,6 +218,8 @@ namespace TimePunch.Metro.Wpf.Metro
                 {
                     Topmost = false; // important
                     Topmost = true; // important
+                    Focus();
+                    Activate();
                 });
             };
 
@@ -445,18 +439,18 @@ namespace TimePunch.Metro.Wpf.Metro
                             isMagicKeyPressed = false;
                             break;
                         case PinStyle.AlwaysOff:
-                            HookManager.MouseDown -= OnMouseClickOnScreen;
+                            Deactivated -= OnWindowDeactivated;
                             break;
                         case PinStyle.Manual:
-                            HookManager.MouseDown -= OnMouseClickOnScreen;
+                            Deactivated -= OnWindowDeactivated;
                             break;
                         case PinStyle.Fixed:
                             break;
                         case PinStyle.TouchFriendly:
-                            HookManager.MouseDown -= OnMouseClickOnScreen;
+                            Deactivated -= OnWindowDeactivated;
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException("value");
+                            throw new ArgumentOutOfRangeException(nameof(PinStyle));
                     }
 
                     SetValue(SlidingStyleProperty, value);
@@ -472,19 +466,19 @@ namespace TimePunch.Metro.Wpf.Metro
                             HookManager.MouseMove += OnMouseMoveOnScreen;
                             break;
                         case PinStyle.AlwaysOff:
-                            HookManager.MouseDown += OnMouseClickOnScreen;
+                            Deactivated += OnWindowDeactivated;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             BeginAnimation(fadeIn);
                             break;
                         case PinStyle.Manual:
-                            HookManager.MouseDown += OnMouseClickOnScreen;
+                            Deactivated += OnWindowDeactivated;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             BeginAnimation(fadeIn);
                             break;
                         case PinStyle.Fixed:
                             break;
                         case PinStyle.TouchFriendly:
-                            HookManager.MouseDown += OnMouseClickOnScreen;
+                            Deactivated += OnWindowDeactivated;
                             AdjustSlidingBehaviour(Width, Height, DockedTo);
                             break;
                         default:
@@ -493,6 +487,7 @@ namespace TimePunch.Metro.Wpf.Metro
                 }
             }
         }
+
 
         /// <summary>
         /// Gets or sets the Slide In Latency
@@ -827,15 +822,8 @@ namespace TimePunch.Metro.Wpf.Metro
             IsMagicKeyPressed = false;
         }
 
-        /// <summary>
-        /// Called when the user clicks on the screen
-        /// </summary>
-        /// <param name="sender">Sening object</param>
-        /// <param name="e">Event arguments</param>
-        private void OnMouseClickOnScreen(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnWindowDeactivated(object sender, EventArgs e)
         {
-            var formLocation = new System.Drawing.Point((int)screenResolution.ConvertXDpi(e.Location.X), (int)screenResolution.ConvertYDpi(e.Location.Y));
-
             // Only interessting for Touch Friendly)
             if (PinStyle != PinStyle.TouchFriendly && PinStyle != PinStyle.AlwaysOff && PinStyle != PinStyle.Manual)
                 return;
@@ -844,15 +832,10 @@ namespace TimePunch.Metro.Wpf.Metro
             if (Hidden || IsAnimating)
                 return;
 
-            // Check if the user clicks outside the current window
-            bool mustHide = !(new Rectangle((int)Left, (int)Top, (int)Width, (int)Height).Contains(formLocation));
-            if (!mustHide) 
-                return;
-
             // Check if the user pressed the magic key
             Storyboard sliding;
             latencyTimer.Stop();
-            if (IsMagicKeyPressed && PinStyle == PinStyle.AlwaysOn) 
+            if (IsMagicKeyPressed && PinStyle == PinStyle.AlwaysOn)
                 return;
 
             // Stop the current animation and hide the window
@@ -861,6 +844,7 @@ namespace TimePunch.Metro.Wpf.Metro
 
             BeginAnimation(slideOut);
         }
+
 
         /// <summary>
         /// Called when the user moves the mouse onto the screen
@@ -877,11 +861,12 @@ namespace TimePunch.Metro.Wpf.Metro
             if (!Hidden || IsAnimating)
                 return;
 
-            bool mustShow = !(new Rectangle((int)Left, (int)Top, (int)Width, (int)Height).Contains(e.Location));
+            bool mustShow = !this.IsMouseOver; 
 
             if (mustShow)
                 BeginAnimation(reduceOpacity);
         }
+
 
         /// <summary>
         /// Called when the user moves the mouse into the window

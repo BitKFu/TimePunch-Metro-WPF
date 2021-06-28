@@ -26,7 +26,6 @@ namespace SnappedWindowDemo.ViewModels
             DockToLeftCommand = RegisterCommand(ExecuteDockToLeftCommand, CanExecuteDockToLeftCommand, true);
 
             PinStyle = PinStyle.TouchFriendly;
-
             AddPropertyChangedNotification(() => PinStyle, () => PinStyleAlwaysOn);
         }
 
@@ -78,7 +77,7 @@ namespace SnappedWindowDemo.ViewModels
         public void ExecuteDockToTopCommand(object sender, ExecutedRoutedEventArgs eventArgs)
         {
             var window = (SnappedTransparentWindow)Application.Current.MainWindow;
-            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Top, 0);
+            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Top, 1);
         }
 
         #endregion
@@ -116,7 +115,7 @@ namespace SnappedWindowDemo.ViewModels
         public void ExecuteDockToBottomCommand(object sender, ExecutedRoutedEventArgs eventArgs)
         {
             var window = (SnappedTransparentWindow)Application.Current.MainWindow;
-            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Bottom, 0);
+            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Bottom, 1);
         }
 
         #endregion
@@ -154,7 +153,7 @@ namespace SnappedWindowDemo.ViewModels
         public void ExecuteDockToLeftCommand(object sender, ExecutedRoutedEventArgs eventArgs)
         {
             var window = (SnappedTransparentWindow)Application.Current.MainWindow;
-            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Left, 0);
+            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Left, 1);
         }
 
         #endregion
@@ -192,7 +191,7 @@ namespace SnappedWindowDemo.ViewModels
         public void ExecuteDockToRightCommand(object sender, ExecutedRoutedEventArgs eventArgs)
         {
             var window = (SnappedTransparentWindow)Application.Current.MainWindow;
-            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Right, 0);
+            window.Dock(TimePunch.Metro.Wpf.Docking.TaskBar.TaskBarEdge.Right, 1);
         }
 
         #endregion

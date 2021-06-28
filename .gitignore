@@ -34,3 +34,6 @@
 /Trunk/Demo/packages/TimePunch-MVVM.0.3.0
 /Trunk/Source/TpMetroWpfLibrary/packages/TimePunch-MVVM.0.3.0
 /Trunk/Output
+/.vs
+/Trunk/Demo/.vs/Demo
+/Trunk/Source/TpMetroWpfLibrary/output
