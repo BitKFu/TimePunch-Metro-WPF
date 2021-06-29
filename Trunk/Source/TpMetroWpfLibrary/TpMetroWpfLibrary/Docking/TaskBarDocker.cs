@@ -130,13 +130,14 @@ namespace TimePunch.Metro.Wpf.Docking
                     return;
             }
 
+            var screenResolution = new ScreenResolution(form);
             var left = activeScreen.WorkingArea.Left;
             var top = activeScreen.WorkingArea.Top;
             var height = activeScreen.WorkingArea.Height;
 
-            form.Left = left;
-            form.Top = top;
-            form.Height = height;
+            form.Left = screenResolution.ConvertXDpi(left);
+            form.Top = screenResolution.ConvertYDpi(top);
+            form.Height = screenResolution.ConvertYDpi(height);
         }
         
         public TaskBar.TaskBarEdge DockedTo
@@ -164,13 +165,14 @@ namespace TimePunch.Metro.Wpf.Docking
                     return;
             }
 
+            var screenResolution = new ScreenResolution(form);
             var left = activeScreen.WorkingArea.Left;
             var top = activeScreen.WorkingArea.Top;
             var width = activeScreen.WorkingArea.Width;
 
-            form.Top = top;
-            form.Left = left;
-            form.Width = width;
+            form.Top = screenResolution.ConvertYDpi(top);
+            form.Left = screenResolution.ConvertXDpi(left);
+            form.Width = screenResolution.ConvertXDpi(width);
         }
 
         private void PostionRight()
@@ -184,13 +186,14 @@ namespace TimePunch.Metro.Wpf.Docking
                     return;
             }
 
-            var left = activeScreen.WorkingArea.Left + activeScreen.WorkingArea.Width - form.Width;
+            var screenResolution = new ScreenResolution(form);
+            var left = activeScreen.WorkingArea.Left + activeScreen.WorkingArea.Width - screenResolution.ConvertXToScreen(form.Width);
             var top = activeScreen.WorkingArea.Top;
             var height = activeScreen.WorkingArea.Height;
 
-            form.Left = left;
-            form.Top = top;
-            form.Height = height;
+            form.Left = screenResolution.ConvertXDpi(left);
+            form.Top = screenResolution.ConvertYDpi(top);
+            form.Height = screenResolution.ConvertYDpi(height);
         }
 
         private void PostionBottom()
@@ -204,13 +207,14 @@ namespace TimePunch.Metro.Wpf.Docking
                     return;
             }
 
+            var screenResolution = new ScreenResolution(form);
             var left = activeScreen.WorkingArea.Left;
-            var top = activeScreen.WorkingArea.Top + activeScreen.WorkingArea.Height - form.Height;
+            var top = activeScreen.WorkingArea.Top + activeScreen.WorkingArea.Height - screenResolution.ConvertYToScreen(form.Height);
             var width = activeScreen.WorkingArea.Width;
 
-            form.Top = top;
-            form.Left = left;
-            form.Width = width;
+            form.Top = screenResolution.ConvertYDpi(top);
+            form.Left = screenResolution.ConvertXDpi(left);
+            form.Width = screenResolution.ConvertXDpi(width);
         }
 
         #endregion
