@@ -34,12 +34,7 @@ namespace TimePunch.Metro.Wpf.Docking
         private TaskBar.TaskBarEdge dockedTo = TaskBar.TaskBarEdge.NotDocked;
 
         public event Action<TaskBar.TaskBarEdge> OnDockingChanged = null;
-
-        /// <summary>
-        /// Used to get the DPI of the screen
-        /// </summary>
-        private readonly ScreenResolution screenResolution = new ScreenResolution();
-        
+       
         #endregion
 
         #region Private Constants
@@ -96,7 +91,7 @@ namespace TimePunch.Metro.Wpf.Docking
             switch (dockTo)
             {
                 case TaskBar.TaskBarEdge.Left:
-                    PostionLeft();
+                    PositionLeft();
                     break;
                 case TaskBar.TaskBarEdge.Top:
                     PostionTop();
@@ -124,48 +119,24 @@ namespace TimePunch.Metro.Wpf.Docking
         #region Private Methods
 
 
-        private void PostionLeft()
+        private void PositionLeft()
         {
-            Screen activeScreen = ActiveScreen;
-            Screen taskBarScreen = Screen.FromHandle(TaskBar.GetHandle()); ;
-            Size taskBarSize = TaskBar.GetTaskBarSize();
-
-            var left = activeScreen.Bounds.Left;
-            var top = activeScreen.Bounds.Top;
-            var height = activeScreen.Bounds.Height;
-
-            var taskbarHeight = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Height : 0);
-            var taskbarWidth = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Width : 0); 
-
-            switch (TaskBar.GetTaskBarEdge())
+            Screen? activeScreen = ActiveScreen;
+            if (activeScreen == null)
             {
-                case TaskBar.TaskBarEdge.Left:
-                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height);
-                    break;
-
-                case TaskBar.TaskBarEdge.Top:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
-                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
-                    break;
-
-                case TaskBar.TaskBarEdge.Right:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height);
-                    break;
-
-                case TaskBar.TaskBarEdge.Bottom:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ActiveScreenIndex = 0;
+                activeScreen = ActiveScreen;
+                if (activeScreen == null)
+                    return;
             }
+
+            var left = activeScreen.WorkingArea.Left;
+            var top = activeScreen.WorkingArea.Top;
+            var height = activeScreen.WorkingArea.Height;
+
+            form.Left = left;
+            form.Top = top;
+            form.Height = height;
         }
         
         public TaskBar.TaskBarEdge DockedTo
@@ -173,10 +144,7 @@ namespace TimePunch.Metro.Wpf.Docking
             get { return dockedTo; }
         }
 
-        public Screen ActiveScreen
-        {
-            get { return Screen.AllScreens[ActiveScreenIndex]; }
-        }
+        public Screen? ActiveScreen => ActiveScreenIndex < Screen.AllScreens.Length ? Screen.AllScreens[ActiveScreenIndex] : null;
 
         private int activeScreenIndex = 0;
         public int ActiveScreenIndex 
@@ -187,135 +155,62 @@ namespace TimePunch.Metro.Wpf.Docking
 
         private void PostionTop()
         {
-            Screen activeScreen = ActiveScreen;
-            Screen taskBarScreen = Screen.FromHandle(TaskBar.GetHandle()); ;
-            Size taskBarSize = TaskBar.GetTaskBarSize();
-
-            var left = activeScreen.Bounds.Left;
-            var top = activeScreen.Bounds.Top;
-            var width = activeScreen.Bounds.Width;
-
-            var taskbarHeight = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Height : 0);
-            var taskbarWidth = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Width : 0); 
-
-            switch (TaskBar.GetTaskBarEdge())
+            Screen? activeScreen = ActiveScreen;
+            if (activeScreen == null)
             {
-                case TaskBar.TaskBarEdge.Left:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
-                    form.Width = screenResolution.ConvertYDpi(width - taskbarWidth);
-                    break;
-
-                case TaskBar.TaskBarEdge.Top:
-                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(width);
-                    break;
-
-                case TaskBar.TaskBarEdge.Right:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
-                    break;
-
-                case TaskBar.TaskBarEdge.Bottom:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(width);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ActiveScreenIndex = 0;
+                activeScreen = ActiveScreen;
+                if (activeScreen == null)
+                    return;
             }
+
+            var left = activeScreen.WorkingArea.Left;
+            var top = activeScreen.WorkingArea.Top;
+            var width = activeScreen.WorkingArea.Width;
+
+            form.Top = top;
+            form.Left = left;
+            form.Width = width;
         }
 
         private void PostionRight()
         {
-            Screen activeScreen = ActiveScreen;
-            Screen taskBarScreen = Screen.FromHandle(TaskBar.GetHandle()); ;
-            Size taskBarSize = TaskBar.GetTaskBarSize();
-
-            var left = activeScreen.Bounds.Left + activeScreen.Bounds.Width - screenResolution.ConvertXToScreen(form.Width);
-            var top = activeScreen.Bounds.Top;
-            var height = activeScreen.Bounds.Height;
-
-            var taskbarHeight = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Height : 0);
-            var taskbarWidth = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Width : 0); 
-
-            switch (TaskBar.GetTaskBarEdge())
+            Screen? activeScreen = ActiveScreen;
+            if (activeScreen == null)
             {
-                case TaskBar.TaskBarEdge.Left:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height);
-                    break;
-
-                case TaskBar.TaskBarEdge.Top:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top + taskbarHeight);
-                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
-                    break;
-
-                case TaskBar.TaskBarEdge.Right:
-                    form.Left = screenResolution.ConvertXDpi(left - taskbarWidth);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height);
-                    break;
-
-                case TaskBar.TaskBarEdge.Bottom:
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Height = screenResolution.ConvertYDpi(height - taskbarHeight);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ActiveScreenIndex = 0;
+                activeScreen = ActiveScreen;
+                if (activeScreen == null)
+                    return;
             }
-            
+
+            var left = activeScreen.WorkingArea.Left + activeScreen.WorkingArea.Width - form.Width;
+            var top = activeScreen.WorkingArea.Top;
+            var height = activeScreen.WorkingArea.Height;
+
+            form.Left = left;
+            form.Top = top;
+            form.Height = height;
         }
 
         private void PostionBottom()
         {
-            Screen activeScreen = ActiveScreen;
-            Screen taskBarScreen = Screen.FromHandle(TaskBar.GetHandle()); ;
-            Size taskBarSize = TaskBar.GetTaskBarSize();
-
-            var left = activeScreen.Bounds.Left;
-            var top = activeScreen.Bounds.Top + activeScreen.Bounds.Height - screenResolution.ConvertYToScreen(form.Height);
-            var width = activeScreen.Bounds.Width;
-
-            var taskbarHeight = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Height : 0);
-            var taskbarWidth = (activeScreen.DeviceEquals(taskBarScreen) ? taskBarSize.Width : 0); 
-
-            switch (TaskBar.GetTaskBarEdge())
+            Screen? activeScreen = ActiveScreen;
+            if (activeScreen == null)
             {
-                case TaskBar.TaskBarEdge.Left:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left + taskbarWidth);
-                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
-                    break;
-
-                case TaskBar.TaskBarEdge.Top:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(taskbarWidth);
-                    break;
-
-                case TaskBar.TaskBarEdge.Right:
-                    form.Top = screenResolution.ConvertYDpi(top);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(width - taskbarWidth);
-                    break;
-
-                case TaskBar.TaskBarEdge.Bottom:
-                    form.Top = screenResolution.ConvertYDpi(top - taskbarHeight);
-                    form.Left = screenResolution.ConvertXDpi(left);
-                    form.Width = screenResolution.ConvertXDpi(width);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ActiveScreenIndex = 0;
+                activeScreen = ActiveScreen;
+                if (activeScreen == null)
+                    return;
             }
+
+            var left = activeScreen.WorkingArea.Left;
+            var top = activeScreen.WorkingArea.Top + activeScreen.WorkingArea.Height - form.Height;
+            var width = activeScreen.WorkingArea.Width;
+
+            form.Top = top;
+            form.Left = left;
+            form.Width = width;
         }
 
         #endregion

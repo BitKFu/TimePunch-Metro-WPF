@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PackageId>TpMetroWpf</PackageId>
-    <PackageVersion>2.0.0.6</PackageVersion>
+    <PackageVersion>2.0.1.0</PackageVersion>
     <Authors>Gerhard Stephan</Authors>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>

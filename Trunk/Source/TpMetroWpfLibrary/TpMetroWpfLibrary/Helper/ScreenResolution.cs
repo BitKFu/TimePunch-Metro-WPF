@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace TimePunch.Metro.Wpf.Helper
 {
@@ -23,6 +25,19 @@ namespace TimePunch.Metro.Wpf.Helper
 
             Xdpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSX);
             Ydpi = GetDeviceCaps(desktop, (int)DeviceCap.LOGPIXELSY);  
+        }
+
+        public ScreenResolution(System.Windows.Media.Visual visual)
+        {
+            var dpi = VisualTreeHelper.GetDpi(visual);
+            Xdpi = (int) dpi.PixelsPerInchX;
+            Ydpi = (int) dpi.PixelsPerInchY;
+        }
+
+        public ScreenResolution(int xdpi, int ydpi)
+        {
+            Xdpi = xdpi;
+            Ydpi = ydpi;
         }
 
         private enum DeviceCap
