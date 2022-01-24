@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PackageId>TpMetroWpf</PackageId>
-    <PackageVersion>2.0.3.0</PackageVersion>
+    <PackageVersion>2.0.4.0</PackageVersion>
     <Authors>Gerhard Stephan</Authors>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
@@ -69,7 +69,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TimePunch-MVVM" Version="0.5.0" />
+    <PackageReference Include="TimePunch-MVVM" Version="0.5.1" />
   </ItemGroup>
 
   <ItemGroup>

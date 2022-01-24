@@ -54,9 +54,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xaml" />
-    <Reference Include="TpMVVM_Wpf, Version=0.5.0.0, Culture=neutral, PublicKeyToken=0e9ec715575165a9, processorArchitecture=MSIL">
-      <HintPath>..\packages\TimePunch-MVVM.0.5.0\lib\net472\TpMVVM_Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +77,11 @@
       <Project>{18c832bb-9c4b-401b-96ab-7bc4fc4472dc}</Project>
       <Name>TpMetroWpfLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="TimePunch-MVVM">
+      <Version>0.5.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
