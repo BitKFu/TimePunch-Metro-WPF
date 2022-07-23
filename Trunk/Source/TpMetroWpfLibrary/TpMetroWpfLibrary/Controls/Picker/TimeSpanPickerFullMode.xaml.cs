@@ -27,7 +27,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         private void CorrectSelectorOrder()
         {
             Grid.SetColumn(hourControl, 1);
+            hourControl.TabIndex = 1;
+
             Grid.SetColumn(minuteControl, 2);
+            minuteControl.TabIndex = 2;
+
+            hourControl.Focus();
         }
 
         /// <summary>

@@ -42,8 +42,14 @@
             Visibility="{Binding FilterDelegate, Converter={StaticResource ObjectToVisibilityConverter}}"
             Style="{DynamicResource WinInputTextNormalStyle}"
             VerticalContentAlignment="Center"
-            Name="FilterTextBox"
-            />
+            AutomationProperties.LabeledBy="{Binding SelectedItem}"
+            Name="FilterTextBox">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+            </TextBox.InputBindings>
+        </TextBox>
 
         <!-- Content -->
         <ListBox Grid.Row="1" 
@@ -57,6 +63,9 @@
                  Margin="{StaticResource WinMargin}"
                  KeyUp="OnListBoxKeyUp"
                  MouseLeftButtonUp="OnSelectItem">
+            <ListBox.InputBindings>
+                <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+            </ListBox.InputBindings>
         </ListBox>
 
         <!-- Application Bar -->

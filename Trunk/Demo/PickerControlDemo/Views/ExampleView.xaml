@@ -36,10 +36,11 @@
                            DisplayMemberPath="Text"
                            FullModeHeader="Month selection"
                            Filter="{Binding FilterMonth}"
+                           Uid="ListPicker"
                            SelectedItem="{Binding SelectedMonth, Mode=TwoWay}">
             <Picker:ListPicker.FullModeItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Text}" Style="{StaticResource WinTextNormalStyle}" Margin="{StaticResource WinMargin}"/>
+                    <TextBlock AutomationProperties.Name="{Binding Text}" Text="{Binding Text}" Style="{StaticResource WinTextNormalStyle}" Margin="{StaticResource WinMargin}"/>
                 </DataTemplate>
             </Picker:ListPicker.FullModeItemTemplate>
         </Picker:ListPicker>
@@ -51,6 +52,7 @@
             IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="3" 
+            Uid="DatePicker"
             Value="{Binding SelectedDate, Mode=TwoWay}"/>
         
         <!-- Time Picker -->
@@ -60,6 +62,7 @@
             IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="5" 
+            Uid="TimePicker"
             Value="{Binding SelectedDate, Mode=TwoWay}"/>
 
         <!-- TimeSpan Picker -->
@@ -69,6 +72,7 @@
             IsTouchSelectionEnabled="True"
             Margin="{StaticResource WinMargin}" 
             Grid.Row="7" 
+            Uid="TimeSpanPicker"
             Value="{Binding SelectedTimeSpan, Mode=TwoWay}"/>
 
     </Grid>

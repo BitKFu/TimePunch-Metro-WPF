@@ -43,13 +43,31 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             int index;
             if (parts.TryGetValue('h', out index))
+            {
                 Grid.SetColumn(hourControl, index + 1);
+                hourControl.TabIndex = index + 1;
+
+                if (index == 0)
+                    hourControl.Focus();
+            }
 
             if (parts.TryGetValue('m', out index))
+            {
                 Grid.SetColumn(minuteControl, index + 1);
+                minuteControl.TabIndex = index + 1;
+
+                if (index == 0)
+                    minuteControl.Focus();
+            }
 
             if (parts.TryGetValue('t', out index))
+            {
                 Grid.SetColumn(designatorControl, index + 1);
+                designatorControl.TabIndex = index + 1;
+
+                if (index == 0)
+                    designatorControl.Focus();
+            }
         }
 
         /// <summary>

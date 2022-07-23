@@ -866,7 +866,7 @@
                                 Padding="2"
                                 SnapsToDevicePixels="true">
 
-                        <ContentPresenter />
+                        <ContentPresenter/>
                     </Border>
 
                     <ControlTemplate.Triggers>

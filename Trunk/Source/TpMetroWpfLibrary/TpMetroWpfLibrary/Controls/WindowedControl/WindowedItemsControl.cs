@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -71,8 +72,17 @@ namespace TimePunch.Metro.Wpf.Controls.WindowedControl
 
                 SetVerticalOffsetFromSelectedIndex();
             }
-
             get { return (int)GetValue(SelectedIndexProperty); }
+        }
+
+        public void SetSelectedIndex(int value)
+        {
+            value %= Items.Count;
+            if (value < 0) value += Items.Count;
+            SetValue(SelectedIndexProperty, value);
+            SelectedItem = Items[value];
+
+            SetVerticalOffsetFromSelectedIndex();
         }
 
         public object SelectedItem

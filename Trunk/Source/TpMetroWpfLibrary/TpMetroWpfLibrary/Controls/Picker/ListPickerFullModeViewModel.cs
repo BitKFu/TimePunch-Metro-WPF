@@ -84,6 +84,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             }
         }
 
+        private int CountFiltered => FilterDelegate != null
+            ? ItemsSource
+                .Cast<object>()
+                .Count(item => FilterDelegate(item.GetType().GetProperty(DisplayMemberPath).GetValue(item).ToString(), FilterText))
+            : ItemsSource.Cast<object>().Count();
+
         /// <summary>
         /// Gets or sets the selected item
         /// </summary>
@@ -117,7 +123,18 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public string FilterText
         {
             get { return GetPropertyValue(() => FilterText); }
-            set { SetPropertyValue(() => FilterText, value); }
+            set
+            {
+                if (SetPropertyValue(() => FilterText, value))
+                {
+                    if (CountFiltered == 1)
+                    {
+                        var firstElement = FilteredItemSource.GetEnumerator();
+                        firstElement.MoveNext();
+                        SelectedItem = firstElement.Current;
+                    }
+                }
+            }
         }
 
         /// <summary>

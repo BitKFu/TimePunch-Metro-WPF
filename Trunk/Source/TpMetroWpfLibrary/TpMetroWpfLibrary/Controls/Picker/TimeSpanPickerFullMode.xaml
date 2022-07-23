@@ -39,6 +39,12 @@
                                     ItemsSource="{Binding AllHours}"
                                     SelectedItem="{Binding SelectedHour, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:HourInfo">
@@ -94,6 +100,12 @@
                                     ItemsSource="{Binding AllMinutes}"
                                     SelectedItem="{Binding SelectedMinute, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:MinuteInfo">

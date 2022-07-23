@@ -4,18 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+             Name="ListPickerCtr"
              d:DesignHeight="100" d:DesignWidth="300">
     <Grid x:Name="ListPickerContent"
             HorizontalAlignment="Stretch"
-            IsHitTestVisible="True"
-            MouseLeftButtonDown="OnEnterFullModeViaClick"
-            TouchUp="OnEnterFullModeViaTouch"
             Cursor="{Binding PickerCursor}"
+            MouseLeftButtonUp="OnEnterFullModeViaClick"
+            TouchUp="OnEnterFullModeViaTouch"
             Background="{DynamicResource WinChromeBrush}">
         <TextBlock 
             Text="{Binding DisplayValue}" 
             Style="{DynamicResource WinTextNormalStyle}" 
+            MouseLeftButtonUp="OnEnterFullModeViaClick"
+            TouchUp="OnEnterFullModeViaTouch"
             Foreground="{DynamicResource WinTextBoxForegroundBrush}"
             Margin="{StaticResource WinMargin}"/>
+        <Button Style="{StaticResource ChromeButtonStyleHidden}"
+                IsEnabled="True"
+                IsHitTestVisible="True"
+                Uid="{Binding ElementName=ListPickerCtr, Path=Uid, Mode=OneWay}"
+                Click="OnEnterFullModeViaClick"
+                AutomationProperties.Name="{Binding DisplayValue}"
+                TouchUp="OnEnterFullModeViaTouch"></Button>
     </Grid>
 </UserControl>

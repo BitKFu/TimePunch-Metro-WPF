@@ -4,7 +4,10 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
@@ -121,10 +124,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Send FullMode Request when the user clicks the Selected Item
         /// </summary>
-        private void OnEnterFullModeViaClick(object sender, MouseButtonEventArgs e)
+        private void OnEnterFullModeViaClick(object sender, RoutedEventArgs routedEventArgs)
         {
             if (IsReadonly)
                 return;
+
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
 
             if (IsTouchSelectionEnabled)
             {
@@ -140,6 +145,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             if (IsReadonly)
                 return;
+
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
 
             if (IsTouchSelectionEnabled)
             {
@@ -166,6 +173,20 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // switch the animation mode
             if (oldAnimationMode != null)
                 Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+
+            if (focusedControl != null)
+                Task.Run(() =>
+                {
+                    Thread.Sleep(500);
+                    if ((Parent as FrameworkElement)?.Parent is UIElement window)
+                        window.Dispatcher.Invoke(() =>
+                        {
+                            var element = window.FindUid(focusedControl).FindUid(focusedControl);
+                            element?.Focus();
+                            Keyboard.Focus(element);
+                            focusedControl = null;
+                        });
+                });
         }
 
         /// <summary>
@@ -204,6 +225,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         public event PropertyChangedEventHandler PropertyChanged;
         private object oldAnimationMode;
+        private string? focusedControl;
 
         #endregion
     }

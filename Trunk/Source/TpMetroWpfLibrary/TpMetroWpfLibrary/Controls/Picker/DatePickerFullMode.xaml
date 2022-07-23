@@ -40,6 +40,11 @@
                                     ItemsSource="{Binding AllMonths}"
                                     SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:MonthInfo">
@@ -100,6 +105,11 @@
                                     ItemsSource="{Binding AllDays}"
                                     SelectedItem="{Binding SelectedDay, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:MonthInfo">
@@ -161,6 +171,11 @@
                                     ItemsSource="{Binding AllYears}"
                                     SelectedItem="{Binding SelectedYear, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="system:Int32">

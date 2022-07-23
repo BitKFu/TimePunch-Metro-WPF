@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Converter="clr-namespace:TimePunch.Metro.Wpf.Converter" xmlns:local="clr-namespace:TimePunch.Metro.Wpf.Controls.WindowedControl" xmlns:AppBar="clr-namespace:TimePunch.Metro.Wpf.Controls.AppBar" xmlns:Resources="clr-namespace:TimePunch.Metro.Wpf.Resources"
       xmlns:picker="clr-namespace:TimePunch.Metro.Wpf.Controls.Picker"
       mc:Ignorable="d" 
+      AutomationProperties.Name="{Binding FullModeHeader, Mode=OneWay}"
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="TimePickerFullMode">
 
@@ -41,6 +42,11 @@
                                     ItemsSource="{Binding AllHours}"
                                     SelectedItem="{Binding SelectedHour, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:HourInfo">
@@ -96,6 +102,11 @@
                                     ItemsSource="{Binding AllMinutes}"
                                     SelectedItem="{Binding SelectedMinute, Mode=TwoWay}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:MinuteInfo">
@@ -153,6 +164,11 @@
                                     SelectedItem="{Binding SelectedDesignator, Mode=TwoWay}"
                                     Visibility="{Binding IsDesignatorVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     IsActiveChanged="OnWindowedItemsControlIsActiveChanged">
+                <local:WindowedItemsControl.InputBindings>
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding CheckCommand}" Key="Enter" />
+                    <KeyBinding Command="{Binding CancelCommand}" Key="Escape" />
+                </local:WindowedItemsControl.InputBindings>
 
                 <local:WindowedItemsControl.ItemTemplate>
                     <DataTemplate DataType="picker:DesignatorInfo">

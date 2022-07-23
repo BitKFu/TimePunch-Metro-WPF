@@ -5,7 +5,10 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
@@ -91,6 +94,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             = DependencyProperty.Register("IsTouchSelectionEnabled", typeof(bool), typeof(DatePicker), new PropertyMetadata(DeviceInfo.HasTouchInput()));
 
         private bool isPickerVisible;
+        private string? focusedControl;
 
         #endregion
 
@@ -156,6 +160,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             if (IsReadonly)
                 return;
 
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
+
             if (IsTouchSelectionEnabled)
             {
                 oldAnimationMode =Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
@@ -166,10 +172,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Send FullMode Request when the user touches the Selected Item
         /// </summary>
-        private void OnEnterFullModeViaTouch(object sender, TouchEventArgs e)
+        private void OnEnterFullModeViaTouch(object sender, RoutedEventArgs routedEventArgs)
         {
             if (IsReadonly)
                 return;
+
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
 
             if (IsTouchSelectionEnabled)
             {
@@ -196,6 +204,20 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // switch the animation mode
             if (oldAnimationMode != null)
                 Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+
+            if (focusedControl != null)
+                Task.Run(() =>
+                {
+                    Thread.Sleep(500);
+                    if ((Parent as FrameworkElement)?.Parent is UIElement window)
+                        window.Dispatcher.Invoke(() =>
+                        {
+                            var element = window.FindUid(focusedControl).FindUid(focusedControl);
+                            element?.Focus();
+                            Keyboard.Focus(element);
+                            focusedControl = null;
+                        });
+                });
         }
 
         /// <summary>
@@ -211,7 +233,6 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-
 
         /// <summary>
         /// Gets or sets the IsReadonly flag

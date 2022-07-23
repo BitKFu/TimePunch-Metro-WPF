@@ -5,10 +5,15 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
+using TimePunch.Metro.Wpf.Helper;
 using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
 using TimePunch.MVVM.Events;
@@ -42,13 +47,13 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// DisplayValue
         /// </summary>
-        public static DependencyProperty DisplayValueProperty = DependencyProperty.Register("DisplayValue", typeof (string), typeof (ListPicker));
+        public static DependencyProperty DisplayValueProperty = DependencyProperty.Register("DisplayValue", typeof(string), typeof(ListPicker));
 
         /// <summary>
         /// Selected item of the item source.
         /// </summary>
         public static DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof (object), typeof (ListPicker), new PropertyMetadata(null, OnSelectedItemChangedCallback, OnCoerceValueCallback));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(ListPicker), new PropertyMetadata(null, OnSelectedItemChangedCallback, OnCoerceValueCallback));
 
         /// <summary>
         /// IsReadonly property specifies if the value shall be shown, but not enabled for editing
@@ -58,7 +63,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Defines a filter property
         /// </summary>
-        public static DependencyProperty FilterProperty =  DependencyProperty.Register("Filter", typeof(ListPickerFilterDelegate), typeof(ListPicker));
+        public static DependencyProperty FilterProperty = DependencyProperty.Register("Filter", typeof(ListPickerFilterDelegate), typeof(ListPicker));
 
         private static object OnCoerceValueCallback(DependencyObject d, object basevalue)
         {
@@ -78,7 +83,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// If null, than the selected item will be shown within accessing any property.
         /// </summary>
         public static DependencyProperty DisplayMemberPathProperty =
-            DependencyProperty.Register("DisplayMemberPath", typeof (string), typeof (ListPicker), new PropertyMetadata(null, OnDisplayMemberPathChangedCallback));
+            DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(ListPicker), new PropertyMetadata(null, OnDisplayMemberPathChangedCallback));
 
         private static void OnDisplayMemberPathChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -89,7 +94,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// FullMode Header that is shown in the fullmode page
         /// </summary>
         public static DependencyProperty FullModeHeaderProperty =
-            DependencyProperty.Register("FullModeHeader", typeof (string), typeof (ListPicker));
+            DependencyProperty.Register("FullModeHeader", typeof(string), typeof(ListPicker));
 
         #endregion
 
@@ -128,7 +133,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string DisplayMemberPath
         {
-            get => (string) GetValue(DisplayMemberPathProperty);
+            get => (string)GetValue(DisplayMemberPathProperty);
             set => SetValue(DisplayMemberPathProperty, value);
         }
 
@@ -137,7 +142,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         public string FullModeHeader
         {
-            get => (string) GetValue(FullModeHeaderProperty);
+            get => (string)GetValue(FullModeHeaderProperty);
             set => SetValue(FullModeHeaderProperty, value);
         }
 
@@ -233,11 +238,15 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         #region Send Request to Enter the FullMode
 
+        private string? focusedControl = null;
+
         /// <summary>
         /// Send FullMode Request when the user clicks the Selected Item
         /// </summary>
-        private void OnEnterFullModeViaClick(object sender, MouseButtonEventArgs e)
+        private void OnEnterFullModeViaClick(object sender, RoutedEventArgs routedEventArgs)
         {
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
+
             oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
@@ -250,6 +259,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// </summary>
         private void OnEnterFullModeViaTouch(object sender, TouchEventArgs e)
         {
+            focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
+
             oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
@@ -275,6 +286,20 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             // switch the animation mode
             if (oldAnimationMode != null)
                 Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+
+            if (focusedControl != null)
+                Task.Run(() =>
+                {
+                    Thread.Sleep(500);
+                    if ((Parent as FrameworkElement)?.Parent is UIElement window)
+                        window.Dispatcher.Invoke(() =>
+                        {
+                            var element = window.FindUid(focusedControl).FindUid(focusedControl);
+                            element?.Focus();
+                            Keyboard.Focus(element); 
+                            focusedControl = null;
+                        });
+                });
         }
 
 
