@@ -278,7 +278,7 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
                 var button = new Button
                                   {
                                       Margin = new Thickness(12,3,12,3),
-                                      Focusable = newItem.Focusable,
+                                      Focusable = true,
                                       IsDefault = newItem.IsDefault,
                                       IsCancel = newItem.IsCancel
                                   };
