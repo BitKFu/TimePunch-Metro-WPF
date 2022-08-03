@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -302,6 +303,9 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
 
                 binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.DescriptionProperty) };
                 textBlock.SetBinding(TextBlock.TextProperty, binding);
+
+                var automationButton = new Binding(){Source = textBlock, Path = new PropertyPath(TextBlock.TextProperty) } ;
+                button.SetBinding(AutomationProperties.NameProperty, automationButton);
 
                 binding = new Binding() { Source = newItem, Path = new PropertyPath(ApplicationBarIcon.ImageSourceProperty)};
                 content.SetBinding(Image.SourceProperty, binding);
