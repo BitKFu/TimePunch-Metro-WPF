@@ -36,7 +36,7 @@ namespace PickerControlDemo.ViewModels
                              new Resource("December"),
                          };
 
-            SelectedMonth = Months[0];
+            SelectedMonth = null;
             SelectedDate = DateTime.Now;
         }
 
