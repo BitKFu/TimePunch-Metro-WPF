@@ -37,3 +37,5 @@
 /.vs
 /Trunk/Demo/.vs/Demo
 /Trunk/Source/TpMetroWpfLibrary/output
+/Trunk/Source/TpMetroWpfLibrary/.vs
+.vs
