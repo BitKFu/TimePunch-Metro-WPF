@@ -118,9 +118,17 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <param name="navigateToPage">The navigate to page.</param>
         public override void NavigateToPage(string navigateToPage)
         {
+            if (ContentFrame == null)
+                return;
+
             if (CurrentPage == null)
-                Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() =>
-                    ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative))));
+            {
+                if (ContentFrame.CheckAccess())
+                    ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative));
+                else
+                    ContentFrame.Dispatcher.BeginInvoke((ThreadStart)(() =>
+                        ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative))));
+            }
             else
             {
                 if (CurrentPage.Dispatcher.CheckAccess())
@@ -150,9 +158,17 @@ namespace TimePunch.Metro.Wpf.Controller
         /// <param name="message">The message thas will be send to the page</param>
         public override void NavigateToPage(string navigateToPage, object message)
         {
+            if (ContentFrame == null)
+                return;
+
             if (CurrentPage == null)
-                Application.Current.Dispatcher.BeginInvoke((ThreadStart)(() => 
-                    ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative), message)));
+            {
+                if (ContentFrame.CheckAccess())
+                    ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative), message);
+                else
+                    ContentFrame.Dispatcher.BeginInvoke((ThreadStart)(() =>
+                        ContentFrame.Navigate(new Uri(navigateToPage, UriKind.Relative), message)));
+            }
             else
             {
                 if (CurrentPage.Dispatcher.CheckAccess())
