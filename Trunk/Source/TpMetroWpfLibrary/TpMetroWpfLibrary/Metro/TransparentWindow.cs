@@ -373,8 +373,8 @@ namespace TimePunch.Metro.Wpf.Metro
             // Only visit the OnClosing Method once
             if (firstOnClosing && IsMainWindow)
             {
-                var closingEvent = Kernel.Instance.EventAggregator.PublishMessage(new ApplicationIsClosingEvent());
-                e.Cancel = !((INavigationController)Kernel.Instance.Controller).ForceClosing && closingEvent.Cancel;
+                var closingEvent = Kernel.Instance?.EventAggregator.PublishMessage(new ApplicationIsClosingEvent());
+                e.Cancel = !((INavigationController)Kernel.Instance?.Controller).ForceClosing && closingEvent.Cancel;
                 
                 if (!e.Cancel)
                     firstOnClosing = false;
@@ -393,8 +393,8 @@ namespace TimePunch.Metro.Wpf.Metro
         {
             if (IsMainWindow)
             {
-                Kernel.Instance.EventAggregator.PublishMessage(new ApplicationClosedEvent());
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.PublishMessage(new ApplicationClosedEvent());
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
             }
 
             base.OnClosed(e);

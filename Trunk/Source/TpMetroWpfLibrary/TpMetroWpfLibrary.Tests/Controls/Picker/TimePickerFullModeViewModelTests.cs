@@ -337,7 +337,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             vm.Initialize();
             vm.InitializePage(new TimePickerFullModeRequest("Header", DateTime.Today.AddHours(3), checkCommandId));
 
-            Kernel.Instance.EventAggregator.Subscribe(this);
+            Kernel.Instance?.EventAggregator.Subscribe(this);
             try
             {
                 // Execute command and send the event
@@ -348,7 +348,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             }
             finally 
             {
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
             }
         }   
         
@@ -363,7 +363,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             vm.Initialize();
             vm.InitializePage(new TimePickerFullModeRequest("Header", DateTime.Today.AddHours(3), checkCommandId));
 
-            Kernel.Instance.EventAggregator.Subscribe(this);
+            Kernel.Instance?.EventAggregator.Subscribe(this);
             try
             {
                 // Execute command and send the event
@@ -374,7 +374,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             }
             finally 
             {
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
             }
         }
 

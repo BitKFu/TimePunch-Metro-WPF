@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.Collections;
 using System.Windows;
@@ -19,7 +20,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         public ListPickerFullModeRequest(
             string fullModeHeader, 
             IEnumerable itemsSource, 
-            object selectedItem, 
+            object? selectedItem, 
             DataTemplate fullModeItemTemplate, 
             Guid listPickerId,
             ListPickerFilterDelegate? filterDelegate,
@@ -43,7 +44,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the selected item
         /// </summary>
-        public object SelectedItem { get; }
+        public object? SelectedItem { get; }
 
         /// <summary>
         /// Gets or sets the FullModeItemTemplate

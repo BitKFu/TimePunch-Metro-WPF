@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -10,8 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.MVVM.Controller;
@@ -104,7 +103,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Gets or sets the FullMode Item Template
         /// http://chris.59north.com/post/Using-DataTemplates-in-custom-controls.aspx
         /// </summary>
-        public DataTemplate FullModeItemTemplate
+        public DataTemplate? FullModeItemTemplate
         {
             get;
             set;
@@ -122,7 +121,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the selected item, which must be included in the items source
         /// </summary>
-        public object SelectedItem
+        public object? SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
@@ -214,14 +213,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             ListPickerContent.DataContext = this;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                Kernel.Instance?.EventAggregator.Subscribe(this);
 
-            IsEnabledChanged += (s, e) =>
+            IsEnabledChanged += (_, _) =>
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("PickerCursor"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PickerCursor"));
             };
         }
 
@@ -231,14 +227,14 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         ~ListPicker()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         #endregion
 
         #region Send Request to Enter the FullMode
 
-        private string? focusedControl = null;
+        private string? focusedControl;
 
         /// <summary>
         /// Send FullMode Request when the user clicks the Selected Item
@@ -247,11 +243,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+            oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
+            if (FullModeItemTemplate != null)
+                Kernel.Instance?.EventAggregator.PublishMessage(
+                    new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
         }
 
         /// <summary>
@@ -261,11 +258,12 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             focusedControl = (Keyboard.FocusedElement as Control)?.Uid;
 
-            oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(
+            oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(
                 new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
 
-            Kernel.Instance.EventAggregator.PublishMessage(
-                new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
+            if (FullModeItemTemplate != null)
+                Kernel.Instance?.EventAggregator.PublishMessage(
+                    new ListPickerFullModeRequest(FullModeHeader, ItemsSource, SelectedItem, FullModeItemTemplate, ListPickerId, Filter, DisplayMemberPath));
         }
 
         #endregion
@@ -276,16 +274,16 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="message">item selection message</param>
         public void Handle(ListPickerSelectItemRequest message)
         {
-            if (message == null || message.ListPickerId != ListPickerId)
+            if (message.ListPickerId != ListPickerId)
                 return;
 
             // Set the selected Item
             SelectedItem = message.SelectedItem;
-            Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+            Kernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
 
             // switch the animation mode
             if (oldAnimationMode != null)
-                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+                Kernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
 
             if (focusedControl != null)
                 Task.Run(() =>
@@ -325,8 +323,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         #region Implementation of INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private ChangeAnimationModeRequest oldAnimationMode;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private ChangeAnimationModeRequest? oldAnimationMode;
 
         #endregion
 

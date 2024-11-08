@@ -2,15 +2,13 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using TimePunch.Metro.Wpf.Events;
-using TimePunch.Metro.Wpf.ViewModel;
 using TimePunch.MVVM.Events;
-using TimePunch.MVVM.ViewModels;
 using ViewModelBase = TimePunch.Metro.Wpf.ViewModel.ViewModelBase;
 
 namespace TimePunch.Metro.Wpf.Controls.Picker
@@ -63,7 +61,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the ItemsSource
         /// </summary>
-        public IEnumerable ItemsSource 
+        public IEnumerable? ItemsSource 
         {
             get { return GetPropertyValue(() => ItemsSource); }
             set { SetPropertyValue(() => ItemsSource, value); }
@@ -72,28 +70,31 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Returns the filtered items source
         /// </summary>
-        public IEnumerable FilteredItemSource
+        public IEnumerable? FilteredItemSource
         {
             get
             {
                 var dmp = DisplayMemberPath;
+                if (dmp == null)
+                    return null;
+
                 return FilterDelegate != null
-                           ? ItemsSource.Cast<object>()
+                           ? ItemsSource?.Cast<object>()
                                .Where(item => FilterDelegate(item.GetType().GetProperty(dmp).GetValue(item).ToString(), FilterText))
                            : ItemsSource;
             }
         }
 
-        private int CountFiltered => FilterDelegate != null
+        private int CountFiltered => (FilterDelegate != null && ItemsSource != null && DisplayMemberPath != null)
             ? ItemsSource
                 .Cast<object>()
                 .Count(item => FilterDelegate(item.GetType().GetProperty(DisplayMemberPath).GetValue(item).ToString(), FilterText))
-            : ItemsSource.Cast<object>().Count();
+            : ItemsSource?.Cast<object>().Count() ?? 0;
 
         /// <summary>
         /// Gets or sets the selected item
         /// </summary>
-        public object SelectedItem
+        public object? SelectedItem
         {
             get { return GetPropertyValue(() => SelectedItem); }
             set { SetPropertyValue(() => SelectedItem, value); }
@@ -102,7 +103,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the FullModeItemTemplate
         /// </summary>
-        public DataTemplate FullModeItemTemplate
+        public DataTemplate? FullModeItemTemplate
         {
             get { return GetPropertyValue(() => FullModeItemTemplate); }
             set { SetPropertyValue(() => FullModeItemTemplate, value); }
@@ -111,7 +112,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the FullMode Header
         /// </summary>
-        public string FullModeHeader
+        public string? FullModeHeader
         {
             get { return GetPropertyValue(() => FullModeHeader); }
             set { SetPropertyValue(() => FullModeHeader, value); }
@@ -120,14 +121,14 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the Filter text
         /// </summary>
-        public string FilterText
+        public string? FilterText
         {
             get { return GetPropertyValue(() => FilterText); }
             set
             {
                 if (SetPropertyValue(() => FilterText, value))
                 {
-                    if (CountFiltered == 1)
+                    if (CountFiltered == 1 && FilteredItemSource != null)
                     {
                         var firstElement = FilteredItemSource.GetEnumerator();
                         firstElement.MoveNext();
@@ -149,7 +150,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <summary>
         /// Gets or sets the display member path
         /// </summary>
-        public string DisplayMemberPath
+        public string? DisplayMemberPath
         {
             get { return GetPropertyValue(() => DisplayMemberPath); }
             set { SetPropertyValue(() => DisplayMemberPath, value); }
@@ -163,7 +164,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Gets or sets the Save command.
         /// </summary>
         /// <value>The Save command.</value>
-        public ICommand CheckCommand
+        public ICommand? CheckCommand
         {
             get { return GetPropertyValue(() => CheckCommand); }
             set { SetPropertyValue(() => CheckCommand, value); }
@@ -200,7 +201,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Gets or sets the Cancel command.
         /// </summary>
         /// <value>The Cancel command.</value>
-        public ICommand CancelCommand
+        public ICommand? CancelCommand
         {
             get { return GetPropertyValue(() => CancelCommand); }
             set { SetPropertyValue(() => CancelCommand, value); }

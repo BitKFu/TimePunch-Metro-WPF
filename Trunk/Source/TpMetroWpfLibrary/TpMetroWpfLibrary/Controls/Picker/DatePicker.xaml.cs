@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -31,7 +32,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// Unique Identifier used to identify the message from ListPickerFullModeViewModel
         /// </summary>
         private readonly Guid datePickerId = Guid.NewGuid();
-        private ChangeAnimationModeRequest oldAnimationMode;
+        private ChangeAnimationModeRequest? oldAnimationMode;
         
         #region Constructor
 
@@ -44,7 +45,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             DatePickerContent.DataContext = this;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                Kernel.Instance?.EventAggregator.Subscribe(this);
 
             IsEnabledChanged += (s, e) =>
             {
@@ -62,7 +63,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         ~DatePicker()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         #endregion
@@ -113,8 +114,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         {
             Debug.WriteLine("DatePicker Value Changed to {0}", d.GetValue(e.Property));
 
-            var picker = d as DatePicker;
-            if (picker != null && picker.PropertyChanged != null)
+            if (d is DatePicker picker && picker.PropertyChanged != null)
                 picker.PropertyChanged.Invoke(picker, new PropertyChangedEventArgs("DatePickerValue"));
         }
 
@@ -164,8 +164,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode =Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
+                oldAnimationMode =Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
             }
         }
 
@@ -181,8 +181,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
+                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new DatePickerFullModeRequest(FullModeHeader, Value, DatePickerId));
             }
         }
 
@@ -194,16 +194,16 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="message">the message to handle</param>
         public void Handle(DatePickerSelectDateRequest message)
         {
-            if (message == null || message.DatePickerId != DatePickerId)
+            if (message.DatePickerId != DatePickerId)
                 return;
 
             // Set the selected Item
             Value = message.Value;
-            Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+            Kernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
 
             // switch the animation mode
             if (oldAnimationMode != null)
-                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+                Kernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
 
             if (focusedControl != null)
                 Task.Run(() =>
@@ -230,7 +230,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         #region Implementation of INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #endregion
 

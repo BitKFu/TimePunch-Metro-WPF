@@ -38,7 +38,7 @@ namespace TimePunch.Metro.Wpf.Controller
         /// Initializes a new instance of the BaseController class.
         /// </summary>
         protected BaseController() 
-            : base(Kernel.Instance.EventAggregator)
+            : base(Kernel.Instance?.EventAggregator)
         {
         }
 

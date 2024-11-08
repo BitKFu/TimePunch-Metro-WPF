@@ -2,8 +2,8 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Linq;
@@ -26,14 +26,14 @@ namespace TimePunch.Metro.Wpf.Docking
         #region Instance Data
 
         private readonly Window form;
-        private readonly Timer timer;
+        private readonly Timer? timer;
         private bool isFirstRun = true;
         private TaskBar.TaskBarEdge lastEdge;
         private Size lastSize;
         private Point lastLocation;
         private TaskBar.TaskBarEdge dockedTo = TaskBar.TaskBarEdge.NotDocked;
 
-        public event Action<TaskBar.TaskBarEdge> OnDockingChanged = null;
+        public event Action<TaskBar.TaskBarEdge>? OnDockingChanged = null;
        
         #endregion
 
@@ -121,7 +121,7 @@ namespace TimePunch.Metro.Wpf.Docking
 
         private void PositionLeft()
         {
-            Screen? activeScreen = ActiveScreen;
+            var activeScreen = ActiveScreen;
             if (activeScreen == null)
             {
                 ActiveScreenIndex = 0;

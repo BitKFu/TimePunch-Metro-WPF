@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,7 +39,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             TimePickerContent.DataContext = this;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                Kernel.Instance?.EventAggregator.Subscribe(this);
 
             IsEnabledChanged += (s, e) =>
                                     {
@@ -56,7 +57,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         ~TimePicker()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         #endregion
@@ -150,8 +151,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
             }
         }
 
@@ -167,8 +168,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
             }
         }
 
@@ -180,16 +181,16 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="message">the message to handle</param>
         public void Handle(TimePickerSelectRequest message)
         {
-            if (message == null || message.TimePickerId != TimePickerId)
+            if (message.TimePickerId != TimePickerId)
                 return;
 
             // Set the selected Item
             Value = message.Value;
-            Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+            Kernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
 
             // switch the animation mode
             if (oldAnimationMode != null)
-                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+                Kernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
 
             if (focusedControl != null)
                 Task.Run(() =>
@@ -208,8 +209,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         #region Implementation of INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private object oldAnimationMode;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private object? oldAnimationMode;
         private string? focusedControl;
 
         #endregion

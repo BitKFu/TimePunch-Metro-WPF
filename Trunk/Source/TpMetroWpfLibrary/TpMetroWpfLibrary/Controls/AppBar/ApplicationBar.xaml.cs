@@ -60,7 +60,7 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
             Unloaded += OnUnloaded;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                Kernel.Instance?.EventAggregator.Subscribe(this);
 
             SetResourceReference(ImageSourceProperty, "BurgerMenu");
         }
@@ -71,7 +71,7 @@ namespace TimePunch.Metro.Wpf.Controls.AppBar
         ~ApplicationBar()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         /// <summary>

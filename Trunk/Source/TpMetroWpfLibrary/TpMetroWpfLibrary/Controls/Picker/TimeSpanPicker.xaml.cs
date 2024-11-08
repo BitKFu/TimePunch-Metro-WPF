@@ -2,6 +2,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Events;
 using TimePunch.Metro.Wpf.Helper;
 using TimePunch.MVVM.Controller;
@@ -41,9 +41,9 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             TimeSpanPickerContent.DataContext = this;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Subscribe(this);
+                Kernel.Instance?.EventAggregator.Subscribe(this);
 
-            IsEnabledChanged += (s, e) =>
+            IsEnabledChanged += (_, _) =>
             {
                 if (PropertyChanged != null)
                 {
@@ -59,7 +59,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         ~TimeSpanPicker()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance.EventAggregator.Unsubscribe(this);
+                Kernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         #endregion
@@ -133,8 +133,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
+                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
             }
         }
 
@@ -150,8 +150,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance.EventAggregator.PublishMessage(new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
+                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                Kernel.Instance?.EventAggregator.PublishMessage(new TimeSpanPickerFullModeRequest(FullModeHeader, Value, TimeSpanPickerId));
             }
         }
 
@@ -163,16 +163,16 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         /// <param name="message">the message to handle</param>
         public void Handle(TimeSpanPickerSelectRequest message)
         {
-            if (message == null || message.TimeSpanPickerId != TimeSpanPickerId)
+            if (message.TimeSpanPickerId != TimeSpanPickerId)
                 return;
 
             // Set the selected Item
             Value = message.Value;
-            Kernel.Instance.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+            Kernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
 
             // switch the animation mode
             if (oldAnimationMode != null)
-                Kernel.Instance.EventAggregator.PublishMessage(oldAnimationMode);
+                Kernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
 
             if (focusedControl != null)
                 Task.Run(() =>
@@ -223,8 +223,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
         #region Implementation of INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private object oldAnimationMode;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private object? oldAnimationMode;
         private string? focusedControl;
 
         #endregion

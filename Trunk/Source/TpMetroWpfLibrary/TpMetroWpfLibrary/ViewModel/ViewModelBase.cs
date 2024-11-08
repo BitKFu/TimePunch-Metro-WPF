@@ -12,7 +12,7 @@ namespace TimePunch.Metro.Wpf.ViewModel
     public abstract class ViewModelBase : MVVM.ViewModels.ViewModelBase
     {
         protected ViewModelBase(IEventAggregator eventAggregator = null) 
-            : base(eventAggregator ?? Kernel.Instance.EventAggregator)
+            : base(eventAggregator ?? Kernel.Instance?.EventAggregator)
         {
         }
     }

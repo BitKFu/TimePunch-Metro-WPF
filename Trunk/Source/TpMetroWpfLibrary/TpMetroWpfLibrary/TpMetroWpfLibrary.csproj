@@ -9,10 +9,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PackageId>TpMetroWpf</PackageId>
-    <PackageVersion>2.1.2.0</PackageVersion>
+    <PackageVersion>2.2.0.0</PackageVersion>
     <Authors>Gerhard Stephan</Authors>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
@@ -65,11 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.2">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TimePunch-MVVM" Version="0.5.1" />
+    <PackageReference Include="TimePunch-MVVM" Version="0.8.1" />
   </ItemGroup>
 
   <ItemGroup>
