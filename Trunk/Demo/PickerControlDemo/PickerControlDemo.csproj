@@ -52,6 +52,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="TimePunch-MVVM, Version=0.9.3.0, Culture=neutral, PublicKeyToken=0e9ec715575165a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\TimePunch-MVVM.0.9.3\lib\net472\TimePunch-MVVM.dll</HintPath>
+    </Reference>
     <Reference Include="TpMVVM_Wpf, Version=0.5.1.0, Culture=neutral, PublicKeyToken=0e9ec715575165a9, processorArchitecture=MSIL">
       <HintPath>..\packages\TimePunch-MVVM.0.5.1\lib\net472\TpMVVM_Wpf.dll</HintPath>
     </Reference>

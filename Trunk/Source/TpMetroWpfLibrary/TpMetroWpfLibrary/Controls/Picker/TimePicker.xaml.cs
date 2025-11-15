@@ -39,7 +39,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
             TimePickerContent.DataContext = this;
 
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance?.EventAggregator.Subscribe(this);
+                GenericKernel.Instance?.EventAggregator.Subscribe(this);
 
             IsEnabledChanged += (s, e) =>
                                     {
@@ -57,7 +57,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         ~TimePicker()
         {
             if (!ViewModelBase.IsDesignMode)
-                Kernel.Instance?.EventAggregator.Unsubscribe(this);
+                GenericKernel.Instance?.EventAggregator.Unsubscribe(this);
         }
 
         #endregion
@@ -151,8 +151,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+                oldAnimationMode = GenericKernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                GenericKernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
             }
         }
 
@@ -168,8 +168,8 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             if (IsTouchSelectionEnabled)
             {
-                oldAnimationMode = Kernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
-                Kernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
+                oldAnimationMode = GenericKernel.Instance?.EventAggregator.PublishMessage(new ChangeAnimationModeRequest(Frames.AnimationMode.Fade));
+                GenericKernel.Instance?.EventAggregator.PublishMessage(new TimePickerFullModeRequest(FullModeHeader, Value, TimePickerId));
             }
         }
 
@@ -186,11 +186,11 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
             // Set the selected Item
             Value = message.Value;
-            Kernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
+            GenericKernel.Instance?.EventAggregator.PublishMessage(new GoBackNavigationRequest());
 
             // switch the animation mode
             if (oldAnimationMode != null)
-                Kernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
+                GenericKernel.Instance?.EventAggregator.PublishMessage(oldAnimationMode);
 
             if (focusedControl != null)
                 Task.Run(() =>

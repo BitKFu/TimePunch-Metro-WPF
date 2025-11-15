@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <LangVersion>latest</LangVersion>
     <PackageId>TpMetroWpf</PackageId>
-    <PackageVersion>2.2.2.0</PackageVersion>
+    <PackageVersion>2.3.0.0</PackageVersion>
     <Authors>Gerhard Stephan</Authors>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
@@ -68,7 +68,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TimePunch-MVVM" Version="0.8.2" />
+    <PackageReference Include="TimePunch-MVVM" Version="0.9.3" />
   </ItemGroup>
 
   <ItemGroup>

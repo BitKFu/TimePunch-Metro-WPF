@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TimePunch.Metro.Wpf.Controller;
 using TimePunch.Metro.Wpf.Controls.Picker;
-using TimePunch.MVVM.Controller;
 using TimePunch.MVVM.EventAggregation;
 using TimePunch.MVVM.Events;
 using TpMetroWpfLibrary.Tests.Controller;
@@ -39,7 +37,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
         [TestInitialize]
         public void Setup()
         {
-            Kernel.Instance = new StubKernel();
+            var kernel = StubKernel.Instance;
         }
 
         /// <summary>
@@ -337,7 +335,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             vm.Initialize();
             vm.InitializePage(new TimePickerFullModeRequest("Header", DateTime.Today.AddHours(3), checkCommandId));
 
-            Kernel.Instance?.EventAggregator.Subscribe(this);
+            StubKernel.Instance?.EventAggregator.Subscribe(this);
             try
             {
                 // Execute command and send the event
@@ -348,7 +346,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             }
             finally 
             {
-                Kernel.Instance?.EventAggregator.Unsubscribe(this);
+                StubKernel.Instance?.EventAggregator.Unsubscribe(this);
             }
         }   
         
@@ -363,7 +361,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             vm.Initialize();
             vm.InitializePage(new TimePickerFullModeRequest("Header", DateTime.Today.AddHours(3), checkCommandId));
 
-            Kernel.Instance?.EventAggregator.Subscribe(this);
+            StubKernel.Instance?.EventAggregator.Subscribe(this);
             try
             {
                 // Execute command and send the event
@@ -374,7 +372,7 @@ namespace TpMetroWpfLibrary.Tests.Controls.Picker
             }
             finally 
             {
-                Kernel.Instance?.EventAggregator.Unsubscribe(this);
+                StubKernel.Instance?.EventAggregator.Unsubscribe(this);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.Controller;
+﻿using TabControlDemo.Core;
+using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 
 namespace TabControlDemo.Views
@@ -11,7 +12,7 @@ namespace TabControlDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }

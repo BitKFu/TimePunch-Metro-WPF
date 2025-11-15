@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.Controller;
+﻿using ApplicationBarDemo.Core;
+using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 
 namespace ApplicationBarDemo.Views
@@ -11,7 +12,7 @@ namespace ApplicationBarDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }

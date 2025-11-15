@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.Controller;
+﻿using ProgressBarDemo.Core;
+using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 
 namespace ProgressBarDemo.Views
@@ -11,7 +12,7 @@ namespace ProgressBarDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }

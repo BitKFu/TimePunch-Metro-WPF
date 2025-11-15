@@ -80,7 +80,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
 
                 return FilterDelegate != null
                            ? ItemsSource?.Cast<object>()
-                               .Where(item => FilterDelegate(item.GetType().GetProperty(dmp).GetValue(item).ToString(), FilterText))
+                               .Where(item => FilterDelegate(item.GetType().GetProperty(dmp)?.GetValue(item).ToString() ?? string.Empty, FilterText ?? string.Empty))
                            : ItemsSource;
             }
         }
@@ -88,7 +88,7 @@ namespace TimePunch.Metro.Wpf.Controls.Picker
         private int CountFiltered => (FilterDelegate != null && ItemsSource != null && DisplayMemberPath != null)
             ? ItemsSource
                 .Cast<object>()
-                .Count(item => FilterDelegate(item.GetType().GetProperty(DisplayMemberPath).GetValue(item).ToString(), FilterText))
+                .Count(item => FilterDelegate(item.GetType().GetProperty(DisplayMemberPath)?.GetValue(item).ToString() ?? string.Empty, FilterText ?? string.Empty))
             : ItemsSource?.Cast<object>().Count() ?? 0;
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.Controller;
+﻿using SnappedWindowDemo.Core;
+using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 
 namespace SnappedWindowDemo.Views
@@ -11,7 +12,7 @@ namespace SnappedWindowDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
 
             ShowActivated = true;
             Topmost = true;

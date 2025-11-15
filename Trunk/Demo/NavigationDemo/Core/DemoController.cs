@@ -11,6 +11,10 @@ namespace NavigationDemo.Core
         IHandleMessage<NavigateToPage1>,
         IHandleMessage<NavigateToPage2>
     {
+        public DemoController() : base(DemoKernel.Instance.EventAggregator)
+        {
+        }
+
         /// <summary>
         /// This method handles the navigation event to page 1
         /// </summary>

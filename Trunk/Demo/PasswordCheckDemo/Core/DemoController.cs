@@ -7,5 +7,8 @@ namespace PasswordCheckDemo.Core
     /// </summary>
     public class DemoController : BaseController
     {
+        public DemoController() : base(DemoKernel.Instance.EventAggregator)
+        {
+        }
     }
 }

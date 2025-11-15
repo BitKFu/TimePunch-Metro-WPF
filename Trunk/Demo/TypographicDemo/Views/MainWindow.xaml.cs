@@ -1,5 +1,6 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
+using TypographicDemo.Core;
 
 namespace TypographicDemo.Views
 {
@@ -11,7 +12,7 @@ namespace TypographicDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }

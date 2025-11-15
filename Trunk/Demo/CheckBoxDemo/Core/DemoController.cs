@@ -1,4 +1,5 @@
 ﻿using TimePunch.Metro.Wpf.Controller;
+using TimePunch.MVVM.EventAggregation;
 
 namespace CheckBoxDemo.Core
 {
@@ -7,5 +8,8 @@ namespace CheckBoxDemo.Core
     /// </summary>
     public class DemoController : BaseController
     {
+        public DemoController() : base(DemoKernel.Instance.EventAggregator)
+        {
+        }
     }
 }

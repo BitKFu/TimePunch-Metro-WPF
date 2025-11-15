@@ -1,4 +1,5 @@
-﻿using TimePunch.Metro.Wpf.Controller;
+﻿using ListSwapDemo.Core;
+using TimePunch.Metro.Wpf.Controller;
 using TimePunch.MVVM.Controller;
 
 namespace ListSwapDemo.Views
@@ -11,7 +12,9 @@ namespace ListSwapDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-            Kernel.Instance.Controller.SetContentFrame(ContentFrame);
+            
+            // The initialization of the kernel is optional, but maybe necessary for your concrete implementation
+            DemoKernel.Instance.Controller.SetContentFrame(ContentFrame);
         }
     }
 }
